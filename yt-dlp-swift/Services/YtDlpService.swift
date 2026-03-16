@@ -43,14 +43,31 @@ class YtDlpService {
     // yt-dlpの環境変数 (各ツールのパスを確保)
     private func buildEnvironment() -> [String: String] {
         var env = ProcessInfo.processInfo.environment
-        // /usr/local/bin をPATHに追加
-        let binDir = dependencyManager.globalBinDirectory.path
+        // 全検索パスをPATHに追加 (依存ツールがどこにあっても見つかるように)
+        let extraDirs = dependencyManager.searchPaths.joined(separator: ":")
         if let existingPath = env["PATH"] {
-            env["PATH"] = "\(binDir):\(existingPath)"
+            env["PATH"] = "\(extraDirs):\(existingPath)"
         } else {
-            env["PATH"] = binDir
+            env["PATH"] = extraDirs
         }
         return env
+    }
+
+    // YouTube URLかどうかを判定
+    private func isYouTubeURL(_ url: String) -> Bool {
+        url.contains("youtube.com") || url.contains("youtu.be") || url.contains("music.youtube.com")
+    }
+
+    // YouTube向け高速化引数を追加 (ダウンロード時のみ使用)
+    // デフォルトでは4クライアント (android_vr, ios_downgraded, web, web_safari) に問い合わせるため遅い
+    // webクライアント1つに絞ることで高速化
+    // ※ player_skip=configs は使わない (フォーマット情報が不完全になり低画質になる)
+    private func appendYouTubeDownloadArgs(to args: inout [String], url: String) {
+        if isYouTubeURL(url) {
+            args.append(contentsOf: [
+                "--extractor-args", "youtube:player_client=web",
+            ])
+        }
     }
 
     // 動画情報を取得
@@ -65,6 +82,7 @@ class YtDlpService {
             "--no-playlist",        // プレイリストは処理しない（単一動画のみ）
             "--socket-timeout", "15",
         ]
+        // 情報取得時はYouTube最適化を使わない（全フォーマット情報が必要）
         // Cookie
         appendCookieArgs(to: &args)
         // 追加引数
@@ -109,16 +127,25 @@ class YtDlpService {
         var args: [String] = [
             "--newline",
             "--progress",
+            task.downloadPlaylist ? "--yes-playlist" : "--no-playlist",
             "-f", task.formatSelector,
             "-o", task.outputDirectory.appendingPathComponent(task.outputTemplate).path,
         ]
 
+        // YouTube高速化 (ダウンロード時のみクライアント制限)
+        appendYouTubeDownloadArgs(to: &args, url: task.url)
+
+        // 音声抽出の後処理引数
+        if !task.postProcessorArgs.isEmpty {
+            args.append(contentsOf: task.postProcessorArgs)
+        }
+
         // Cookie
         appendCookieArgs(to: &args)
 
-        // コンテナ指定
-        let container = AppSettings.preferredContainer
-        if container != VideoContainer.mp4.rawValue {
+        // コンテナ指定 (映像DL時のみ、音声抽出時は不要)
+        if task.postProcessorArgs.isEmpty {
+            let container = task.container.isEmpty ? AppSettings.preferredContainer : task.container
             args.append(contentsOf: ["--merge-output-format", container])
         }
 
@@ -130,31 +157,35 @@ class YtDlpService {
 
         args.append(task.url)
 
-        let (process, exitCode) = try await ProcessRunner.runWithLiveOutput(
+        let (_, exitCode) = try await ProcessRunner.runWithLiveOutput(
             executableURL: binaryURL,
             arguments: args,
-            environment: buildEnvironment()
-        ) { output in
-            // 各行をパース
-            let lines = output.components(separatedBy: "\n")
-            for line in lines {
-                let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
-                guard !trimmed.isEmpty else { continue }
+            environment: buildEnvironment(),
+            onOutput: { output in
+                // 各行をパース
+                let lines = output.components(separatedBy: "\n")
+                for line in lines {
+                    let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
+                    guard !trimmed.isEmpty else { continue }
 
-                onOutput(trimmed)
+                    onOutput(trimmed)
 
-                if let progress = OutputParser.parseProgress(trimmed) {
-                    onProgress(progress)
+                    if let progress = OutputParser.parseProgress(trimmed) {
+                        onProgress(progress)
+                    }
+
+                    if let destination = OutputParser.parseDestination(trimmed) {
+                        onDestination(destination)
+                    }
                 }
-
-                if let destination = OutputParser.parseDestination(trimmed) {
-                    onDestination(destination)
+            },
+            onProcessStarted: { process in
+                // プロセス開始直後にtaskに設定（キャンセル可能にする）
+                Task { @MainActor in
+                    task.process = process
                 }
             }
-        }
-
-        // Process参照を保持
-        task.process = process
+        )
 
         if exitCode != 0 {
             throw YtDlpError.downloadFailed(L10n.exitCodeError(exitCode))

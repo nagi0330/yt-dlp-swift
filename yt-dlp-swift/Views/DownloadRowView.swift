@@ -9,7 +9,26 @@ struct DownloadRowView: View {
     let onOpenFile: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        HStack(alignment: .top, spacing: 8) {
+            // サムネイル
+            AsyncImage(url: thumbnailImageURL) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(16/9, contentMode: .fill)
+                case .failure:
+                    thumbnailPlaceholder
+                case .empty:
+                    thumbnailPlaceholder
+                @unknown default:
+                    thumbnailPlaceholder
+                }
+            }
+            .frame(width: 64, height: 36)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
+
+            VStack(alignment: .leading, spacing: 6) {
             // タイトル
             Text(task.title)
                 .font(.caption)
@@ -149,8 +168,26 @@ struct DownloadRowView: View {
                     .help(L10n.removeFromList)
                 }
             }
+            }
         }
         .padding(.vertical, 4)
+    }
+
+    private var thumbnailImageURL: URL? {
+        guard let urlString = task.thumbnailURL else { return nil }
+        return URL(string: urlString)
+    }
+
+    @ViewBuilder
+    private var thumbnailPlaceholder: some View {
+        RoundedRectangle(cornerRadius: 4)
+            .fill(.quaternary)
+            .frame(width: 64, height: 36)
+            .overlay {
+                Image(systemName: "play.rectangle")
+                    .font(.system(size: 14))
+                    .foregroundStyle(.tertiary)
+            }
     }
 
     // フェーズインジケータ

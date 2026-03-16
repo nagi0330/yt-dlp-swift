@@ -19,6 +19,46 @@ struct DependencySetupView: View {
                     .foregroundStyle(.secondary)
             }
 
+            // Python3ステータス表示
+            if viewModel.isPython3Available {
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(L10n.python3Detected(viewModel.python3Version ?? ""))
+                            .font(.caption)
+                        Text(L10n.python3DetectedDetail)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                }
+                .padding(10)
+                .background(.green.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal)
+            } else {
+                HStack(spacing: 8) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.orange)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(L10n.python3NotFound)
+                            .font(.caption)
+                            .fontWeight(.medium)
+                        Text(L10n.python3NotFoundDetail)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        Text(L10n.python3InstallHint)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .textSelection(.enabled)
+                    }
+                    Spacer()
+                }
+                .padding(10)
+                .background(.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal)
+            }
+
             // 依存ライブラリリスト
             VStack(spacing: 8) {
                 ForEach(viewModel.statuses) { status in

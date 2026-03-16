@@ -221,12 +221,30 @@ enum L10n {
     }
 
     static var fetch: String {
-        t("取得", "Fetch",
-          zhHant: "取得", zhHans: "获取",
-          ko: "가져오기", ru: "Получить",
-          es: "Obtener", fr: "Récupérer",
-          de: "Abrufen", it: "Ottieni",
-          pt: "Obter")
+        t("詳細取得", "Details",
+          zhHant: "詳細取得", zhHans: "获取详情",
+          ko: "상세 정보", ru: "Подробнее",
+          es: "Detalles", fr: "Détails",
+          de: "Details", it: "Dettagli",
+          pt: "Detalhes")
+    }
+
+    static var quickDownload: String {
+        t("クイックDL", "Quick DL",
+          zhHant: "快速下載", zhHans: "快速下载",
+          ko: "빠른 다운로드", ru: "Быстрая загрузка",
+          es: "Descargar", fr: "Télécharger",
+          de: "Download", it: "Scarica",
+          pt: "Baixar")
+    }
+
+    static var quickDownloadHint: String {
+        t("最高画質・最高音質", "Best quality",
+          zhHant: "最高畫質・最高音質", zhHans: "最高画质・最高音质",
+          ko: "최고 화질・최고 음질", ru: "Лучшее качество",
+          es: "Mejor calidad", fr: "Meilleure qualité",
+          de: "Beste Qualität", it: "Migliore qualità",
+          pt: "Melhor qualidade")
     }
 
     static func bulkURLDetected(_ count: Int) -> String {
@@ -311,11 +329,11 @@ enum L10n {
     static var customFormatPlaceholder: String { "bestvideo[height<=1080]+bestaudio" }
 
     static var startDownload: String {
-        t("ダウンロード開始", "Start Download",
-          zhHant: "開始下載", zhHans: "开始下载",
-          ko: "다운로드 시작", ru: "Начать загрузку",
-          es: "Iniciar descarga", fr: "Démarrer le téléchargement",
-          de: "Download starten", it: "Avvia download",
+        t("ダウンロード", "Download",
+          zhHant: "下載", zhHans: "下载",
+          ko: "다운로드", ru: "Скачать",
+          es: "Descargar", fr: "Télécharger",
+          de: "Herunterladen", it: "Scarica",
           pt: "Iniciar download")
     }
 
@@ -1376,6 +1394,85 @@ enum L10n {
           pt: "yt-dlp, FFmpeg, Deno estão sujeitos às suas respectivas licenças")
     }
 
+    // MARK: - プレイリスト
+
+    static var playlistBehavior: String {
+        t("プレイリストの動作", "Playlist behavior",
+          zhHant: "播放清單行為", zhHans: "播放列表行为",
+          ko: "재생목록 동작", ru: "Поведение плейлиста",
+          es: "Comportamiento de la lista", fr: "Comportement de la playlist",
+          de: "Playlist-Verhalten", it: "Comportamento playlist",
+          pt: "Comportamento da playlist")
+    }
+
+    static var playlistSingleOnly: String {
+        t("常に単一動画のみ", "Always single video only",
+          zhHant: "總是僅下載單一影片", zhHans: "总是仅下载单个视频",
+          ko: "항상 단일 동영상만", ru: "Только одно видео",
+          es: "Solo un video", fr: "Vidéo unique uniquement",
+          de: "Immer nur einzelnes Video", it: "Solo video singolo",
+          pt: "Apenas vídeo único")
+    }
+
+    static var playlistAll: String {
+        t("常にプレイリスト全体", "Always entire playlist",
+          zhHant: "總是下載整個播放清單", zhHans: "总是下载整个播放列表",
+          ko: "항상 전체 재생목록", ru: "Весь плейлист",
+          es: "Lista completa", fr: "Playlist entière",
+          de: "Immer gesamte Playlist", it: "Intera playlist",
+          pt: "Playlist inteira")
+    }
+
+    static var playlistAsk: String {
+        t("毎回確認する", "Ask every time",
+          zhHant: "每次詢問", zhHans: "每次询问",
+          ko: "매번 확인", ru: "Спрашивать каждый раз",
+          es: "Preguntar siempre", fr: "Demander à chaque fois",
+          de: "Jedes Mal fragen", it: "Chiedi ogni volta",
+          pt: "Perguntar sempre")
+    }
+
+    static var playlistDetectedTitle: String {
+        t("プレイリストが検出されました", "Playlist detected",
+          zhHant: "偵測到播放清單", zhHans: "检测到播放列表",
+          ko: "재생목록이 감지되었습니다", ru: "Обнаружен плейлист",
+          es: "Lista de reproducción detectada", fr: "Playlist détectée",
+          de: "Playlist erkannt", it: "Playlist rilevata",
+          pt: "Playlist detectada")
+    }
+
+    static var playlistDetectedMessage: String {
+        t("このURLにはプレイリストが含まれています。どのようにダウンロードしますか？",
+          "This URL contains a playlist. How would you like to download?",
+          zhHant: "此網址包含播放清單。您要如何下載？",
+          zhHans: "此网址包含播放列表。您想如何下载？",
+          ko: "이 URL에 재생목록이 포함되어 있습니다. 어떻게 다운로드하시겠습니까?",
+          ru: "Этот URL содержит плейлист. Как вы хотите скачать?",
+          es: "Esta URL contiene una lista. ¿Cómo desea descargar?",
+          fr: "Cette URL contient une playlist. Comment souhaitez-vous télécharger ?",
+          de: "Diese URL enthält eine Playlist. Wie möchten Sie herunterladen?",
+          it: "Questo URL contiene una playlist. Come vuoi scaricare?",
+          pt: "Este URL contém uma playlist. Como deseja baixar?")
+    }
+
+    static var downloadSingleVideo: String {
+        t("この動画のみ", "This video only",
+          zhHant: "僅此影片", zhHans: "仅此视频",
+          ko: "이 동영상만", ru: "Только это видео",
+          es: "Solo este video", fr: "Cette vidéo uniquement",
+          de: "Nur dieses Video", it: "Solo questo video",
+          pt: "Apenas este vídeo")
+    }
+
+    static var downloadEntirePlaylist: String {
+        t("プレイリスト全体", "Entire playlist",
+          zhHant: "整個播放清單", zhHans: "整个播放列表",
+          ko: "전체 재생목록", ru: "Весь плейлист",
+          es: "Lista completa", fr: "Playlist entière",
+          de: "Gesamte Playlist", it: "Intera playlist",
+          pt: "Playlist inteira")
+    }
+
     // MARK: - メニューバー
 
     static var menuBarResident: String {
@@ -1439,5 +1536,145 @@ enum L10n {
           es: "Salir", fr: "Quitter",
           de: "Beenden", it: "Esci",
           pt: "Sair")
+    }
+
+    // MARK: - Python3検出
+
+    static func python3Detected(_ version: String) -> String {
+        t("Python3 検出済み (v\(version))", "Python3 Detected (v\(version))",
+          zhHant: "已偵測到 Python3 (v\(version))", zhHans: "已检测到 Python3 (v\(version))",
+          ko: "Python3 감지됨 (v\(version))", ru: "Python3 обнаружен (v\(version))",
+          es: "Python3 detectado (v\(version))", fr: "Python3 détecté (v\(version))",
+          de: "Python3 erkannt (v\(version))", it: "Python3 rilevato (v\(version))",
+          pt: "Python3 detectado (v\(version))")
+    }
+
+    static var python3DetectedDetail: String {
+        t("yt-dlpはPython版 (pip) で高速にインストール・実行されます",
+          "yt-dlp will be installed via pip for faster performance",
+          zhHant: "yt-dlp 將透過 pip 安裝以獲得更快的效能",
+          zhHans: "yt-dlp 将通过 pip 安装以获得更快的性能",
+          ko: "yt-dlp가 더 빠른 성능을 위해 pip로 설치됩니다",
+          ru: "yt-dlp будет установлен через pip для большей скорости",
+          es: "yt-dlp se instalará via pip para un mejor rendimiento",
+          fr: "yt-dlp sera installé via pip pour de meilleures performances",
+          de: "yt-dlp wird via pip für bessere Leistung installiert",
+          it: "yt-dlp verrà installato tramite pip per prestazioni migliori",
+          pt: "yt-dlp será instalado via pip para melhor desempenho")
+    }
+
+    static var python3NotFound: String {
+        t("Python3 が見つかりません", "Python3 Not Found",
+          zhHant: "未找到 Python3", zhHans: "未找到 Python3",
+          ko: "Python3을 찾을 수 없음", ru: "Python3 не найден",
+          es: "Python3 no encontrado", fr: "Python3 non trouvé",
+          de: "Python3 nicht gefunden", it: "Python3 non trovato",
+          pt: "Python3 não encontrado")
+    }
+
+    static var python3NotFoundDetail: String {
+        t("Python3がないため、yt-dlpはスタンドアロン版でインストールされます。スタンドアロン版は起動が遅いため、Python3のインストールを推奨します。",
+          "Without Python3, yt-dlp will be installed as a standalone binary. The standalone version has slower startup. Installing Python3 is recommended.",
+          zhHant: "沒有 Python3，yt-dlp 將以獨立二進制檔安裝。獨立版啟動較慢，建議安裝 Python3。",
+          zhHans: "没有 Python3，yt-dlp 将以独立二进制文件安装。独立版启动较慢，建议安装 Python3。",
+          ko: "Python3 없이 yt-dlp는 독립 실행 파일로 설치됩니다. 독립 버전은 시작이 느리므로 Python3 설치를 권장합니다.",
+          ru: "Без Python3 yt-dlp будет установлен как автономный бинарник. Автономная версия медленнее запускается. Рекомендуется установить Python3.",
+          es: "Sin Python3, yt-dlp se instalará como binario independiente. La versión independiente es más lenta. Se recomienda instalar Python3.",
+          fr: "Sans Python3, yt-dlp sera installé en binaire autonome. La version autonome démarre plus lentement. L'installation de Python3 est recommandée.",
+          de: "Ohne Python3 wird yt-dlp als eigenständige Binary installiert. Die eigenständige Version startet langsamer. Die Installation von Python3 wird empfohlen.",
+          it: "Senza Python3, yt-dlp verrà installato come binario standalone. La versione standalone è più lenta. Si consiglia di installare Python3.",
+          pt: "Sem Python3, yt-dlp será instalado como binário independente. A versão independente é mais lenta. Recomenda-se instalar o Python3.")
+    }
+
+    static var python3InstallHint: String {
+        t("インストール方法: brew install python3", "Install: brew install python3",
+          zhHant: "安裝方式：brew install python3", zhHans: "安装方式：brew install python3",
+          ko: "설치: brew install python3", ru: "Установка: brew install python3",
+          es: "Instalar: brew install python3", fr: "Installer : brew install python3",
+          de: "Installation: brew install python3", it: "Installazione: brew install python3",
+          pt: "Instalar: brew install python3")
+    }
+
+    // MARK: - yt-dlpパス設定
+
+    static var ytDlpPathSection: String {
+        t("yt-dlp バイナリ", "yt-dlp Binary",
+          zhHant: "yt-dlp 執行檔", zhHans: "yt-dlp 可执行文件",
+          ko: "yt-dlp 바이너리", ru: "Бинарный файл yt-dlp",
+          es: "Binario yt-dlp", fr: "Binaire yt-dlp",
+          de: "yt-dlp Binary", it: "Binario yt-dlp",
+          pt: "Binário yt-dlp")
+    }
+
+    static var ytDlpPathLabel: String {
+        t("使用するパス", "Binary Path",
+          zhHant: "使用路徑", zhHans: "使用路径",
+          ko: "사용할 경로", ru: "Путь к файлу",
+          es: "Ruta del binario", fr: "Chemin du binaire",
+          de: "Binärpfad", it: "Percorso binario",
+          pt: "Caminho do binário")
+    }
+
+    static var ytDlpPathAuto: String {
+        t("自動検出", "Auto Detect",
+          zhHant: "自動偵測", zhHans: "自动检测",
+          ko: "자동 감지", ru: "Автоопределение",
+          es: "Detección automática", fr: "Détection automatique",
+          de: "Automatisch erkennen", it: "Rilevamento automatico",
+          pt: "Detecção automática")
+    }
+
+    static var ytDlpPathPip: String {
+        t("Python版 (pip) — 推奨", "Python (pip) — Recommended",
+          zhHant: "Python 版 (pip) — 推薦", zhHans: "Python 版 (pip) — 推荐",
+          ko: "Python 버전 (pip) — 권장", ru: "Python (pip) — Рекомендуется",
+          es: "Python (pip) — Recomendado", fr: "Python (pip) — Recommandé",
+          de: "Python (pip) — Empfohlen", it: "Python (pip) — Consigliato",
+          pt: "Python (pip) — Recomendado")
+    }
+
+    static var ytDlpPathCustom: String {
+        t("カスタムパス…", "Custom Path…",
+          zhHant: "自訂路徑…", zhHans: "自定义路径…",
+          ko: "사용자 지정 경로…", ru: "Другой путь…",
+          es: "Ruta personalizada…", fr: "Chemin personnalisé…",
+          de: "Benutzerdefinierter Pfad…", it: "Percorso personalizzato…",
+          pt: "Caminho personalizado…")
+    }
+
+    static var ytDlpPathCustomPlaceholder: String {
+        t("/path/to/yt-dlp", "/path/to/yt-dlp",
+          zhHant: "/path/to/yt-dlp", zhHans: "/path/to/yt-dlp",
+          ko: "/path/to/yt-dlp", ru: "/path/to/yt-dlp",
+          es: "/path/to/yt-dlp", fr: "/path/to/yt-dlp",
+          de: "/path/to/yt-dlp", it: "/path/to/yt-dlp",
+          pt: "/path/to/yt-dlp")
+    }
+
+    static var ytDlpChooseBinary: String {
+        t("yt-dlp バイナリを選択", "Choose yt-dlp Binary",
+          zhHant: "選擇 yt-dlp 執行檔", zhHans: "选择 yt-dlp 可执行文件",
+          ko: "yt-dlp 바이너리 선택", ru: "Выберите бинарный файл yt-dlp",
+          es: "Seleccionar binario yt-dlp", fr: "Choisir le binaire yt-dlp",
+          de: "yt-dlp Binary auswählen", it: "Seleziona binario yt-dlp",
+          pt: "Selecionar binário yt-dlp")
+    }
+
+    static var browseButton: String {
+        t("選択…", "Browse…",
+          zhHant: "瀏覽…", zhHans: "浏览…",
+          ko: "찾아보기…", ru: "Обзор…",
+          es: "Examinar…", fr: "Parcourir…",
+          de: "Durchsuchen…", it: "Sfoglia…",
+          pt: "Procurar…")
+    }
+
+    static func ytDlpCurrentPath(_ path: String) -> String {
+        t("現在のパス: \(path)", "Current path: \(path)",
+          zhHant: "目前路徑：\(path)", zhHans: "当前路径：\(path)",
+          ko: "현재 경로: \(path)", ru: "Текущий путь: \(path)",
+          es: "Ruta actual: \(path)", fr: "Chemin actuel : \(path)",
+          de: "Aktueller Pfad: \(path)", it: "Percorso attuale: \(path)",
+          pt: "Caminho atual: \(path)")
     }
 }

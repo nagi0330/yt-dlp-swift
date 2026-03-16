@@ -5,7 +5,11 @@ class DownloadTask: Identifiable {
     let id: UUID
     let url: String
     var title: String
+    var thumbnailURL: String?
     let formatSelector: String
+    let container: String          // merge-output-format (mp4/mkv/webm)
+    let postProcessorArgs: [String] // 音声抽出用 (-x --audio-format mp3 等)
+    let downloadPlaylist: Bool     // true: --yes-playlist, false: --no-playlist
     let outputDirectory: URL
     let outputTemplate: String
     let createdAt: Date
@@ -23,11 +27,15 @@ class DownloadTask: Identifiable {
     // Process制御用（永続化しない）
     var process: Process?
 
-    init(url: String, title: String, formatSelector: String, outputDirectory: URL, outputTemplate: String) {
+    init(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, outputDirectory: URL, outputTemplate: String) {
         self.id = UUID()
         self.url = url
         self.title = title
+        self.thumbnailURL = thumbnailURL
         self.formatSelector = formatSelector
+        self.container = container
+        self.postProcessorArgs = postProcessorArgs
+        self.downloadPlaylist = downloadPlaylist
         self.outputDirectory = outputDirectory
         self.outputTemplate = outputTemplate
         self.createdAt = Date()
@@ -38,7 +46,11 @@ class DownloadTask: Identifiable {
         self.id = record.id
         self.url = record.url
         self.title = record.title
+        self.thumbnailURL = record.thumbnailURL
         self.formatSelector = record.formatSelector
+        self.container = record.container ?? ""
+        self.postProcessorArgs = record.postProcessorArgs ?? []
+        self.downloadPlaylist = record.downloadPlaylist ?? false
         self.outputDirectory = URL(fileURLWithPath: record.outputDirectoryPath)
         self.outputTemplate = record.outputTemplate
         self.createdAt = record.createdAt
@@ -53,7 +65,11 @@ class DownloadTask: Identifiable {
             id: id,
             url: url,
             title: title,
+            thumbnailURL: thumbnailURL,
             formatSelector: formatSelector,
+            container: container,
+            postProcessorArgs: postProcessorArgs,
+            downloadPlaylist: downloadPlaylist,
             outputDirectoryPath: outputDirectory.path,
             outputTemplate: outputTemplate,
             createdAt: createdAt,
@@ -70,7 +86,11 @@ struct TaskRecord: Codable {
     let id: UUID
     let url: String
     let title: String
+    let thumbnailURL: String?
     let formatSelector: String
+    let container: String?
+    let postProcessorArgs: [String]?
+    let downloadPlaylist: Bool?
     let outputDirectoryPath: String
     let outputTemplate: String
     let createdAt: Date

@@ -62,15 +62,79 @@ class DependencyManager {
     // グローバルインストール先
     let globalBinDirectory = URL(fileURLWithPath: "/usr/local/bin")
 
-    // 検索パス (優先順)
-    private let searchPaths = [
-        "/usr/local/bin",
-        "/opt/homebrew/bin",
-        "/usr/bin",
-    ]
+    // pip venv インストール先
+    var pipVenvDirectory: URL {
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        return appSupport.appendingPathComponent("yt-dlp-swift/python-env")
+    }
+
+    // 検索パス (優先順: pip venv → システムパス)
+    var searchPaths: [String] {
+        [pipVenvDirectory.appendingPathComponent("bin").path,
+         "/usr/local/bin",
+         "/opt/homebrew/bin",
+         "/usr/bin"]
+    }
+
+    // MARK: - Python3 検出
+
+    /// Python3が利用可能か
+    var isPython3Available: Bool {
+        findPython3Path() != nil
+    }
+
+    /// Python3のパスを検出
+    func findPython3Path() -> String? {
+        let candidates = [
+            "/opt/homebrew/bin/python3",
+            "/usr/local/bin/python3",
+            "/usr/bin/python3",
+        ]
+        for path in candidates {
+            if FileManager.default.isExecutableFile(atPath: path) {
+                // Xcode CLTのスタブではないか確認
+                if path == "/usr/bin/python3" {
+                    let result = try? runSyncWithOutput(executable: path, arguments: ["--version"])
+                    if result == nil || result!.isEmpty { continue }
+                }
+                return path
+            }
+        }
+        if let path = findBinaryWithWhich("python3") {
+            return path
+        }
+        return nil
+    }
+
+    /// Python3のバージョンを取得
+    func python3Version() -> String? {
+        guard let python3 = findPython3Path() else { return nil }
+        guard let output = try? runSyncWithOutput(executable: python3, arguments: ["--version"]) else { return nil }
+        // "Python 3.14.3" → "3.14.3"
+        return output.replacingOccurrences(of: "Python ", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// yt-dlpがpip venv版でインストールされているか
+    var isYtDlpPipInstalled: Bool {
+        let venvYtDlp = pipVenvDirectory.appendingPathComponent("bin/yt-dlp").path
+        return FileManager.default.isExecutableFile(atPath: venvYtDlp)
+    }
 
     // 依存バイナリのパスを解決
     func resolveBinaryPath(for dependency: Dependency) -> URL? {
+        // yt-dlpはユーザー設定のパスを優先
+        if dependency == .ytDlp {
+            if let customPath = resolveYtDlpConfiguredPath() {
+                return customPath
+            }
+        }
+
+        // yt-dlpはスクリプト版 (Homebrew/pip) を優先検索
+        // スタンドアロンバイナリ (yt-dlp_macos) はPython展開に数秒かかるため遅い
+        if dependency == .ytDlp {
+            return resolveYtDlpAuto()
+        }
+
         for dir in searchPaths {
             let path = "\(dir)/\(dependency.binaryName)"
             if FileManager.default.isExecutableFile(atPath: path) {
@@ -83,6 +147,78 @@ class DependencyManager {
             return URL(fileURLWithPath: path)
         }
 
+        return nil
+    }
+
+    // yt-dlpの自動検出: スクリプト版を優先し、スタンドアロンバイナリはフォールバック
+    private func resolveYtDlpAuto() -> URL? {
+        var scriptVersionPath: URL?
+        var standaloneVersionPath: URL?
+
+        for dir in searchPaths {
+            let path = "\(dir)/yt-dlp"
+            guard FileManager.default.isExecutableFile(atPath: path) else { continue }
+
+            if isStandaloneBinary(path: path) {
+                if standaloneVersionPath == nil {
+                    standaloneVersionPath = URL(fileURLWithPath: path)
+                }
+            } else {
+                // スクリプト版 (Homebrew/pip) → 優先
+                if scriptVersionPath == nil {
+                    scriptVersionPath = URL(fileURLWithPath: path)
+                }
+            }
+        }
+
+        // whichで追加検索
+        if scriptVersionPath == nil, let whichPath = findBinaryWithWhich("yt-dlp") {
+            if !isStandaloneBinary(path: whichPath) {
+                scriptVersionPath = URL(fileURLWithPath: whichPath)
+            } else if standaloneVersionPath == nil {
+                standaloneVersionPath = URL(fileURLWithPath: whichPath)
+            }
+        }
+
+        // スクリプト版があればそちらを優先
+        return scriptVersionPath ?? standaloneVersionPath
+    }
+
+    // Mach-Oバイナリ (スタンドアロン版) かどうかを判定
+    // スクリプト版はテキストファイル (#! で始まる)
+    private func isStandaloneBinary(path: String) -> Bool {
+        guard let file = FileHandle(forReadingAtPath: path) else { return false }
+        defer { file.closeFile() }
+        let magic = file.readData(ofLength: 4)
+        guard magic.count >= 4 else { return false }
+        // Mach-O magic: 0xFEEDFACE, 0xFEEDFACF, FAT: 0xCAFEBABE, 0xBEBAFECA
+        let m = magic.withUnsafeBytes { $0.load(as: UInt32.self) }
+        return m == 0xFEEDFACE || m == 0xFEEDFACF || m == 0xCAFEBABE || m == 0xBEBAFECA
+    }
+
+    // ユーザー設定に基づくyt-dlpパスの解決
+    private func resolveYtDlpConfiguredPath() -> URL? {
+        let setting = AppSettings.ytDlpPath
+
+        // "auto"なら自動検出に任せる
+        if setting == YtDlpPathOption.auto.rawValue {
+            return nil
+        }
+
+        // "custom"なら別途保存されたカスタムパスを使用
+        if setting == YtDlpPathOption.custom.rawValue {
+            let customPath = AppSettings.ytDlpCustomPath
+            guard !customPath.isEmpty else { return nil }
+            if FileManager.default.isExecutableFile(atPath: customPath) {
+                return URL(fileURLWithPath: customPath)
+            }
+            return nil
+        }
+
+        // プリセットパス
+        if FileManager.default.isExecutableFile(atPath: setting) {
+            return URL(fileURLWithPath: setting)
+        }
         return nil
     }
 
@@ -257,12 +393,68 @@ class DependencyManager {
         let url: String
     }
 
+    // MARK: - yt-dlp pip インストール
+
+    /// pip venvにyt-dlpをインストール (Python3がある場合に使用)
+    func installYtDlpViaPip(onLog: @escaping @Sendable (String) -> Void) async throws {
+        guard let python3 = findPython3Path() else {
+            throw DependencyError.installFailed(.ytDlp, "Python3 not found")
+        }
+
+        let venvDir = pipVenvDirectory
+        let fm = FileManager.default
+
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    // venvが存在しなければ作成
+                    if !fm.fileExists(atPath: venvDir.appendingPathComponent("bin/python3").path) {
+                        onLog("[yt-dlp] Creating Python virtual environment...")
+                        let exitCode = try self.runSync(executable: python3, arguments: ["-m", "venv", venvDir.path])
+                        guard exitCode == 0 else {
+                            throw DependencyError.installFailed(.ytDlp, "Failed to create venv")
+                        }
+                        onLog("[yt-dlp] Virtual environment created")
+                    }
+
+                    // pip install / upgrade yt-dlp
+                    let pipPath = venvDir.appendingPathComponent("bin/pip").path
+                    onLog("[yt-dlp] Installing yt-dlp via pip...")
+                    let exitCode = try self.runSync(
+                        executable: pipPath,
+                        arguments: ["install", "--upgrade", "yt-dlp"]
+                    )
+                    guard exitCode == 0 else {
+                        throw DependencyError.installFailed(.ytDlp, "pip install yt-dlp failed")
+                    }
+
+                    // インストール確認
+                    let ytdlpPath = venvDir.appendingPathComponent("bin/yt-dlp").path
+                    guard fm.isExecutableFile(atPath: ytdlpPath) else {
+                        throw DependencyError.installFailed(.ytDlp, "yt-dlp binary not found after pip install")
+                    }
+                    onLog("[yt-dlp] pip install complete")
+                    continuation.resume()
+                } catch {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+
+    /// yt-dlpのインストールにpipを使うべきか
+    var shouldUsePipForYtDlp: Bool {
+        isPython3Available
+    }
+
     /// 各依存のダウンロードURLを解決
     func resolveDownloadURL(for dependency: Dependency) async throws -> URL {
         let arch = ProcessInfo.processInfo.machineArchitecture
 
         switch dependency {
         case .ytDlp:
+            // pip版の場合はURLは使わない (installYtDlpViaPipで処理)
+            // ここはスタンドアロン版フォールバック用
             let assets = try await getLatestReleaseAssets(repo: "yt-dlp/yt-dlp")
             guard let asset = assets.first(where: { $0.name == "yt-dlp_macos" }),
                   let url = URL(string: asset.downloadURL) else {
@@ -374,6 +566,19 @@ class DependencyManager {
         try process.run()
         process.waitUntilExit()
         return process.terminationStatus
+    }
+
+    private func runSyncWithOutput(executable: String, arguments: [String]) throws -> String {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: executable)
+        process.arguments = arguments
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        process.standardError = Pipe()
+        try process.run()
+        process.waitUntilExit()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        return String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
 
     // MARK: - GitHub API

@@ -11,12 +11,16 @@ struct URLInputView: View {
                 HStack {
                     Image(systemName: "link")
                         .foregroundStyle(.secondary)
-                    TextField(L10n.urlInputPlaceholder, text: $vm.urlText, axis: .vertical)
+                    TextField(L10n.urlInputPlaceholder, text: Binding(
+                        get: { vm.urlText },
+                        set: { vm.urlText = $0.replacingOccurrences(of: "\n", with: " ") }
+                    ))
                         .textFieldStyle(.plain)
-                        .lineLimit(1...5)
                         .onSubmit {
-                            if !viewModel.isBulkMode {
-                                Task { await viewModel.fetchVideoInfo() }
+                            if viewModel.isBulkMode {
+                                viewModel.startBulkDownload()
+                            } else {
+                                viewModel.quickDownload()
                             }
                         }
 
@@ -44,13 +48,23 @@ struct URLInputView: View {
                     .disabled(viewModel.isFetching)
                     .keyboardShortcut(.return, modifiers: .command)
                 } else {
+                    // クイックDLボタン
                     Button {
-                        Task { await viewModel.fetchVideoInfo() }
+                        viewModel.quickDownload()
+                    } label: {
+                        Label(L10n.quickDownload, systemImage: "bolt.circle.fill")
+                    }
+                    .disabled(viewModel.urlText.isEmpty || viewModel.isFetching)
+                    .keyboardShortcut(.return, modifiers: .command)
+
+                    // 情報取得ボタン
+                    Button {
+                        viewModel.fetchVideoInfo()
                     } label: {
                         Label(L10n.fetch, systemImage: "magnifyingglass")
                     }
                     .disabled(viewModel.urlText.isEmpty || viewModel.isFetching)
-                    .keyboardShortcut(.return, modifiers: .command)
+                    .keyboardShortcut(.return, modifiers: [.command, .shift])
                 }
             }
 

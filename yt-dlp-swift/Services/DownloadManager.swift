@@ -24,11 +24,15 @@ class DownloadManager {
     }
 
     // タスクを追加してキューに入れる
-    func addTask(url: String, title: String, formatSelector: String, outputTemplate: String? = nil) {
+    func addTask(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, outputTemplate: String? = nil) {
         let task = DownloadTask(
             url: url,
             title: title,
+            thumbnailURL: thumbnailURL,
             formatSelector: formatSelector,
+            container: container,
+            postProcessorArgs: postProcessorArgs,
+            downloadPlaylist: downloadPlaylist,
             outputDirectory: AppSettings.downloadDirectoryURL,
             outputTemplate: outputTemplate ?? AppSettings.outputTemplate
         )
@@ -57,11 +61,14 @@ class DownloadManager {
 
     // ダウンロードを実行
     private func executeDownload(_ task: DownloadTask) async {
-        // タイトルがURLのままなら動画情報を取得してタイトルを更新
+        // タイトルがURLのままなら動画情報を取得してタイトル・サムネイルを更新
         if task.title == task.url {
             if let info = try? await ytDlpService.fetchVideoInfo(url: task.url) {
                 await MainActor.run {
                     task.title = info.title
+                    if task.thumbnailURL == nil {
+                        task.thumbnailURL = info.thumbnail
+                    }
                 }
             }
         }
@@ -114,8 +121,17 @@ class DownloadManager {
 
     // タスクをキャンセル
     func cancelTask(_ task: DownloadTask) {
-        task.process?.terminate()
+        if let process = task.process, process.isRunning {
+            process.interrupt()  // SIGINTでyt-dlpに正常終了を促す
+            // 少し待ってもまだ動いていたら強制終了
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+                if process.isRunning {
+                    process.terminate()
+                }
+            }
+        }
         task.status = .cancelled
+        task.process = nil
         saveHistory()
     }
 

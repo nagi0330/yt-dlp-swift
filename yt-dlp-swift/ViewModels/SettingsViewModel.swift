@@ -13,6 +13,9 @@ class SettingsViewModel {
     var preferredContainer: String = AppSettings.preferredContainer
     var language: String = AppSettings.language
     var menuBarEnabled: Bool = AppSettings.menuBarEnabled
+    var playlistBehavior: String = AppSettings.playlistBehavior
+    var ytDlpPath: String = AppSettings.ytDlpPath
+    var ytDlpCustomPath: String = AppSettings.ytDlpCustomPath
 
     func save() {
         AppSettings.downloadDirectory = downloadDirectory
@@ -24,6 +27,9 @@ class SettingsViewModel {
         AppSettings.preferredContainer = preferredContainer
         AppSettings.language = language
         AppSettings.menuBarEnabled = menuBarEnabled
+        AppSettings.playlistBehavior = playlistBehavior
+        AppSettings.ytDlpPath = ytDlpPath
+        AppSettings.ytDlpCustomPath = ytDlpCustomPath
     }
 
     func chooseDownloadDirectory() {

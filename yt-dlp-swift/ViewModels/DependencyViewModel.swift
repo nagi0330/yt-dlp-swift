@@ -13,6 +13,10 @@ class DependencyViewModel {
     var installStepDescription: String = ""
     var downloadSizeInfo: String = ""
 
+    // Python3関連
+    var isPython3Available: Bool { manager.isPython3Available }
+    var python3Version: String? { manager.python3Version() }
+
     var allInstalled: Bool {
         statuses.filter { $0.dependency != .ffprobe }.allSatisfy { $0.isInstalled }
     }
@@ -128,6 +132,24 @@ class DependencyViewModel {
             let stepSize = 1.0 / Double(totalCount)
 
             do {
+                // yt-dlpはPython3があればpipでインストール
+                if dep == .ytDlp && manager.shouldUsePipForYtDlp {
+                    installStepDescription = "yt-dlp — pip install..."
+                    installProgress = stepBase
+                    appendLog("[yt-dlp] Python3 detected, using pip install (faster)")
+
+                    try await manager.installYtDlpViaPip { [weak self] message in
+                        Task { @MainActor in
+                            self?.appendLog(message)
+                        }
+                    }
+
+                    completed += 1
+                    installProgress = Double(completed) / Double(totalCount)
+                    appendLog("[yt-dlp] \(L10n.installComplete)")
+                    continue
+                }
+
                 // URL解決
                 installStepDescription = "\(dep.binaryName) — URL..."
                 installProgress = stepBase

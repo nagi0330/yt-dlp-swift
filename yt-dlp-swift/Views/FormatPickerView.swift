@@ -71,21 +71,6 @@ struct FormatPickerView: View {
                 }
             }
 
-            Divider()
-
-            // ダウンロードボタン
-            HStack {
-                Spacer()
-                Button {
-                    viewModel.startDownload()
-                } label: {
-                    Label(L10n.startDownload, systemImage: "arrow.down.circle.fill")
-                        .font(.headline)
-                }
-                .controlSize(.large)
-                .keyboardShortcut("d", modifiers: .command)
-                .disabled(viewModel.videoInfo == nil)
-            }
         }
         .padding()
         .background(.background, in: RoundedRectangle(cornerRadius: 12))

@@ -84,6 +84,50 @@ enum DownloadPreset: String, CaseIterable, Identifiable {
     }
 }
 
+enum PlaylistBehavior: String, CaseIterable, Identifiable {
+    case singleOnly = "single"
+    case entirePlaylist = "playlist"
+    case ask = "ask"
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .singleOnly: return L10n.playlistSingleOnly
+        case .entirePlaylist: return L10n.playlistAll
+        case .ask: return L10n.playlistAsk
+        }
+    }
+}
+
+// yt-dlpバイナリのパス設定
+enum YtDlpPathOption: String, CaseIterable, Identifiable {
+    case auto = "auto"
+    case usrLocalBin = "/usr/local/bin/yt-dlp"
+    case homebrewBin = "/opt/homebrew/bin/yt-dlp"
+    case custom = "custom"
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .auto: return L10n.ytDlpPathAuto
+        case .usrLocalBin: return "/usr/local/bin/yt-dlp"
+        case .homebrewBin: return "/opt/homebrew/bin/yt-dlp (Homebrew)"
+        case .custom: return L10n.ytDlpPathCustom
+        }
+    }
+
+    /// 設定値からパスを返す。autoならnil（自動検出）
+    var binaryPath: String? {
+        switch self {
+        case .auto: return nil
+        case .usrLocalBin, .homebrewBin: return rawValue
+        case .custom: return nil // customの場合は別途取得
+        }
+    }
+}
+
 enum VideoContainer: String, CaseIterable, Identifiable {
     case mp4 = "mp4"
     case mkv = "mkv"

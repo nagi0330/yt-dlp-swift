@@ -121,7 +121,9 @@ struct MenuBarView: View {
         downloadManager.addTask(
             url: url,
             title: url,
-            formatSelector: preset.formatString
+            formatSelector: preset.formatString,
+            container: AppSettings.preferredContainer,
+            postProcessorArgs: preset.postProcessorArgs
         )
 
         urlText = ""

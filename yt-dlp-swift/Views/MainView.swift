@@ -22,13 +22,22 @@ struct MainView: View {
 
                 if mainVM.isFetching {
                     Spacer()
-                    ProgressView(L10n.fetchingVideoInfo)
-                        .padding()
+                    VStack(spacing: 12) {
+                        ProgressView(L10n.fetchingVideoInfo)
+                        Button(L10n.cancel) {
+                            mainVM.cancelFetch()
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                    }
+                    .padding()
                     Spacer()
                 } else if let videoInfo = mainVM.videoInfo {
                     ScrollView {
                         VStack(spacing: 16) {
-                            VideoInfoView(videoInfo: videoInfo)
+                            VideoInfoView(videoInfo: videoInfo) {
+                                mainVM.startDownload()
+                            }
                             FormatPickerView()
                         }
                         .padding()
@@ -87,5 +96,21 @@ struct MainView: View {
                 .frame(minWidth: 500, minHeight: 400)
                 .interactiveDismissDisabled()
         }
+        .alert(L10n.playlistDetectedTitle, isPresented: playlistAlertBinding) {
+            Button(L10n.downloadSingleVideo) {
+                mainVM.confirmPlaylistChoice(downloadPlaylist: false)
+            }
+            Button(L10n.downloadEntirePlaylist) {
+                mainVM.confirmPlaylistChoice(downloadPlaylist: true)
+            }
+            Button(L10n.cancel, role: .cancel) {}
+        } message: {
+            Text(L10n.playlistDetectedMessage)
+        }
+    }
+
+    private var playlistAlertBinding: Binding<Bool> {
+        @Bindable var vm = mainVM
+        return $vm.showPlaylistAlert
     }
 }

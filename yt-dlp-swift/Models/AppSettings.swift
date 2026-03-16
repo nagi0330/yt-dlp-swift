@@ -12,6 +12,9 @@ struct AppSettings {
     @AppStorage("preferredContainer") static var preferredContainer: String = VideoContainer.mp4.rawValue
     @AppStorage("language") static var language: String = AppLanguage.system.rawValue
     @AppStorage("menuBarEnabled") static var menuBarEnabled: Bool = false
+    @AppStorage("playlistBehavior") static var playlistBehavior: String = PlaylistBehavior.ask.rawValue
+    @AppStorage("ytDlpPath") static var ytDlpPath: String = YtDlpPathOption.auto.rawValue
+    @AppStorage("ytDlpCustomPath") static var ytDlpCustomPath: String = ""
 
     static var defaultDownloadDirectory: String {
         FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first?.path ?? "~/Downloads"

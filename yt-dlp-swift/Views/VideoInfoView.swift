@@ -2,6 +2,7 @@ import SwiftUI
 
 struct VideoInfoView: View {
     let videoInfo: VideoInfo
+    var onStartDownload: (() -> Void)?
 
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
@@ -68,13 +69,28 @@ struct VideoInfoView: View {
                         .foregroundStyle(.blue)
                 }
 
-                // 利用可能なフォーマット数
-                if let formats = videoInfo.formats {
-                    let videoFormats = formats.filter { $0.hasVideo }
-                    let audioFormats = formats.filter { $0.hasAudio && !$0.hasVideo }
-                    Text(L10n.formatCount(video: videoFormats.count, audio: audioFormats.count))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                // 利用可能なフォーマット数 + ダウンロードボタン
+                HStack {
+                    if let formats = videoInfo.formats {
+                        let videoFormats = formats.filter { $0.hasVideo }
+                        let audioFormats = formats.filter { $0.hasAudio && !$0.hasVideo }
+                        Text(L10n.formatCount(video: videoFormats.count, audio: audioFormats.count))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Spacer()
+
+                    if let action = onStartDownload {
+                        Button {
+                            action()
+                        } label: {
+                            Label(L10n.startDownload, systemImage: "arrow.down.circle.fill")
+                                .font(.body)
+                        }
+                        .controlSize(.large)
+                        .keyboardShortcut("d", modifiers: .command)
+                    }
                 }
             }
         }
