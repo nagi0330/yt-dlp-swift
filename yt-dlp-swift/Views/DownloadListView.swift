@@ -38,6 +38,7 @@ struct DownloadListView: View {
                         DownloadRowView(
                             task: task,
                             onCancel: { viewModel.cancelTask(task) },
+                            onStopRecording: { viewModel.stopRecording(task) },
                             onResume: { viewModel.resumeTask(task) },
                             onRemove: { viewModel.removeTask(task) },
                             onRevealInFinder: { viewModel.revealInFinder(task) },

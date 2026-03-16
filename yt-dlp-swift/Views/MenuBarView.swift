@@ -169,6 +169,9 @@ struct MenuBarTaskRow: View {
                 case .paused:
                     Image(systemName: "pause.circle")
                         .foregroundStyle(.secondary)
+                case .recording:
+                    Image(systemName: "record.circle")
+                        .foregroundStyle(.red)
                 }
             }
             .frame(width: 16)

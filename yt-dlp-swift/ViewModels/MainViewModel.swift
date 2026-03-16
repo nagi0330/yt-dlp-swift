@@ -1,6 +1,18 @@
 import Foundation
 import SwiftUI
 
+enum AppMode: String, CaseIterable {
+    case download
+    case liveRecording
+
+    var displayName: String {
+        switch self {
+        case .download: return L10n.modeDownload
+        case .liveRecording: return L10n.modeLiveRecording
+        }
+    }
+}
+
 @MainActor
 @Observable
 class MainViewModel {
@@ -11,6 +23,8 @@ class MainViewModel {
     var selectedPreset: DownloadPreset = .bestVideo
     var customFormatString: String = ""
     var showPlaylistAlert = false
+    var appMode: AppMode = .download
+    var liveFromStart: Bool = true  // デフォルトで最初から録画
     private var pendingPlaylistURL: String?
 
     private let ytDlpService = YtDlpService.shared
@@ -175,6 +189,57 @@ class MainViewModel {
             container: AppSettings.preferredContainer,
             postProcessorArgs: preset.postProcessorArgs,
             downloadPlaylist: downloadPlaylist
+        )
+
+        // UIリセット
+        urlText = ""
+        videoInfo = nil
+        errorMessage = nil
+    }
+
+    // ライブ録画開始（情報取得後）
+    func startLiveRecording() {
+        guard let info = videoInfo else { return }
+
+        let formatSelector: String
+        if selectedPreset == .custom {
+            formatSelector = customFormatString
+        } else {
+            formatSelector = selectedPreset.formatString
+        }
+
+        downloadManager.addTask(
+            url: urlText,
+            title: info.title,
+            thumbnailURL: info.thumbnail,
+            formatSelector: formatSelector,
+            container: AppSettings.preferredContainer,
+            postProcessorArgs: selectedPreset.postProcessorArgs,
+            isLiveRecording: true,
+            liveFromStart: liveFromStart
+        )
+
+        // UIリセット
+        urlText = ""
+        videoInfo = nil
+        errorMessage = nil
+    }
+
+    // クイック録画開始（情報取得スキップ）
+    func quickLiveRecording() {
+        let url = urlText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !url.isEmpty else { return }
+
+        let preset = DownloadPreset.allCases.first { $0.rawValue == AppSettings.defaultPreset } ?? .bestVideo
+
+        downloadManager.addTask(
+            url: url,
+            title: url,
+            formatSelector: preset.formatString,
+            container: AppSettings.preferredContainer,
+            postProcessorArgs: preset.postProcessorArgs,
+            isLiveRecording: true,
+            liveFromStart: liveFromStart
         )
 
         // UIリセット

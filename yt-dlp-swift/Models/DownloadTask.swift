@@ -24,10 +24,16 @@ class DownloadTask: Identifiable {
     var outputFilePath: String?
     var error: String?
 
+    // ライブ録画関連
+    let isLiveRecording: Bool
+    let liveFromStart: Bool       // --live-from-start を使うか
+    var recordingStartTime: Date? // 録画開始時刻
+    var recordingElapsed: String = "" // 経過時間表示用
+
     // Process制御用（永続化しない）
     var process: Process?
 
-    init(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, outputDirectory: URL, outputTemplate: String) {
+    init(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, isLiveRecording: Bool = false, liveFromStart: Bool = false, outputDirectory: URL, outputTemplate: String) {
         self.id = UUID()
         self.url = url
         self.title = title
@@ -36,6 +42,8 @@ class DownloadTask: Identifiable {
         self.container = container
         self.postProcessorArgs = postProcessorArgs
         self.downloadPlaylist = downloadPlaylist
+        self.isLiveRecording = isLiveRecording
+        self.liveFromStart = liveFromStart
         self.outputDirectory = outputDirectory
         self.outputTemplate = outputTemplate
         self.createdAt = Date()
@@ -51,6 +59,8 @@ class DownloadTask: Identifiable {
         self.container = record.container ?? ""
         self.postProcessorArgs = record.postProcessorArgs ?? []
         self.downloadPlaylist = record.downloadPlaylist ?? false
+        self.isLiveRecording = record.isLiveRecording ?? false
+        self.liveFromStart = record.liveFromStart ?? false
         self.outputDirectory = URL(fileURLWithPath: record.outputDirectoryPath)
         self.outputTemplate = record.outputTemplate
         self.createdAt = record.createdAt
@@ -70,6 +80,8 @@ class DownloadTask: Identifiable {
             container: container,
             postProcessorArgs: postProcessorArgs,
             downloadPlaylist: downloadPlaylist,
+            isLiveRecording: isLiveRecording,
+            liveFromStart: liveFromStart,
             outputDirectoryPath: outputDirectory.path,
             outputTemplate: outputTemplate,
             createdAt: createdAt,
@@ -91,6 +103,8 @@ struct TaskRecord: Codable {
     let container: String?
     let postProcessorArgs: [String]?
     let downloadPlaylist: Bool?
+    let isLiveRecording: Bool?
+    let liveFromStart: Bool?
     let outputDirectoryPath: String
     let outputTemplate: String
     let createdAt: Date
@@ -103,6 +117,7 @@ struct TaskRecord: Codable {
 enum DownloadStatus: String {
     case waiting = "waiting"
     case downloading = "downloading"
+    case recording = "recording"    // ライブ録画中
     case processing = "processing"
     case completed = "completed"
     case failed = "failed"
@@ -113,6 +128,7 @@ enum DownloadStatus: String {
         switch self {
         case .waiting: return L10n.statusWaiting
         case .downloading: return L10n.statusDownloading
+        case .recording: return L10n.statusRecording
         case .processing: return L10n.statusProcessing
         case .completed: return L10n.statusCompleted
         case .failed: return L10n.statusFailed
@@ -142,12 +158,14 @@ enum DownloadPhase: String {
     case video = "video"
     case audio = "audio"
     case postProcess = "postProcess"
+    case liveRecording = "liveRecording"
 
     var displayName: String {
         switch self {
         case .video: return L10n.phaseVideo
         case .audio: return L10n.phaseAudio
         case .postProcess: return L10n.phasePostProcess
+        case .liveRecording: return L10n.phaseLiveRecording
         }
     }
 }

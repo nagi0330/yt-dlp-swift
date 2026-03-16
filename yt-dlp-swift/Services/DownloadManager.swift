@@ -24,7 +24,7 @@ class DownloadManager {
     }
 
     // タスクを追加してキューに入れる
-    func addTask(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, outputTemplate: String? = nil) {
+    func addTask(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, isLiveRecording: Bool = false, liveFromStart: Bool = false, outputTemplate: String? = nil) {
         let task = DownloadTask(
             url: url,
             title: title,
@@ -33,6 +33,8 @@ class DownloadManager {
             container: container,
             postProcessorArgs: postProcessorArgs,
             downloadPlaylist: downloadPlaylist,
+            isLiveRecording: isLiveRecording,
+            liveFromStart: liveFromStart,
             outputDirectory: AppSettings.downloadDirectoryURL,
             outputTemplate: outputTemplate ?? AppSettings.outputTemplate
         )
@@ -49,7 +51,10 @@ class DownloadManager {
         guard let task = tasks.first(where: { $0.status == .waiting }) else { return }
 
         activeTasks += 1
-        task.status = .downloading
+        task.status = task.isLiveRecording ? .recording : .downloading
+        if task.isLiveRecording {
+            task.phase = .liveRecording
+        }
 
         Task {
             await executeDownload(task)
@@ -73,6 +78,26 @@ class DownloadManager {
             }
         }
 
+        // ライブ録画の場合、経過時間タイマーを開始
+        var elapsedTimer: Task<Void, Never>?
+        if task.isLiveRecording {
+            await MainActor.run {
+                task.recordingStartTime = Date()
+            }
+            elapsedTimer = Task {
+                while !Task.isCancelled {
+                    try? await Task.sleep(for: .seconds(1))
+                    guard !Task.isCancelled else { break }
+                    await MainActor.run {
+                        if let start = task.recordingStartTime {
+                            let elapsed = Date().timeIntervalSince(start)
+                            task.recordingElapsed = Self.formatElapsed(elapsed)
+                        }
+                    }
+                }
+            }
+        }
+
         do {
             try await ytDlpService.download(
                 task: task,
@@ -86,11 +111,21 @@ class DownloadManager {
                 },
                 onOutput: { [weak task] line in
                     Task { @MainActor in
+                        guard let task else { return }
+                        // ライブ録画中はフェーズ検出でステータスを上書きしない
                         if let phase = OutputParser.detectPhase(line) {
-                            task?.phase = phase
-                            if phase == .postProcess {
-                                task?.status = .processing
+                            if task.isLiveRecording && phase != .postProcess {
+                                // ライブ録画中はliveRecordingフェーズを維持
+                            } else {
+                                task.phase = phase
+                                if phase == .postProcess {
+                                    task.status = .processing
+                                }
                             }
+                        }
+                        // ライブ録画のサイズ情報を更新
+                        if task.isLiveRecording, let sizeInfo = OutputParser.parseLiveSize(line) {
+                            task.totalSize = sizeInfo
                         }
                     }
                 },
@@ -101,15 +136,19 @@ class DownloadManager {
                 }
             )
 
+            elapsedTimer?.cancel()
+
             await MainActor.run {
                 task.status = .completed
                 task.progress = 1.0
             }
 
             // 完了通知
-            await sendNotification(title: L10n.downloadComplete, body: task.title)
+            let notifTitle = task.isLiveRecording ? L10n.recordingComplete : L10n.downloadComplete
+            await sendNotification(title: notifTitle, body: task.title)
 
         } catch {
+            elapsedTimer?.cancel()
             await MainActor.run {
                 if task.status != .cancelled {
                     task.status = .failed
@@ -117,6 +156,18 @@ class DownloadManager {
                 }
             }
         }
+    }
+
+    // 経過時間フォーマット
+    static func formatElapsed(_ interval: TimeInterval) -> String {
+        let total = Int(interval)
+        let hours = total / 3600
+        let minutes = (total % 3600) / 60
+        let seconds = total % 60
+        if hours > 0 {
+            return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+        }
+        return String(format: "%d:%02d", minutes, seconds)
     }
 
     // タスクをキャンセル
@@ -135,6 +186,12 @@ class DownloadManager {
         saveHistory()
     }
 
+    // ライブ録画を正常停止（SIGINTでyt-dlpに終了を伝え、ファイルを正しく閉じる）
+    func stopRecording(_ task: DownloadTask) {
+        guard task.isLiveRecording, let process = task.process, process.isRunning else { return }
+        process.interrupt()  // SIGINTで正常終了 → yt-dlpがファイルを閉じて完了扱いになる
+    }
+
     // タスクを再開
     func resumeTask(_ task: DownloadTask) {
         guard task.status == .cancelled || task.status == .failed else { return }
@@ -142,14 +199,16 @@ class DownloadManager {
         task.error = nil
         task.speed = ""
         task.eta = ""
-        task.phase = .video
+        task.recordingElapsed = ""
+        task.recordingStartTime = nil
+        task.phase = task.isLiveRecording ? .liveRecording : .video
         saveHistory()
         processQueue()
     }
 
     // タスクを削除
     func removeTask(_ task: DownloadTask) {
-        if task.status == .downloading || task.status == .processing {
+        if task.status == .downloading || task.status == .processing || task.status == .recording {
             cancelTask(task)
         }
         tasks.removeAll { $0.id == task.id }
@@ -193,7 +252,7 @@ class DownloadManager {
             tasks = records.map { record in
                 let task = DownloadTask(record: record)
                 // 実行中だったタスクはキャンセル扱いに
-                if task.status == .downloading || task.status == .processing || task.status == .waiting {
+                if task.status == .downloading || task.status == .processing || task.status == .waiting || task.status == .recording {
                     task.status = .cancelled
                 }
                 return task

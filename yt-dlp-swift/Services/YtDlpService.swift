@@ -123,7 +123,15 @@ class YtDlpService {
             "-o", task.outputDirectory.appendingPathComponent(task.outputTemplate).path,
         ]
 
-        // YouTube高速化は使わない（player_client制限で高画質フォーマットが取得できなくなるため）
+        // ライブ録画オプション
+        if task.isLiveRecording {
+            if task.liveFromStart {
+                args.append("--live-from-start")
+            }
+            // ライブ配信が終了するまで待機
+            args.append("--wait-for-video")
+            args.append("5-30")
+        }
 
         // 音声抽出の後処理引数
         if !task.postProcessorArgs.isEmpty {

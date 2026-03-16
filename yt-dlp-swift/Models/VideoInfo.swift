@@ -16,6 +16,10 @@ struct VideoInfo: Identifiable, Codable {
     let extractor: String?
     let formats: [VideoFormat]?
     let requestedFormats: [VideoFormat]?
+    let isLive: Bool?
+    let isUpcoming: Bool?
+    let liveStatus: String?       // "is_live", "is_upcoming", "was_live", "not_live", etc.
+    let releaseTimestamp: Double?  // 配信開始予定のUNIXタイムスタンプ
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, thumbnail, duration
@@ -26,6 +30,26 @@ struct VideoInfo: Identifiable, Codable {
         case uploadDate = "upload_date"
         case webpage_url, extractor, formats
         case requestedFormats = "requested_formats"
+        case isLive = "is_live"
+        case isUpcoming = "is_upcoming"
+        case liveStatus = "live_status"
+        case releaseTimestamp = "release_timestamp"
+    }
+
+    /// 現在ライブ配信中か
+    var isCurrentlyLive: Bool {
+        isLive == true || liveStatus == "is_live"
+    }
+
+    /// 配信予定か
+    var isScheduled: Bool {
+        isUpcoming == true || liveStatus == "is_upcoming"
+    }
+
+    /// 配信開始予定日時
+    var scheduledStartDate: Date? {
+        guard let ts = releaseTimestamp else { return nil }
+        return Date(timeIntervalSince1970: ts)
     }
 
     // 再生時間を "HH:MM:SS" 形式に変換

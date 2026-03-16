@@ -7,22 +7,36 @@ struct URLInputView: View {
         @Bindable var vm = viewModel
 
         VStack(spacing: 8) {
+            // モード切替
+            Picker("", selection: $vm.appMode) {
+                ForEach(AppMode.allCases, id: \.self) { mode in
+                    Text(mode.displayName).tag(mode)
+                }
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+
             HStack(spacing: 12) {
                 HStack {
-                    Image(systemName: "link")
-                        .foregroundStyle(.secondary)
-                    TextField(L10n.urlInputPlaceholder, text: Binding(
-                        get: { vm.urlText },
-                        set: { vm.urlText = $0.replacingOccurrences(of: "\n", with: " ") }
-                    ))
-                        .textFieldStyle(.plain)
-                        .onSubmit {
-                            if viewModel.isBulkMode {
-                                viewModel.startBulkDownload()
-                            } else {
-                                viewModel.quickDownload()
-                            }
+                    Image(systemName: viewModel.appMode == .liveRecording ? "record.circle" : "link")
+                        .foregroundStyle(viewModel.appMode == .liveRecording ? .red : .secondary)
+                    TextField(
+                        viewModel.appMode == .liveRecording ? L10n.enterLiveURLPlaceholder : L10n.urlInputPlaceholder,
+                        text: Binding(
+                            get: { vm.urlText },
+                            set: { vm.urlText = $0.replacingOccurrences(of: "\n", with: " ") }
+                        )
+                    )
+                    .textFieldStyle(.plain)
+                    .onSubmit {
+                        if viewModel.appMode == .liveRecording {
+                            viewModel.quickLiveRecording()
+                        } else if viewModel.isBulkMode {
+                            viewModel.startBulkDownload()
+                        } else {
+                            viewModel.quickDownload()
                         }
+                    }
 
                     if !viewModel.urlText.isEmpty {
                         Button {
@@ -39,7 +53,27 @@ struct URLInputView: View {
                 .padding(8)
                 .background(.quaternary, in: RoundedRectangle(cornerRadius: 8))
 
-                if viewModel.isBulkMode {
+                if viewModel.appMode == .liveRecording {
+                    // 録画モード
+                    Button {
+                        viewModel.quickLiveRecording()
+                    } label: {
+                        Label(L10n.quickRecording, systemImage: "record.circle")
+                    }
+                    .tint(.red)
+                    .disabled(viewModel.urlText.isEmpty || viewModel.isFetching)
+                    .keyboardShortcut(.return, modifiers: .command)
+
+                    // 情報取得ボタン
+                    Button {
+                        viewModel.fetchVideoInfo()
+                    } label: {
+                        Label(L10n.fetch, systemImage: "magnifyingglass")
+                    }
+                    .disabled(viewModel.urlText.isEmpty || viewModel.isFetching)
+                    .keyboardShortcut(.return, modifiers: [.command, .shift])
+
+                } else if viewModel.isBulkMode {
                     Button {
                         viewModel.startBulkDownload()
                     } label: {
@@ -68,8 +102,23 @@ struct URLInputView: View {
                 }
             }
 
+            // 録画モード時のオプション
+            if viewModel.appMode == .liveRecording {
+                HStack(spacing: 12) {
+                    @Bindable var vm = viewModel
+                    Toggle(isOn: $vm.liveFromStart) {
+                        Text(L10n.liveFromStart)
+                            .font(.caption2)
+                    }
+                    .toggleStyle(.checkbox)
+
+                    Spacer()
+                }
+                .foregroundStyle(.secondary)
+            }
+
             // 一括モード時の説明
-            if viewModel.isBulkMode {
+            if viewModel.appMode == .download && viewModel.isBulkMode {
                 HStack(spacing: 4) {
                     Image(systemName: "info.circle")
                         .font(.caption2)

@@ -3,6 +3,7 @@ import SwiftUI
 struct DownloadRowView: View {
     let task: DownloadTask
     let onCancel: () -> Void
+    let onStopRecording: () -> Void
     let onResume: () -> Void
     let onRemove: () -> Void
     let onRevealInFinder: () -> Void
@@ -11,22 +12,40 @@ struct DownloadRowView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             // サムネイル
-            AsyncImage(url: thumbnailImageURL) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(16/9, contentMode: .fill)
-                case .failure:
-                    thumbnailPlaceholder
-                case .empty:
-                    thumbnailPlaceholder
-                @unknown default:
-                    thumbnailPlaceholder
+            ZStack(alignment: .topLeading) {
+                AsyncImage(url: thumbnailImageURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(16/9, contentMode: .fill)
+                    case .failure:
+                        thumbnailPlaceholder
+                    case .empty:
+                        thumbnailPlaceholder
+                    @unknown default:
+                        thumbnailPlaceholder
+                    }
+                }
+                .frame(width: 64, height: 36)
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+
+                // ライブ録画バッジ
+                if task.isLiveRecording && (task.status == .recording || task.status == .downloading) {
+                    HStack(spacing: 2) {
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 4, height: 4)
+                        Text("REC")
+                            .font(.system(size: 7, weight: .bold))
+                            .foregroundStyle(.white)
+                    }
+                    .padding(.horizontal, 3)
+                    .padding(.vertical, 1)
+                    .background(.red, in: RoundedRectangle(cornerRadius: 2))
+                    .padding(2)
                 }
             }
-            .frame(width: 64, height: 36)
-            .clipShape(RoundedRectangle(cornerRadius: 4))
 
             VStack(alignment: .leading, spacing: 6) {
             // タイトル
@@ -35,8 +54,55 @@ struct DownloadRowView: View {
                 .lineLimit(2)
                 .truncationMode(.tail)
 
+            // 録画中
+            if task.status == .recording {
+                HStack(spacing: 4) {
+                    recordingIndicator
+                    Spacer()
+                    // 録画停止ボタン
+                    Button {
+                        onStopRecording()
+                    } label: {
+                        Image(systemName: "stop.circle.fill")
+                            .foregroundStyle(.red)
+                    }
+                    .buttonStyle(.plain)
+                    .help(L10n.stopRecording)
+
+                    // キャンセルボタン
+                    Button {
+                        onCancel()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help(L10n.cancelHelp)
+                }
+
+                // 経過時間とサイズ
+                HStack {
+                    if !task.recordingElapsed.isEmpty {
+                        Text(L10n.recordingElapsed(task.recordingElapsed))
+                            .font(.caption2)
+                            .monospacedDigit()
+                            .foregroundStyle(.red)
+                    }
+                    Spacer()
+                    if !task.speed.isEmpty {
+                        Text(task.speed)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                    if !task.totalSize.isEmpty {
+                        Text(task.totalSize)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
             // ダウンロード中
-            if task.status == .downloading {
+            } else if task.status == .downloading {
                 // フェーズ表示
                 HStack(spacing: 4) {
                     phaseIndicator
@@ -184,10 +250,23 @@ struct DownloadRowView: View {
             .fill(.quaternary)
             .frame(width: 64, height: 36)
             .overlay {
-                Image(systemName: "play.rectangle")
+                Image(systemName: task.isLiveRecording ? "record.circle" : "play.rectangle")
                     .font(.system(size: 14))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(task.isLiveRecording ? Color.red.opacity(0.5) : Color.secondary)
             }
+    }
+
+    // 録画中インジケータ
+    @ViewBuilder
+    private var recordingIndicator: some View {
+        HStack(spacing: 4) {
+            Circle()
+                .fill(.red)
+                .frame(width: 8, height: 8)
+            Text(L10n.statusRecording)
+                .font(.caption2)
+                .foregroundStyle(.red)
+        }
     }
 
     // フェーズインジケータ
@@ -208,6 +287,7 @@ struct DownloadRowView: View {
         case .video: return "film"
         case .audio: return "waveform"
         case .postProcess: return "gearshape"
+        case .liveRecording: return "record.circle"
         }
     }
 
@@ -216,6 +296,7 @@ struct DownloadRowView: View {
         case .video: return .blue
         case .audio: return .purple
         case .postProcess: return .orange
+        case .liveRecording: return .red
         }
     }
 
@@ -242,6 +323,7 @@ struct DownloadRowView: View {
         switch task.status {
         case .waiting: return .gray
         case .downloading: return .blue
+        case .recording: return .red
         case .processing: return .orange
         case .completed: return .green
         case .failed: return .red

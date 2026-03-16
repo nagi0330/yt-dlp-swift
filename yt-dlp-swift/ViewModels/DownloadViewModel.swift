@@ -11,7 +11,7 @@ class DownloadViewModel {
     }
 
     var activeCount: Int {
-        tasks.filter { $0.status == .downloading || $0.status == .processing }.count
+        tasks.filter { $0.status == .downloading || $0.status == .processing || $0.status == .recording }.count
     }
 
     var completedCount: Int {
@@ -20,6 +20,10 @@ class DownloadViewModel {
 
     func cancelTask(_ task: DownloadTask) {
         downloadManager.cancelTask(task)
+    }
+
+    func stopRecording(_ task: DownloadTask) {
+        downloadManager.stopRecording(task)
     }
 
     func resumeTask(_ task: DownloadTask) {

@@ -46,6 +46,18 @@ enum OutputParser {
         return info
     }
 
+    // ライブ配信のダウンロードサイズをパース
+    // 例: "[download] 125.50MiB at 2.50MiB/s"
+    // 例: "[download] 1.23GiB at 5.00MiB/s (frag 42)"
+    static func parseLiveSize(_ line: String) -> String? {
+        guard line.contains("[download]"), !line.contains("%") else { return nil }
+        // サイズ情報 (数字 + 単位)
+        if let range = line.range(of: #"\d+\.?\d*\s*[KMGT]?i?B"#, options: .regularExpression) {
+            return String(line[range])
+        }
+        return nil
+    }
+
     // ダウンロード先ファイルパスを検出
     // 例: "[download] Destination: /path/to/file.mp4"
     // 例: "[Merger] Merging formats into "/path/to/file.mp4""

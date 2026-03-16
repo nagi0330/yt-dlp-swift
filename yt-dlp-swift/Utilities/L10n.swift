@@ -1677,4 +1677,141 @@ enum L10n {
           de: "Aktueller Pfad: \(path)", it: "Percorso attuale: \(path)",
           pt: "Caminho atual: \(path)")
     }
+
+    // MARK: - ライブ配信録画
+
+    static var modeDownload: String {
+        t("ダウンロード", "Download",
+          zhHant: "下載", zhHans: "下载",
+          ko: "다운로드", ru: "Загрузка",
+          es: "Descarga", fr: "Téléchargement",
+          de: "Download", it: "Download",
+          pt: "Download")
+    }
+
+    static var modeLiveRecording: String {
+        t("配信録画", "Live Recording",
+          zhHant: "直播錄影", zhHans: "直播录制",
+          ko: "라이브 녹화", ru: "Запись трансляции",
+          es: "Grabación en vivo", fr: "Enregistrement live",
+          de: "Live-Aufnahme", it: "Registrazione live",
+          pt: "Gravação ao vivo")
+    }
+
+    static var startRecording: String {
+        t("録画開始", "Start Recording",
+          zhHant: "開始錄影", zhHans: "开始录制",
+          ko: "녹화 시작", ru: "Начать запись",
+          es: "Iniciar grabación", fr: "Démarrer l'enregistrement",
+          de: "Aufnahme starten", it: "Avvia registrazione",
+          pt: "Iniciar gravação")
+    }
+
+    static var quickRecording: String {
+        t("クイック録画", "Quick Record",
+          zhHant: "快速錄影", zhHans: "快速录制",
+          ko: "빠른 녹화", ru: "Быстрая запись",
+          es: "Grabación rápida", fr: "Enregistrement rapide",
+          de: "Schnellaufnahme", it: "Registrazione rapida",
+          pt: "Gravação rápida")
+    }
+
+    static var stopRecording: String {
+        t("録画停止", "Stop Recording",
+          zhHant: "停止錄影", zhHans: "停止录制",
+          ko: "녹화 중지", ru: "Остановить запись",
+          es: "Detener grabación", fr: "Arrêter l'enregistrement",
+          de: "Aufnahme stoppen", it: "Ferma registrazione",
+          pt: "Parar gravação")
+    }
+
+    static var statusRecording: String {
+        t("録画中", "Recording",
+          zhHant: "錄影中", zhHans: "录制中",
+          ko: "녹화 중", ru: "Запись",
+          es: "Grabando", fr: "Enregistrement",
+          de: "Aufnahme läuft", it: "Registrazione",
+          pt: "Gravando")
+    }
+
+    static var phaseLiveRecording: String {
+        t("録画", "Recording",
+          zhHant: "錄影", zhHans: "录制",
+          ko: "녹화", ru: "Запись",
+          es: "Grabación", fr: "Enregistrement",
+          de: "Aufnahme", it: "Registrazione",
+          pt: "Gravação")
+    }
+
+    static var liveFromStart: String {
+        t("最初から録画", "Record from start",
+          zhHant: "從頭錄影", zhHans: "从头录制",
+          ko: "처음부터 녹화", ru: "Записать с начала",
+          es: "Grabar desde el inicio", fr: "Enregistrer depuis le début",
+          de: "Von Anfang an aufnehmen", it: "Registra dall'inizio",
+          pt: "Gravar desde o início")
+    }
+
+    static var liveFromNow: String {
+        t("今から録画", "Record from now",
+          zhHant: "從現在錄影", zhHans: "从现在录制",
+          ko: "지금부터 녹화", ru: "Записать с текущего момента",
+          es: "Grabar desde ahora", fr: "Enregistrer à partir de maintenant",
+          de: "Ab jetzt aufnehmen", it: "Registra da adesso",
+          pt: "Gravar a partir de agora")
+    }
+
+    static var liveBadge: String {
+        t("LIVE", "LIVE",
+          zhHant: "直播", zhHans: "直播",
+          ko: "라이브", ru: "LIVE",
+          es: "EN VIVO", fr: "EN DIRECT",
+          de: "LIVE", it: "LIVE",
+          pt: "AO VIVO")
+    }
+
+    static var upcomingBadge: String {
+        t("配信予定", "Upcoming",
+          zhHant: "即將直播", zhHans: "即将直播",
+          ko: "예정", ru: "Скоро",
+          es: "Próximo", fr: "À venir",
+          de: "Geplant", it: "In programma",
+          pt: "Em breve")
+    }
+
+    static var recordingComplete: String {
+        t("録画完了", "Recording Complete",
+          zhHant: "錄影完成", zhHans: "录制完成",
+          ko: "녹화 완료", ru: "Запись завершена",
+          es: "Grabación completa", fr: "Enregistrement terminé",
+          de: "Aufnahme abgeschlossen", it: "Registrazione completata",
+          pt: "Gravação concluída")
+    }
+
+    static func recordingElapsed(_ time: String) -> String {
+        t("経過 \(time)", "\(time) elapsed",
+          zhHant: "已錄 \(time)", zhHans: "已录 \(time)",
+          ko: "\(time) 경과", ru: "Прошло \(time)",
+          es: "\(time) transcurrido", fr: "\(time) écoulé",
+          de: "\(time) vergangen", it: "\(time) trascorso",
+          pt: "\(time) decorrido")
+    }
+
+    static var enterLiveURLPlaceholder: String {
+        t("配信URLを入力して録画を開始", "Enter a live stream URL to start recording",
+          zhHant: "輸入直播 URL 以開始錄影", zhHans: "输入直播 URL 以开始录制",
+          ko: "라이브 스트림 URL을 입력하여 녹화 시작", ru: "Введите URL трансляции для записи",
+          es: "Introduce la URL del directo para grabar", fr: "Entrez l'URL du stream pour enregistrer",
+          de: "Stream-URL eingeben, um aufzunehmen", it: "Inserisci l'URL dello stream per registrare",
+          pt: "Insira o URL da transmissão para gravar")
+    }
+
+    static var liveStreamDetected: String {
+        t("ライブ配信を検出しました", "Live stream detected",
+          zhHant: "偵測到直播", zhHans: "检测到直播",
+          ko: "라이브 스트림 감지됨", ru: "Обнаружена трансляция",
+          es: "Transmisión en vivo detectada", fr: "Flux en direct détecté",
+          de: "Livestream erkannt", it: "Stream live rilevato",
+          pt: "Transmissão ao vivo detectada")
+    }
 }

@@ -35,9 +35,15 @@ struct MainView: View {
                 } else if let videoInfo = mainVM.videoInfo {
                     ScrollView {
                         VStack(spacing: 16) {
-                            VideoInfoView(videoInfo: videoInfo) {
-                                mainVM.startDownload()
-                            }
+                            VideoInfoView(
+                                videoInfo: videoInfo,
+                                onStartDownload: mainVM.appMode == .download ? {
+                                    mainVM.startDownload()
+                                } : nil,
+                                onStartRecording: mainVM.appMode == .liveRecording || videoInfo.isCurrentlyLive ? {
+                                    mainVM.startLiveRecording()
+                                } : nil
+                            )
                             FormatPickerView()
                         }
                         .padding()
@@ -57,10 +63,10 @@ struct MainView: View {
                 } else {
                     Spacer()
                     VStack(spacing: 12) {
-                        Image(systemName: "arrow.down.circle")
+                        Image(systemName: mainVM.appMode == .liveRecording ? "record.circle" : "arrow.down.circle")
                             .font(.system(size: 48))
-                            .foregroundStyle(.secondary)
-                        Text(L10n.enterURLPlaceholder)
+                            .foregroundStyle(mainVM.appMode == .liveRecording ? .red.opacity(0.5) : .secondary)
+                        Text(mainVM.appMode == .liveRecording ? L10n.enterLiveURLPlaceholder : L10n.enterURLPlaceholder)
                             .foregroundStyle(.secondary)
                     }
                     Spacer()
