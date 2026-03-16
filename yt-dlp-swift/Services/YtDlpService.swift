@@ -58,17 +58,8 @@ class YtDlpService {
         url.contains("youtube.com") || url.contains("youtu.be") || url.contains("music.youtube.com")
     }
 
-    // YouTube向け高速化引数を追加 (ダウンロード時のみ使用)
-    // デフォルトでは4クライアント (android_vr, ios_downgraded, web, web_safari) に問い合わせるため遅い
-    // webクライアント1つに絞ることで高速化
-    // ※ player_skip=configs は使わない (フォーマット情報が不完全になり低画質になる)
-    private func appendYouTubeDownloadArgs(to args: inout [String], url: String) {
-        if isYouTubeURL(url) {
-            args.append(contentsOf: [
-                "--extractor-args", "youtube:player_client=web",
-            ])
-        }
-    }
+    // NOTE: YouTube高速化（player_client制限）は画質低下を引き起こすため無効化
+    // yt-dlpのデフォルト（複数クライアント問い合わせ）を使用する
 
     // 動画情報を取得
     func fetchVideoInfo(url: String) async throws -> VideoInfo {
@@ -132,8 +123,7 @@ class YtDlpService {
             "-o", task.outputDirectory.appendingPathComponent(task.outputTemplate).path,
         ]
 
-        // YouTube高速化 (ダウンロード時のみクライアント制限)
-        appendYouTubeDownloadArgs(to: &args, url: task.url)
+        // YouTube高速化は使わない（player_client制限で高画質フォーマットが取得できなくなるため）
 
         // 音声抽出の後処理引数
         if !task.postProcessorArgs.isEmpty {
@@ -147,6 +137,12 @@ class YtDlpService {
         if task.postProcessorArgs.isEmpty {
             let container = task.container.isEmpty ? AppSettings.preferredContainer : task.container
             args.append(contentsOf: ["--merge-output-format", container])
+
+            // mp4コンテナの場合、QuickTime互換コーデック (H.264+AAC) を優先
+            // VP9/Opus等はmp4に入れてもQuickTimeで再生できないため
+            if container == "mp4" {
+                args.append(contentsOf: ["-S", "vcodec:h264,acodec:aac"])
+            }
         }
 
         // 追加引数
