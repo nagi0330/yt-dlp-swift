@@ -1,0 +1,483 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1694098B99CFF6B0E8D0607C /* URLInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C47D001D1EBD78BF2E7849D /* URLInputView.swift */; };
+		212ED07581B3923161E681A1 /* FileNameSanitizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6542087377BCD3D4BB0AA49C /* FileNameSanitizer.swift */; };
+		227732B919226AE744D48614 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08661B2A688BF2D240279207 /* SettingsView.swift */; };
+		269510CC9A5C4584BD19DE64 /* VideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496F0F129D6B7A5E725CAF6 /* VideoInfo.swift */; };
+		295B195DBA017E57B0AD15BE /* SupportedSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E2171256FFEE7C4FC6D482 /* SupportedSite.swift */; };
+		2E479441EE32EFEC485BF09C /* DownloadRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC0769B62EA165911FAE103 /* DownloadRowView.swift */; };
+		36241B71CD6FEED29D30C3DA /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87CB92F63C3F40C86E58BEC /* DownloadManager.swift */; };
+		5ED8F3E7975C78A15BFA5E3E /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CB3D22A1A4C7EEC088D95 /* AppSettings.swift */; };
+		643D16FB6379884E8EBD938E /* YtDlpSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100932391042EF45C4373C3 /* YtDlpSwiftApp.swift */; };
+		6578AEAC91BD8A996FA67EBE /* OutputParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E778806EC80DAF8FBD70D0 /* OutputParser.swift */; };
+		6F0F95D873623CFE70691334 /* FormatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0404F3B6FCF397C561388DB /* FormatPickerView.swift */; };
+		857330B1AD16D94BCDCBDC50 /* YtDlpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9471D9EE661C364F5F0BC /* YtDlpService.swift */; };
+		8A494421B826194DC3DEDBED /* SupportedSites.json in Resources */ = {isa = PBXBuildFile; fileRef = D631578873C1E0794095B4DA /* SupportedSites.json */; };
+		8E0136A9A5A5D21A3C3266FB /* DownloadListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE700ABBFFB47425D41EE102 /* DownloadListView.swift */; };
+		A07886C827F587B1F79873BC /* DependencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAEF28530B87D97DF01ABA /* DependencyViewModel.swift */; };
+		A1AD50B61A1BFDAC3A53DEBC /* ProcessRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45BCDDB2B915BDE0EDAF9B0 /* ProcessRunner.swift */; };
+		A1B492FBD988B7ECA056DE11 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A9276B05334BFCB379BB1 /* DownloadTask.swift */; };
+		B252AACB2320F581C275C545 /* SiteRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F3FF7ADFBC539AC623242E /* SiteRegistry.swift */; };
+		C7B311CE58526263C1779CCB /* VideoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE26FBCFE56AB9ECB0AF95 /* VideoInfoView.swift */; };
+		D50DBAC08B5892F877BBC06A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A29B950B159A63177AC8A /* SettingsViewModel.swift */; };
+		D6A2C7C060605225187B026E /* SupportedSitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE004F04DDF4AA908130168 /* SupportedSitesView.swift */; };
+		DDFE31B6BF2A9EA7EE3C3C06 /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58ABF7CAD8BB7A6C5A9F70EB /* DownloadViewModel.swift */; };
+		E37AF2AD8FAEEAB560E92CD5 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABED550598D56ED83A84293 /* MainViewModel.swift */; };
+		E711EEA1BA8AD42465EDCA6A /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFED213216DE2A3C338FE7 /* AboutView.swift */; };
+		EB4EFFA521F994B4CFE7AED7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9717CB505AACD89D444D24D /* MainView.swift */; };
+		EDD26590EC98C9BD1EB3FC4F /* DependencySetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7689075346AAF7F25DF27E /* DependencySetupView.swift */; };
+		F9F1977DBE854D198AA51AB7 /* DownloadFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7E5DCEF3D12A187332E11 /* DownloadFormat.swift */; };
+		FC887365E2067B0B430FD5C1 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE602254FF08E8DA037A52F /* DependencyManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		054A29B950B159A63177AC8A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		08661B2A688BF2D240279207 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1496F0F129D6B7A5E725CAF6 /* VideoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfo.swift; sourceTree = "<group>"; };
+		40F3FF7ADFBC539AC623242E /* SiteRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRegistry.swift; sourceTree = "<group>"; };
+		479CB3D22A1A4C7EEC088D95 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		4E62F064B4D19A99B3205719 /* yt-dlp-swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "yt-dlp-swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		58ABF7CAD8BB7A6C5A9F70EB /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
+		5ABED550598D56ED83A84293 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		5C47D001D1EBD78BF2E7849D /* URLInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLInputView.swift; sourceTree = "<group>"; };
+		5ECE26FBCFE56AB9ECB0AF95 /* VideoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfoView.swift; sourceTree = "<group>"; };
+		6542087377BCD3D4BB0AA49C /* FileNameSanitizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNameSanitizer.swift; sourceTree = "<group>"; };
+		6D7689075346AAF7F25DF27E /* DependencySetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencySetupView.swift; sourceTree = "<group>"; };
+		78E9471D9EE661C364F5F0BC /* YtDlpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YtDlpService.swift; sourceTree = "<group>"; };
+		81BAEF28530B87D97DF01ABA /* DependencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyViewModel.swift; sourceTree = "<group>"; };
+		81E2171256FFEE7C4FC6D482 /* SupportedSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedSite.swift; sourceTree = "<group>"; };
+		81E778806EC80DAF8FBD70D0 /* OutputParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputParser.swift; sourceTree = "<group>"; };
+		8BE602254FF08E8DA037A52F /* DependencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyManager.swift; sourceTree = "<group>"; };
+		92A7E5DCEF3D12A187332E11 /* DownloadFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFormat.swift; sourceTree = "<group>"; };
+		A2660C2E3A77ABD837BCCFB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B26A9276B05334BFCB379BB1 /* DownloadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTask.swift; sourceTree = "<group>"; };
+		B9717CB505AACD89D444D24D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		BAC0769B62EA165911FAE103 /* DownloadRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadRowView.swift; sourceTree = "<group>"; };
+		C87CB92F63C3F40C86E58BEC /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		D0BFED213216DE2A3C338FE7 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		D45BCDDB2B915BDE0EDAF9B0 /* ProcessRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessRunner.swift; sourceTree = "<group>"; };
+		D631578873C1E0794095B4DA /* SupportedSites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SupportedSites.json; sourceTree = "<group>"; };
+		DCE004F04DDF4AA908130168 /* SupportedSitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedSitesView.swift; sourceTree = "<group>"; };
+		DE700ABBFFB47425D41EE102 /* DownloadListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadListView.swift; sourceTree = "<group>"; };
+		E0404F3B6FCF397C561388DB /* FormatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatPickerView.swift; sourceTree = "<group>"; };
+		F100932391042EF45C4373C3 /* YtDlpSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YtDlpSwiftApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		10F2E58576AAB114C9C655B9 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				6542087377BCD3D4BB0AA49C /* FileNameSanitizer.swift */,
+				D45BCDDB2B915BDE0EDAF9B0 /* ProcessRunner.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		132300F8D627CCC83CD29BC6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				81BAEF28530B87D97DF01ABA /* DependencyViewModel.swift */,
+				58ABF7CAD8BB7A6C5A9F70EB /* DownloadViewModel.swift */,
+				5ABED550598D56ED83A84293 /* MainViewModel.swift */,
+				054A29B950B159A63177AC8A /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2A45CF2813765A0CE672D606 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8BE602254FF08E8DA037A52F /* DependencyManager.swift */,
+				C87CB92F63C3F40C86E58BEC /* DownloadManager.swift */,
+				81E778806EC80DAF8FBD70D0 /* OutputParser.swift */,
+				40F3FF7ADFBC539AC623242E /* SiteRegistry.swift */,
+				78E9471D9EE661C364F5F0BC /* YtDlpService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2DF795C24DA1F93E781DB36D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4E62F064B4D19A99B3205719 /* yt-dlp-swift.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8528CF529C86E4554DD30874 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A2660C2E3A77ABD837BCCFB5 /* Info.plist */,
+				D631578873C1E0794095B4DA /* SupportedSites.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8B399BDEEA6EB1B7D1F28DA8 = {
+			isa = PBXGroup;
+			children = (
+				9A5602FB839C174B8711A3C4 /* yt-dlp-swift */,
+				2DF795C24DA1F93E781DB36D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9A5602FB839C174B8711A3C4 /* yt-dlp-swift */ = {
+			isa = PBXGroup;
+			children = (
+				EAD8ACECB342B2223E7C9486 /* App */,
+				A2AEFB7515732E48671C057A /* Models */,
+				8528CF529C86E4554DD30874 /* Resources */,
+				2A45CF2813765A0CE672D606 /* Services */,
+				10F2E58576AAB114C9C655B9 /* Utilities */,
+				132300F8D627CCC83CD29BC6 /* ViewModels */,
+				A8E34A968AD1D1E963A872CE /* Views */,
+			);
+			path = "yt-dlp-swift";
+			sourceTree = "<group>";
+		};
+		A2AEFB7515732E48671C057A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				479CB3D22A1A4C7EEC088D95 /* AppSettings.swift */,
+				92A7E5DCEF3D12A187332E11 /* DownloadFormat.swift */,
+				B26A9276B05334BFCB379BB1 /* DownloadTask.swift */,
+				81E2171256FFEE7C4FC6D482 /* SupportedSite.swift */,
+				1496F0F129D6B7A5E725CAF6 /* VideoInfo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A8E34A968AD1D1E963A872CE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0BFED213216DE2A3C338FE7 /* AboutView.swift */,
+				6D7689075346AAF7F25DF27E /* DependencySetupView.swift */,
+				DE700ABBFFB47425D41EE102 /* DownloadListView.swift */,
+				BAC0769B62EA165911FAE103 /* DownloadRowView.swift */,
+				E0404F3B6FCF397C561388DB /* FormatPickerView.swift */,
+				B9717CB505AACD89D444D24D /* MainView.swift */,
+				08661B2A688BF2D240279207 /* SettingsView.swift */,
+				DCE004F04DDF4AA908130168 /* SupportedSitesView.swift */,
+				5C47D001D1EBD78BF2E7849D /* URLInputView.swift */,
+				5ECE26FBCFE56AB9ECB0AF95 /* VideoInfoView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EAD8ACECB342B2223E7C9486 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F100932391042EF45C4373C3 /* YtDlpSwiftApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		140F46B2C7D07F9D23B0F0CC /* yt-dlp-swift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4D14397413B97CACA962B64 /* Build configuration list for PBXNativeTarget "yt-dlp-swift" */;
+			buildPhases = (
+				2480B39863EDC26E23B062D9 /* Sources */,
+				8A1955DC352A93A1A052A4C4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "yt-dlp-swift";
+			packageProductDependencies = (
+			);
+			productName = "yt-dlp-swift";
+			productReference = 4E62F064B4D19A99B3205719 /* yt-dlp-swift.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D12BC187B10EBC1912BCD047 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					140F46B2C7D07F9D23B0F0CC = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 997BBDE45B234F3C356290E8 /* Build configuration list for PBXProject "yt-dlp-swift" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 8B399BDEEA6EB1B7D1F28DA8;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2DF795C24DA1F93E781DB36D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				140F46B2C7D07F9D23B0F0CC /* yt-dlp-swift */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A1955DC352A93A1A052A4C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A494421B826194DC3DEDBED /* SupportedSites.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2480B39863EDC26E23B062D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E711EEA1BA8AD42465EDCA6A /* AboutView.swift in Sources */,
+				5ED8F3E7975C78A15BFA5E3E /* AppSettings.swift in Sources */,
+				FC887365E2067B0B430FD5C1 /* DependencyManager.swift in Sources */,
+				EDD26590EC98C9BD1EB3FC4F /* DependencySetupView.swift in Sources */,
+				A07886C827F587B1F79873BC /* DependencyViewModel.swift in Sources */,
+				F9F1977DBE854D198AA51AB7 /* DownloadFormat.swift in Sources */,
+				8E0136A9A5A5D21A3C3266FB /* DownloadListView.swift in Sources */,
+				36241B71CD6FEED29D30C3DA /* DownloadManager.swift in Sources */,
+				2E479441EE32EFEC485BF09C /* DownloadRowView.swift in Sources */,
+				A1B492FBD988B7ECA056DE11 /* DownloadTask.swift in Sources */,
+				DDFE31B6BF2A9EA7EE3C3C06 /* DownloadViewModel.swift in Sources */,
+				212ED07581B3923161E681A1 /* FileNameSanitizer.swift in Sources */,
+				6F0F95D873623CFE70691334 /* FormatPickerView.swift in Sources */,
+				EB4EFFA521F994B4CFE7AED7 /* MainView.swift in Sources */,
+				E37AF2AD8FAEEAB560E92CD5 /* MainViewModel.swift in Sources */,
+				6578AEAC91BD8A996FA67EBE /* OutputParser.swift in Sources */,
+				A1AD50B61A1BFDAC3A53DEBC /* ProcessRunner.swift in Sources */,
+				227732B919226AE744D48614 /* SettingsView.swift in Sources */,
+				D50DBAC08B5892F877BBC06A /* SettingsViewModel.swift in Sources */,
+				B252AACB2320F581C275C545 /* SiteRegistry.swift in Sources */,
+				295B195DBA017E57B0AD15BE /* SupportedSite.swift in Sources */,
+				D6A2C7C060605225187B026E /* SupportedSitesView.swift in Sources */,
+				1694098B99CFF6B0E8D0607C /* URLInputView.swift in Sources */,
+				269510CC9A5C4584BD19DE64 /* VideoInfo.swift in Sources */,
+				C7B311CE58526263C1779CCB /* VideoInfoView.swift in Sources */,
+				857330B1AD16D94BCDCBDC50 /* YtDlpService.swift in Sources */,
+				643D16FB6379884E8EBD938E /* YtDlpSwiftApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0BDC8D5DBFE3528B555EF63B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "yt-dlp-swift/yt-dlp-swift.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "yt-dlp-swift/Resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nagi.yt-dlp-swift";
+				PRODUCT_NAME = "yt-dlp-swift";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		6C4C70BB8FE725E1E9B45004 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		78F0E0AA4CEBE48B81B4EF24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CA26E9CF76AB963E694F9F51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "yt-dlp-swift/yt-dlp-swift.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "yt-dlp-swift/Resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nagi.yt-dlp-swift";
+				PRODUCT_NAME = "yt-dlp-swift";
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		997BBDE45B234F3C356290E8 /* Build configuration list for PBXProject "yt-dlp-swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C4C70BB8FE725E1E9B45004 /* Debug */,
+				78F0E0AA4CEBE48B81B4EF24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B4D14397413B97CACA962B64 /* Build configuration list for PBXNativeTarget "yt-dlp-swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0BDC8D5DBFE3528B555EF63B /* Debug */,
+				CA26E9CF76AB963E694F9F51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D12BC187B10EBC1912BCD047 /* Project object */;
+}

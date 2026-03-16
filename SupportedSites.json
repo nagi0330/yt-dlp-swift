@@ -1,0 +1,214 @@
+{
+  "version": "1.0",
+  "note": "yt-dlpの--list-extractorsで動的に取得した一覧と、このファイルのメタデータをマージして表示する",
+  "categories": [
+    {
+      "id": "japan",
+      "name_ja": "🇯🇵 日本のサービス",
+      "name_en": "🇯🇵 Japanese Services",
+      "sites": [
+        {
+          "extractor_pattern": "youtube",
+          "name_ja": "YouTube",
+          "description_ja": "全機能対応。JSランタイム (Deno) が必要。",
+          "requires_login": false,
+          "requires_js_runtime": true,
+          "url": "https://www.youtube.com"
+        },
+        {
+          "extractor_pattern": "niconico",
+          "name_ja": "ニコニコ動画",
+          "description_ja": "一部動画はログインが必要。Cookie取り込みまたはnetrc設定で対応。",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.nicovideo.jp"
+        },
+        {
+          "extractor_pattern": "niconico:live",
+          "name_ja": "ニコニコ生放送",
+          "description_ja": "タイムシフト視聴可能な番組をダウンロード。プレミアム会員推奨。",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://live.nicovideo.jp"
+        },
+        {
+          "extractor_pattern": "niconicochannel",
+          "name_ja": "ニコニコチャンネルプラス",
+          "description_ja": "チャンネル動画・ライブ配信。",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://nicochannel.jp"
+        },
+        {
+          "extractor_pattern": "tver",
+          "name_ja": "TVer",
+          "description_ja": "民放公式の見逃し配信。期間限定のため早めにDL推奨。",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://tver.jp"
+        },
+        {
+          "extractor_pattern": "abematv",
+          "name_ja": "ABEMA (AbemaTV)",
+          "description_ja": "無料配信分はログイン不要。プレミアム限定コンテンツあり。",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://abema.tv"
+        },
+        {
+          "extractor_pattern": "nhk",
+          "name_ja": "NHK (各種)",
+          "description_ja": "NHKプラス、NHK for School、NHKワールドなど複数サービス。",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://plus.nhk.jp"
+        },
+        {
+          "extractor_pattern": "radiko",
+          "name_ja": "Radiko",
+          "description_ja": "インターネットラジオ。タイムフリー対応。",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://radiko.jp"
+        },
+        {
+          "extractor_pattern": "tbs",
+          "name_ja": "TBS FREE",
+          "description_ja": "TBS系の見逃し配信。",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.tbs.co.jp"
+        },
+        {
+          "extractor_pattern": "damtomo",
+          "name_ja": "DAM (カラオケ)",
+          "description_ja": "DAMともの録音・映像。",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.clubdam.com"
+        },
+        {
+          "extractor_pattern": "vrsquare",
+          "name_ja": "VR SQUARE",
+          "description_ja": "VRコンテンツ。",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://vrsquare.jp"
+        }
+      ]
+    },
+    {
+      "id": "video",
+      "name_ja": "🎬 動画プラットフォーム",
+      "name_en": "🎬 Video Platforms",
+      "sites": [
+        {
+          "extractor_pattern": "youtube",
+          "name_ja": "YouTube",
+          "url": "https://www.youtube.com"
+        },
+        {
+          "extractor_pattern": "vimeo",
+          "name_ja": "Vimeo",
+          "url": "https://vimeo.com"
+        },
+        {
+          "extractor_pattern": "dailymotion",
+          "name_ja": "Dailymotion",
+          "url": "https://www.dailymotion.com"
+        },
+        {
+          "extractor_pattern": "bilibili",
+          "name_ja": "Bilibili (ビリビリ)",
+          "url": "https://www.bilibili.com"
+        },
+        {
+          "extractor_pattern": "reddit",
+          "name_ja": "Reddit",
+          "url": "https://www.reddit.com"
+        }
+      ]
+    },
+    {
+      "id": "social",
+      "name_ja": "📱 SNS・ソーシャル",
+      "name_en": "📱 Social Media",
+      "sites": [
+        {
+          "extractor_pattern": "tiktok",
+          "name_ja": "TikTok",
+          "url": "https://www.tiktok.com"
+        },
+        {
+          "extractor_pattern": "instagram",
+          "name_ja": "Instagram",
+          "url": "https://www.instagram.com"
+        },
+        {
+          "extractor_pattern": "twitter",
+          "name_ja": "X (Twitter)",
+          "url": "https://x.com"
+        },
+        {
+          "extractor_pattern": "facebook",
+          "name_ja": "Facebook",
+          "url": "https://www.facebook.com"
+        },
+        {
+          "extractor_pattern": "threads",
+          "name_ja": "Threads",
+          "url": "https://www.threads.net"
+        }
+      ]
+    },
+    {
+      "id": "live",
+      "name_ja": "📺 ライブ配信",
+      "name_en": "📺 Live Streaming",
+      "sites": [
+        {
+          "extractor_pattern": "twitch",
+          "name_ja": "Twitch",
+          "url": "https://www.twitch.tv"
+        },
+        {
+          "extractor_pattern": "niconico:live",
+          "name_ja": "ニコニコ生放送",
+          "url": "https://live.nicovideo.jp"
+        },
+        {
+          "extractor_pattern": "twitcasting",
+          "name_ja": "ツイキャス",
+          "url": "https://twitcasting.tv"
+        },
+        {
+          "extractor_pattern": "showroom",
+          "name_ja": "SHOWROOM",
+          "url": "https://www.showroom-live.com"
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "name_ja": "🎵 音楽",
+      "name_en": "🎵 Music",
+      "sites": [
+        {
+          "extractor_pattern": "soundcloud",
+          "name_ja": "SoundCloud",
+          "url": "https://soundcloud.com"
+        },
+        {
+          "extractor_pattern": "bandcamp",
+          "name_ja": "Bandcamp",
+          "url": "https://bandcamp.com"
+        },
+        {
+          "extractor_pattern": "mixcloud",
+          "name_ja": "Mixcloud",
+          "url": "https://www.mixcloud.com"
+        }
+      ]
+    }
+  ]
+}
