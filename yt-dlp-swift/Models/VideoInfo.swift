@@ -30,7 +30,7 @@ struct VideoInfo: Identifiable, Codable {
 
     // 再生時間を "HH:MM:SS" 形式に変換
     var durationFormatted: String {
-        guard let duration = duration else { return "不明" }
+        guard let duration = duration else { return L10n.unknown }
         let totalSeconds = Int(duration)
         let hours = totalSeconds / 3600
         let minutes = (totalSeconds % 3600) / 60
@@ -47,7 +47,29 @@ struct VideoInfo: Identifiable, Codable {
         let year = String(uploadDate.prefix(4))
         let month = String(uploadDate.dropFirst(4).prefix(2))
         let day = String(uploadDate.dropFirst(6).prefix(2))
-        return "\(year)年\(month)月\(day)日"
+        return L10n.uploadDate(year: year, month: month, day: day)
+    }
+
+    /// 利用可能な最大解像度（高さ）
+    var maxHeight: Int? {
+        formats?.filter { $0.hasVideo }.compactMap { $0.height }.max()
+    }
+
+    /// 利用可能な解像度一覧（高さの降順）
+    var availableHeights: [Int] {
+        guard let formats = formats else { return [] }
+        let heights = Set(formats.filter { $0.hasVideo }.compactMap { $0.height })
+        return heights.sorted(by: >)
+    }
+
+    /// 指定解像度が利用可能か
+    func hasResolution(_ height: Int) -> Bool {
+        availableHeights.contains { $0 >= height }
+    }
+
+    /// 音声フォーマットが利用可能か
+    var hasAudioFormats: Bool {
+        formats?.contains { $0.hasAudio } ?? false
     }
 }
 

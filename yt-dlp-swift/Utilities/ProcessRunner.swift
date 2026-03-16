@@ -1,7 +1,7 @@
 import Foundation
 
 // Process実行ユーティリティ
-actor ProcessRunner {
+enum ProcessRunner {
     struct ProcessResult {
         let exitCode: Int32
         let stdout: String
@@ -31,7 +31,7 @@ actor ProcessRunner {
             process.standardOutput = stdoutPipe
             process.standardError = stderrPipe
 
-            process.terminationHandler = { process in
+            process.terminationHandler = { proc in
                 let stdoutData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
                 let stderrData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
 
@@ -39,7 +39,7 @@ actor ProcessRunner {
                 let stderr = String(data: stderrData, encoding: .utf8) ?? ""
 
                 continuation.resume(returning: ProcessResult(
-                    exitCode: process.terminationStatus,
+                    exitCode: proc.terminationStatus,
                     stdout: stdout,
                     stderr: stderr
                 ))
@@ -71,11 +71,13 @@ actor ProcessRunner {
             process.currentDirectoryURL = dir
         }
 
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.standardError = pipe
+        let stdoutPipe = Pipe()
+        let stderrPipe = Pipe()
+        process.standardOutput = stdoutPipe
+        process.standardError = stderrPipe
 
-        pipe.fileHandleForReading.readabilityHandler = { handle in
+        // readabilityHandlerでリアルタイム出力を取得
+        let handler: @Sendable (FileHandle) -> Void = { handle in
             let data = handle.availableData
             guard !data.isEmpty else { return }
             if let output = String(data: data, encoding: .utf8) {
@@ -83,16 +85,33 @@ actor ProcessRunner {
             }
         }
 
+        stdoutPipe.fileHandleForReading.readabilityHandler = handler
+        stderrPipe.fileHandleForReading.readabilityHandler = handler
+
         return try await withCheckedThrowingContinuation { continuation in
             process.terminationHandler = { proc in
-                pipe.fileHandleForReading.readabilityHandler = nil
+                // ハンドラーを先にクリアしてからcontinuation
+                stdoutPipe.fileHandleForReading.readabilityHandler = nil
+                stderrPipe.fileHandleForReading.readabilityHandler = nil
+
+                // 残りのデータを読み切る
+                let remainStdout = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
+                let remainStderr = stderrPipe.fileHandleForReading.readDataToEndOfFile()
+                if !remainStdout.isEmpty, let str = String(data: remainStdout, encoding: .utf8) {
+                    onOutput(str)
+                }
+                if !remainStderr.isEmpty, let str = String(data: remainStderr, encoding: .utf8) {
+                    onOutput(str)
+                }
+
                 continuation.resume(returning: (process: proc, exitCode: proc.terminationStatus))
             }
 
             do {
                 try process.run()
             } catch {
-                pipe.fileHandleForReading.readabilityHandler = nil
+                stdoutPipe.fileHandleForReading.readabilityHandler = nil
+                stderrPipe.fileHandleForReading.readabilityHandler = nil
                 continuation.resume(throwing: error)
             }
         }

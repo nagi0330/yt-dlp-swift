@@ -1,5 +1,7 @@
 import Foundation
+import AppKit
 
+@MainActor
 @Observable
 class DownloadViewModel {
     let downloadManager = DownloadManager.shared
@@ -20,6 +22,10 @@ class DownloadViewModel {
         downloadManager.cancelTask(task)
     }
 
+    func resumeTask(_ task: DownloadTask) {
+        downloadManager.resumeTask(task)
+    }
+
     func removeTask(_ task: DownloadTask) {
         downloadManager.removeTask(task)
     }
@@ -30,5 +36,11 @@ class DownloadViewModel {
 
     func revealInFinder(_ task: DownloadTask) {
         downloadManager.revealInFinder(task)
+    }
+
+    func openFile(_ task: DownloadTask) {
+        if let path = task.outputFilePath {
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
     }
 }

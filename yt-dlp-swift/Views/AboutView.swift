@@ -11,10 +11,10 @@ struct AboutView: View {
                 .font(.title)
                 .fontWeight(.bold)
 
-            Text("バージョン 1.0.0")
+            Text(L10n.version)
                 .foregroundStyle(.secondary)
 
-            Text("macOS向け yt-dlp GUIアプリケーション")
+            Text(L10n.appDescription)
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -24,7 +24,7 @@ struct AboutView: View {
             VStack(spacing: 4) {
                 Text("MIT License")
                     .font(.caption)
-                Text("yt-dlp, FFmpeg, Deno はそれぞれのライセンスに基づきます")
+                Text(L10n.licenseNote)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }

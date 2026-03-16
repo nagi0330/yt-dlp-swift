@@ -72,7 +72,7 @@ struct VideoInfoView: View {
                 if let formats = videoInfo.formats {
                     let videoFormats = formats.filter { $0.hasVideo }
                     let audioFormats = formats.filter { $0.hasAudio && !$0.hasVideo }
-                    Text("利用可能: 動画 \(videoFormats.count)形式, 音声 \(audioFormats.count)形式")
+                    Text(L10n.formatCount(video: videoFormats.count, audio: audioFormats.count))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -96,9 +96,6 @@ struct VideoInfoView: View {
     }
 
     private func formatCount(_ count: Int) -> String {
-        if count >= 10000 {
-            return String(format: "%.1f万", Double(count) / 10000)
-        }
-        return "\(count)"
+        L10n.viewCount(count)
     }
 }

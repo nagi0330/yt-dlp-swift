@@ -17,16 +17,16 @@ enum DownloadPreset: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .bestVideo: return "最高画質 (動画+音声)"
-        case .bestAudio: return "最高音質 (音声のみ)"
-        case .video4K: return "4K (2160p)"
-        case .video1080p: return "1080p (フルHD)"
-        case .video720p: return "720p (HD)"
-        case .video480p: return "480p (SD)"
-        case .audioMP3: return "MP3 (音声のみ)"
-        case .audioM4A: return "M4A (音声のみ)"
-        case .audioOpus: return "Opus (音声のみ)"
-        case .custom: return "カスタム"
+        case .bestVideo: return L10n.presetBestVideo
+        case .bestAudio: return L10n.presetBestAudio
+        case .video4K: return L10n.preset4K
+        case .video1080p: return L10n.preset1080p
+        case .video720p: return L10n.preset720p
+        case .video480p: return L10n.preset480p
+        case .audioMP3: return L10n.presetMP3
+        case .audioM4A: return L10n.presetM4A
+        case .audioOpus: return L10n.presetOpus
+        case .custom: return L10n.presetCustom
         }
     }
 
@@ -53,6 +53,26 @@ enum DownloadPreset: String, CaseIterable, Identifiable {
         }
     }
 
+    /// このプリセットが要求する最小解像度（高さ）。nilなら制限なし
+    var requiredHeight: Int? {
+        switch self {
+        case .video4K: return 2160
+        case .video1080p: return 1080
+        case .video720p: return 720
+        case .video480p: return 480
+        default: return nil
+        }
+    }
+
+    /// 動画情報に基づいてこのプリセットが利用可能か
+    func isAvailable(for videoInfo: VideoInfo?) -> Bool {
+        guard let info = videoInfo else { return true }
+        if let required = requiredHeight {
+            return info.hasResolution(required)
+        }
+        return true
+    }
+
     // 音声のみの場合の後処理オプション
     var postProcessorArgs: [String] {
         switch self {
@@ -73,7 +93,7 @@ enum VideoContainer: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .mp4: return "MP4 (推奨)"
+        case .mp4: return L10n.containerMP4
         case .mkv: return "MKV"
         case .webm: return "WebM"
         }

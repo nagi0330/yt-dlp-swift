@@ -5,7 +5,6 @@ struct MainView: View {
     @Environment(MainViewModel.self) private var mainVM
     @Environment(DownloadViewModel.self) private var downloadVM
 
-    @State private var showDependencySetup = false
     @State private var showSupportedSites = false
 
     var body: some View {
@@ -23,7 +22,7 @@ struct MainView: View {
 
                 if mainVM.isFetching {
                     Spacer()
-                    ProgressView("動画情報を取得中...")
+                    ProgressView(L10n.fetchingVideoInfo)
                         .padding()
                     Spacer()
                 } else if let videoInfo = mainVM.videoInfo {
@@ -52,7 +51,7 @@ struct MainView: View {
                         Image(systemName: "arrow.down.circle")
                             .font(.system(size: 48))
                             .foregroundStyle(.secondary)
-                        Text("URLを入力して動画情報を取得してください")
+                        Text(L10n.enterURLPlaceholder)
                             .foregroundStyle(.secondary)
                     }
                     Spacer()
@@ -61,26 +60,20 @@ struct MainView: View {
         }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button {
-                    showDependencySetup = true
-                } label: {
-                    Label("依存関係", systemImage: "gearshape.2")
+                SettingsLink {
+                    Label(L10n.settingsToolbar, systemImage: "gearshape.2")
                 }
-                .help("依存関係の管理")
+                .help(L10n.settings)
             }
 
             ToolbarItem(placement: .automatic) {
                 Button {
                     showSupportedSites = true
                 } label: {
-                    Label("対応サイト", systemImage: "globe")
+                    Label(L10n.supportedSites, systemImage: "globe")
                 }
-                .help("対応サイト一覧")
+                .help(L10n.supportedSitesList)
             }
-        }
-        .sheet(isPresented: $showDependencySetup) {
-            DependencySetupView()
-                .frame(minWidth: 500, minHeight: 400)
         }
         .sheet(isPresented: $showSupportedSites) {
             SupportedSitesView()

@@ -3,44 +3,70 @@ import SwiftUI
 struct FormatPickerView: View {
     @Environment(MainViewModel.self) private var viewModel
 
+    private var videoPresets: [DownloadPreset] {
+        DownloadPreset.allCases.filter { !$0.isAudioOnly && $0 != .custom }
+    }
+
+    private var audioPresets: [DownloadPreset] {
+        DownloadPreset.allCases.filter { $0.isAudioOnly }
+    }
+
     var body: some View {
         @Bindable var vm = viewModel
 
         VStack(alignment: .leading, spacing: 12) {
-            Text("ダウンロード設定")
+            Text(L10n.downloadSettings)
                 .font(.headline)
+
+            // 利用可能な解像度の概要
+            if let info = viewModel.videoInfo, let maxH = info.maxHeight {
+                HStack(spacing: 4) {
+                    Image(systemName: "film")
+                        .foregroundStyle(.secondary)
+                    Text(L10n.maxResolution(L10n.resolutionLabel(maxH)))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
 
             // プリセット選択
             VStack(alignment: .leading, spacing: 8) {
-                Text("画質・フォーマット")
+                Text(L10n.qualityFormat)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
 
-                Picker("プリセット", selection: $vm.selectedPreset) {
-                    Section("動画") {
-                        ForEach(DownloadPreset.allCases.filter { !$0.isAudioOnly && $0 != .custom }) { preset in
-                            Text(preset.displayName).tag(preset)
-                        }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(L10n.video)
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+
+                    ForEach(videoPresets) { preset in
+                        presetRow(preset)
                     }
-                    Section("音声のみ") {
-                        ForEach(DownloadPreset.allCases.filter { $0.isAudioOnly }) { preset in
-                            Text(preset.displayName).tag(preset)
-                        }
+
+                    Divider().padding(.vertical, 2)
+
+                    Text(L10n.audioOnly)
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+
+                    ForEach(audioPresets) { preset in
+                        presetRow(preset)
                     }
-                    Section {
-                        Text(DownloadPreset.custom.displayName).tag(DownloadPreset.custom)
-                    }
+
+                    Divider().padding(.vertical, 2)
+
+                    presetRow(.custom)
                 }
-                .pickerStyle(.radioGroup)
             }
 
             // カスタムフォーマット
             if viewModel.selectedPreset == .custom {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("カスタムフォーマット文字列 (-f オプション)")
+                    Text(L10n.customFormatLabel)
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    TextField("例: bestvideo[height<=1080]+bestaudio", text: $vm.customFormatString)
+                    TextField(L10n.customFormatPlaceholder, text: $vm.customFormatString)
                         .textFieldStyle(.roundedBorder)
                 }
             }
@@ -53,7 +79,7 @@ struct FormatPickerView: View {
                 Button {
                     viewModel.startDownload()
                 } label: {
-                    Label("ダウンロード開始", systemImage: "arrow.down.circle.fill")
+                    Label(L10n.startDownload, systemImage: "arrow.down.circle.fill")
                         .font(.headline)
                 }
                 .controlSize(.large)
@@ -64,5 +90,35 @@ struct FormatPickerView: View {
         .padding()
         .background(.background, in: RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.05), radius: 2, y: 1)
+    }
+
+    @ViewBuilder
+    private func presetRow(_ preset: DownloadPreset) -> some View {
+        let available = preset.isAvailable(for: viewModel.videoInfo)
+        let isSelected = viewModel.selectedPreset == preset
+
+        HStack(spacing: 6) {
+            Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
+                .foregroundStyle(available ? Color.accentColor : Color.gray.opacity(0.3))
+                .font(.body)
+
+            Text(preset.displayName)
+                .foregroundStyle(available ? .primary : .tertiary)
+
+            if !available {
+                Text(L10n.unavailable)
+                    .font(.caption2)
+                    .foregroundStyle(.orange)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 1)
+                    .background(.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: 3))
+            }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if available {
+                viewModel.selectedPreset = preset
+            }
+        }
     }
 }

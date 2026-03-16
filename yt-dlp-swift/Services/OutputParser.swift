@@ -82,4 +82,26 @@ enum OutputParser {
     static func isDownloadComplete(_ line: String) -> Bool {
         line.contains("[download] 100%") || line.contains("has already been downloaded")
     }
+
+    // ダウンロードフェーズを判定
+    // yt-dlpは動画と音声を別々にDLし、"Destination:" 行でファイル名からフェーズがわかる
+    // 例: "[download] Destination: file.f137.mp4" (動画)
+    // 例: "[download] Destination: file.f140.m4a" (音声)
+    // また "[download] Downloading video 1 of 1" 等もある
+    static func detectPhase(_ line: String) -> DownloadPhase? {
+        if isPostProcessing(line) {
+            return .postProcess
+        }
+        if line.contains("[download] Destination:") {
+            let lower = line.lowercased()
+            // 音声ファイル拡張子
+            if lower.hasSuffix(".m4a") || lower.hasSuffix(".webm") && !lower.contains("video")
+                || lower.hasSuffix(".opus") || lower.hasSuffix(".mp3")
+                || lower.hasSuffix(".ogg") || lower.hasSuffix(".aac") {
+                return .audio
+            }
+            return .video
+        }
+        return nil
+    }
 }

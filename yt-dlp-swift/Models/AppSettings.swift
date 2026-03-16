@@ -10,6 +10,8 @@ struct AppSettings {
     @AppStorage("clipboardMonitoring") static var clipboardMonitoring: Bool = false
     @AppStorage("extraArguments") static var extraArguments: String = ""
     @AppStorage("preferredContainer") static var preferredContainer: String = VideoContainer.mp4.rawValue
+    @AppStorage("language") static var language: String = AppLanguage.system.rawValue
+    @AppStorage("menuBarEnabled") static var menuBarEnabled: Bool = false
 
     static var defaultDownloadDirectory: String {
         FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first?.path ?? "~/Downloads"
@@ -19,10 +21,12 @@ struct AppSettings {
         URL(fileURLWithPath: downloadDirectory)
     }
 
-    static let outputTemplatePresets: [(name: String, template: String)] = [
-        ("タイトル", "%(title)s.%(ext)s"),
-        ("タイトル + ID", "%(title)s [%(id)s].%(ext)s"),
-        ("チャンネル / タイトル", "%(uploader)s/%(title)s.%(ext)s"),
-        ("日付 - タイトル", "%(upload_date)s - %(title)s.%(ext)s"),
-    ]
+    static var outputTemplatePresets: [(name: String, template: String)] {
+        [
+            (L10n.templateTitle, "%(title)s.%(ext)s"),
+            (L10n.templateTitleID, "%(title)s [%(id)s].%(ext)s"),
+            (L10n.templateChannelTitle, "%(uploader)s/%(title)s.%(ext)s"),
+            (L10n.templateDateTitle, "%(upload_date)s - %(title)s.%(ext)s"),
+        ]
+    }
 }

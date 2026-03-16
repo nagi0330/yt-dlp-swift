@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 @Observable
 class SettingsViewModel {
     var downloadDirectory: String = AppSettings.downloadDirectory
@@ -10,6 +11,8 @@ class SettingsViewModel {
     var clipboardMonitoring: Bool = AppSettings.clipboardMonitoring
     var extraArguments: String = AppSettings.extraArguments
     var preferredContainer: String = AppSettings.preferredContainer
+    var language: String = AppSettings.language
+    var menuBarEnabled: Bool = AppSettings.menuBarEnabled
 
     func save() {
         AppSettings.downloadDirectory = downloadDirectory
@@ -19,11 +22,13 @@ class SettingsViewModel {
         AppSettings.clipboardMonitoring = clipboardMonitoring
         AppSettings.extraArguments = extraArguments
         AppSettings.preferredContainer = preferredContainer
+        AppSettings.language = language
+        AppSettings.menuBarEnabled = menuBarEnabled
     }
 
     func chooseDownloadDirectory() {
         let panel = NSOpenPanel()
-        panel.title = "ダウンロード先フォルダを選択"
+        panel.title = L10n.chooseDownloadFolder
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false

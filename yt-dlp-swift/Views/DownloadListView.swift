@@ -7,11 +7,11 @@ struct DownloadListView: View {
         VStack(spacing: 0) {
             // ヘッダー
             HStack {
-                Text("ダウンロード")
+                Text(L10n.downloads)
                     .font(.headline)
                 Spacer()
                 if viewModel.activeCount > 0 {
-                    Text("\(viewModel.activeCount)件 実行中")
+                    Text(L10n.activeCount(viewModel.activeCount))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -27,7 +27,7 @@ struct DownloadListView: View {
                     Image(systemName: "tray")
                         .font(.system(size: 32))
                         .foregroundStyle(.secondary)
-                    Text("ダウンロードタスクなし")
+                    Text(L10n.noDownloadTasks)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -35,23 +35,14 @@ struct DownloadListView: View {
             } else {
                 List {
                     ForEach(viewModel.tasks) { task in
-                        DownloadRowView(task: task)
-                            .contextMenu {
-                                if task.status == .completed {
-                                    Button("Finderで表示") {
-                                        viewModel.revealInFinder(task)
-                                    }
-                                }
-                                if task.status == .downloading || task.status == .processing {
-                                    Button("キャンセル") {
-                                        viewModel.cancelTask(task)
-                                    }
-                                }
-                                Divider()
-                                Button("削除", role: .destructive) {
-                                    viewModel.removeTask(task)
-                                }
-                            }
+                        DownloadRowView(
+                            task: task,
+                            onCancel: { viewModel.cancelTask(task) },
+                            onResume: { viewModel.resumeTask(task) },
+                            onRemove: { viewModel.removeTask(task) },
+                            onRevealInFinder: { viewModel.revealInFinder(task) },
+                            onOpenFile: { viewModel.openFile(task) }
+                        )
                     }
                 }
                 .listStyle(.sidebar)
@@ -62,7 +53,7 @@ struct DownloadListView: View {
                 if viewModel.completedCount > 0 {
                     HStack {
                         Spacer()
-                        Button("完了済みをクリア") {
+                        Button(L10n.clearCompleted) {
                             viewModel.clearCompleted()
                         }
                         .buttonStyle(.plain)

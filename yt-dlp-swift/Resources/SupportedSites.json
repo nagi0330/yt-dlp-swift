@@ -1,16 +1,27 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "note": "yt-dlpの--list-extractorsで動的に取得した一覧と、このファイルのメタデータをマージして表示する",
   "categories": [
     {
       "id": "japan",
       "name_ja": "🇯🇵 日本のサービス",
       "name_en": "🇯🇵 Japanese Services",
+      "name_zh_hant": "🇯🇵 日本服務",
+      "name_zh_hans": "🇯🇵 日本服务",
+      "name_ko": "🇯🇵 일본 서비스",
+      "name_ru": "🇯🇵 Японские сервисы",
+      "name_es": "🇯🇵 Servicios japoneses",
+      "name_fr": "🇯🇵 Services japonais",
+      "name_de": "🇯🇵 Japanische Dienste",
+      "name_it": "🇯🇵 Servizi giapponesi",
+      "name_pt": "🇯🇵 Serviços japoneses",
       "sites": [
         {
           "extractor_pattern": "youtube",
           "name_ja": "YouTube",
+          "name_en": "YouTube",
           "description_ja": "全機能対応。JSランタイム (Deno) が必要。",
+          "description_en": "Full support. JS runtime (Deno) required.",
           "requires_login": false,
           "requires_js_runtime": true,
           "url": "https://www.youtube.com"
@@ -18,7 +29,9 @@
         {
           "extractor_pattern": "niconico",
           "name_ja": "ニコニコ動画",
-          "description_ja": "一部動画はログインが必要。Cookie取り込みまたはnetrc設定で対応。",
+          "name_en": "Niconico",
+          "description_ja": "一部動画はログインが必要。Cookie取り込みで対応。",
+          "description_en": "Some videos require login. Use cookie import.",
           "requires_login": true,
           "requires_js_runtime": false,
           "url": "https://www.nicovideo.jp"
@@ -26,7 +39,9 @@
         {
           "extractor_pattern": "niconico:live",
           "name_ja": "ニコニコ生放送",
+          "name_en": "Niconico Live",
           "description_ja": "タイムシフト視聴可能な番組をダウンロード。プレミアム会員推奨。",
+          "description_en": "Download timeshift-enabled broadcasts. Premium membership recommended.",
           "requires_login": true,
           "requires_js_runtime": false,
           "url": "https://live.nicovideo.jp"
@@ -34,7 +49,9 @@
         {
           "extractor_pattern": "niconicochannel",
           "name_ja": "ニコニコチャンネルプラス",
+          "name_en": "Niconico Channel Plus",
           "description_ja": "チャンネル動画・ライブ配信。",
+          "description_en": "Channel videos and live streams.",
           "requires_login": true,
           "requires_js_runtime": false,
           "url": "https://nicochannel.jp"
@@ -42,7 +59,9 @@
         {
           "extractor_pattern": "tver",
           "name_ja": "TVer",
+          "name_en": "TVer",
           "description_ja": "民放公式の見逃し配信。期間限定のため早めにDL推奨。",
+          "description_en": "Official Japanese TV catch-up service. Time-limited content.",
           "requires_login": false,
           "requires_js_runtime": false,
           "url": "https://tver.jp"
@@ -50,7 +69,9 @@
         {
           "extractor_pattern": "abematv",
           "name_ja": "ABEMA (AbemaTV)",
+          "name_en": "ABEMA (AbemaTV)",
           "description_ja": "無料配信分はログイン不要。プレミアム限定コンテンツあり。",
+          "description_en": "Free content without login. Some premium-only content.",
           "requires_login": false,
           "requires_js_runtime": false,
           "url": "https://abema.tv"
@@ -58,7 +79,9 @@
         {
           "extractor_pattern": "nhk",
           "name_ja": "NHK (各種)",
-          "description_ja": "NHKプラス、NHK for School、NHKワールドなど複数サービス。",
+          "name_en": "NHK (Various)",
+          "description_ja": "NHKプラス、NHK for School、NHKワールドなど。",
+          "description_en": "NHK Plus, NHK for School, NHK World, etc.",
           "requires_login": false,
           "requires_js_runtime": false,
           "url": "https://plus.nhk.jp"
@@ -66,7 +89,9 @@
         {
           "extractor_pattern": "radiko",
           "name_ja": "Radiko",
+          "name_en": "Radiko",
           "description_ja": "インターネットラジオ。タイムフリー対応。",
+          "description_en": "Japanese internet radio with time-free listening.",
           "requires_login": false,
           "requires_js_runtime": false,
           "url": "https://radiko.jp"
@@ -74,15 +99,49 @@
         {
           "extractor_pattern": "tbs",
           "name_ja": "TBS FREE",
+          "name_en": "TBS FREE",
           "description_ja": "TBS系の見逃し配信。",
+          "description_en": "TBS network catch-up service.",
           "requires_login": false,
           "requires_js_runtime": false,
           "url": "https://www.tbs.co.jp"
         },
         {
+          "extractor_pattern": "fujitv",
+          "name_ja": "フジテレビ (FOD)",
+          "name_en": "Fuji TV (FOD)",
+          "description_ja": "フジテレビオンデマンド。一部プレミアム限定。",
+          "description_en": "Fuji TV on demand. Some premium-only content.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://fod.fujitv.co.jp"
+        },
+        {
+          "extractor_pattern": "tv_asahi",
+          "name_ja": "テレ朝動画",
+          "name_en": "TV Asahi Video",
+          "description_ja": "テレビ朝日の動画配信サービス。",
+          "description_en": "TV Asahi video streaming service.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.tv-asahi.co.jp"
+        },
+        {
+          "extractor_pattern": "mbs",
+          "name_ja": "MBS動画イズム",
+          "name_en": "MBS Video Ism",
+          "description_ja": "毎日放送の動画配信。",
+          "description_en": "MBS (Mainichi Broadcasting System) video service.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.mbs.jp"
+        },
+        {
           "extractor_pattern": "damtomo",
           "name_ja": "DAM (カラオケ)",
+          "name_en": "DAM (Karaoke)",
           "description_ja": "DAMともの録音・映像。",
+          "description_en": "DAM karaoke recordings and videos.",
           "requires_login": false,
           "requires_js_runtime": false,
           "url": "https://www.clubdam.com"
@@ -90,10 +149,52 @@
         {
           "extractor_pattern": "vrsquare",
           "name_ja": "VR SQUARE",
+          "name_en": "VR SQUARE",
           "description_ja": "VRコンテンツ。",
+          "description_en": "VR content platform.",
           "requires_login": false,
           "requires_js_runtime": false,
           "url": "https://vrsquare.jp"
+        },
+        {
+          "extractor_pattern": "linelive",
+          "name_ja": "LINE LIVE",
+          "name_en": "LINE LIVE",
+          "description_ja": "LINEのライブ配信プラットフォーム。",
+          "description_en": "LINE's live streaming platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://live.line.me"
+        },
+        {
+          "extractor_pattern": "mildom",
+          "name_ja": "Mildom",
+          "name_en": "Mildom",
+          "description_ja": "ゲーム配信プラットフォーム。",
+          "description_en": "Game streaming platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.mildom.com"
+        },
+        {
+          "extractor_pattern": "bandainamco",
+          "name_ja": "バンダイチャンネル",
+          "name_en": "Bandai Channel",
+          "description_ja": "アニメ・特撮の動画配信。",
+          "description_en": "Anime and tokusatsu streaming.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.b-ch.com"
+        },
+        {
+          "extractor_pattern": "dplay",
+          "name_ja": "dアニメストア",
+          "name_en": "d Anime Store",
+          "description_ja": "NTTドコモのアニメ配信サービス。",
+          "description_en": "NTT Docomo anime streaming service.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://animestore.docomo.ne.jp"
         }
       ]
     },
@@ -101,31 +202,145 @@
       "id": "video",
       "name_ja": "🎬 動画プラットフォーム",
       "name_en": "🎬 Video Platforms",
+      "name_zh_hant": "🎬 影片平台",
+      "name_zh_hans": "🎬 视频平台",
+      "name_ko": "🎬 동영상 플랫폼",
+      "name_ru": "🎬 Видеоплатформы",
+      "name_es": "🎬 Plataformas de vídeo",
+      "name_fr": "🎬 Plateformes vidéo",
+      "name_de": "🎬 Videoplattformen",
+      "name_it": "🎬 Piattaforme video",
+      "name_pt": "🎬 Plataformas de vídeo",
       "sites": [
         {
           "extractor_pattern": "youtube",
           "name_ja": "YouTube",
+          "name_en": "YouTube",
+          "description_ja": "世界最大の動画共有サイト。プレイリスト・チャンネル対応。",
+          "description_en": "World's largest video sharing site. Playlists & channels supported.",
+          "requires_login": false,
+          "requires_js_runtime": true,
           "url": "https://www.youtube.com"
         },
         {
           "extractor_pattern": "vimeo",
           "name_ja": "Vimeo",
+          "name_en": "Vimeo",
+          "description_ja": "高品質動画ホスティング。パスワード保護動画にも対応。",
+          "description_en": "High-quality video hosting. Password-protected videos supported.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://vimeo.com"
         },
         {
           "extractor_pattern": "dailymotion",
           "name_ja": "Dailymotion",
+          "name_en": "Dailymotion",
+          "description_ja": "フランス発の動画共有サイト。",
+          "description_en": "French video sharing platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://www.dailymotion.com"
         },
         {
           "extractor_pattern": "bilibili",
           "name_ja": "Bilibili (ビリビリ)",
+          "name_en": "Bilibili",
+          "description_ja": "中国最大の動画共有サイト。弾幕コメント付き。一部地域制限あり。",
+          "description_en": "China's largest video sharing site. Danmaku comments. Some geo-restrictions.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://www.bilibili.com"
+        },
+        {
+          "extractor_pattern": "bilibilibangumi",
+          "name_ja": "Bilibili 番組",
+          "name_en": "Bilibili Bangumi",
+          "description_ja": "ビリビリのアニメ・ドラマ番組。",
+          "description_en": "Bilibili anime and drama series.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.bilibili.com/bangumi"
         },
         {
           "extractor_pattern": "reddit",
           "name_ja": "Reddit",
+          "name_en": "Reddit",
+          "description_ja": "投稿内の動画をダウンロード。",
+          "description_en": "Download videos from Reddit posts.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://www.reddit.com"
+        },
+        {
+          "extractor_pattern": "rutube",
+          "name_ja": "Rutube",
+          "name_en": "Rutube",
+          "description_ja": "ロシアの動画共有サイト。",
+          "description_en": "Russian video sharing platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://rutube.ru"
+        },
+        {
+          "extractor_pattern": "peertube",
+          "name_ja": "PeerTube",
+          "name_en": "PeerTube",
+          "description_ja": "分散型の動画ホスティング。各インスタンスに対応。",
+          "description_en": "Decentralized video hosting. Supports various instances.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://joinpeertube.org"
+        },
+        {
+          "extractor_pattern": "odysee",
+          "name_ja": "Odysee",
+          "name_en": "Odysee",
+          "description_ja": "LBRY/Odysee 分散型動画プラットフォーム。",
+          "description_en": "LBRY/Odysee decentralized video platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://odysee.com"
+        },
+        {
+          "extractor_pattern": "rumble",
+          "name_ja": "Rumble",
+          "name_en": "Rumble",
+          "description_ja": "動画共有プラットフォーム。",
+          "description_en": "Video sharing platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://rumble.com"
+        },
+        {
+          "extractor_pattern": "bitchute",
+          "name_ja": "BitChute",
+          "name_en": "BitChute",
+          "description_ja": "P2P動画ホスティング。",
+          "description_en": "P2P video hosting platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.bitchute.com"
+        },
+        {
+          "extractor_pattern": "nebula",
+          "name_ja": "Nebula",
+          "name_en": "Nebula",
+          "description_ja": "クリエイター主導のストリーミングサービス。",
+          "description_en": "Creator-driven streaming service.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://nebula.tv"
+        },
+        {
+          "extractor_pattern": "curiositystream",
+          "name_ja": "CuriosityStream",
+          "name_en": "CuriosityStream",
+          "description_ja": "ドキュメンタリー専門ストリーミング。",
+          "description_en": "Documentary-focused streaming service.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://curiositystream.com"
         }
       ]
     },
@@ -133,31 +348,135 @@
       "id": "social",
       "name_ja": "📱 SNS・ソーシャル",
       "name_en": "📱 Social Media",
+      "name_zh_hant": "📱 社群媒體",
+      "name_zh_hans": "📱 社交媒体",
+      "name_ko": "📱 소셜 미디어",
+      "name_ru": "📱 Социальные сети",
+      "name_es": "📱 Redes sociales",
+      "name_fr": "📱 Réseaux sociaux",
+      "name_de": "📱 Soziale Medien",
+      "name_it": "📱 Social media",
+      "name_pt": "📱 Mídias sociais",
       "sites": [
         {
           "extractor_pattern": "tiktok",
           "name_ja": "TikTok",
+          "name_en": "TikTok",
+          "description_ja": "ショート動画プラットフォーム。ウォーターマークなしでDL可能。",
+          "description_en": "Short video platform. Can download without watermark.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://www.tiktok.com"
         },
         {
           "extractor_pattern": "instagram",
           "name_ja": "Instagram",
+          "name_en": "Instagram",
+          "description_ja": "リール・ストーリー・投稿動画のDL。ログインで非公開アカウントも対応。",
+          "description_en": "Download Reels, Stories, and post videos. Login for private accounts.",
+          "requires_login": true,
+          "requires_js_runtime": false,
           "url": "https://www.instagram.com"
         },
         {
           "extractor_pattern": "twitter",
           "name_ja": "X (Twitter)",
+          "name_en": "X (Twitter)",
+          "description_ja": "ツイートの動画・GIFをDL。スペース録音にも対応。",
+          "description_en": "Download tweet videos and GIFs. Also supports Spaces recordings.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://x.com"
         },
         {
           "extractor_pattern": "facebook",
           "name_ja": "Facebook",
+          "name_en": "Facebook",
+          "description_ja": "投稿動画・ライブ動画・リールのDL。",
+          "description_en": "Download post videos, live videos, and Reels.",
+          "requires_login": true,
+          "requires_js_runtime": false,
           "url": "https://www.facebook.com"
         },
         {
           "extractor_pattern": "threads",
           "name_ja": "Threads",
+          "name_en": "Threads",
+          "description_ja": "Meta社のテキスト共有アプリの動画。",
+          "description_en": "Videos from Meta's text sharing app.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://www.threads.net"
+        },
+        {
+          "extractor_pattern": "snapchat",
+          "name_ja": "Snapchat",
+          "name_en": "Snapchat",
+          "description_ja": "Spotlight・公開ストーリーのDL。",
+          "description_en": "Download Spotlight and public Stories.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.snapchat.com"
+        },
+        {
+          "extractor_pattern": "pinterest",
+          "name_ja": "Pinterest",
+          "name_en": "Pinterest",
+          "description_ja": "ピン動画のダウンロード。",
+          "description_en": "Download pinned videos.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.pinterest.com"
+        },
+        {
+          "extractor_pattern": "linkedin",
+          "name_ja": "LinkedIn",
+          "name_en": "LinkedIn",
+          "description_ja": "投稿動画のDL。",
+          "description_en": "Download posted videos.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.linkedin.com"
+        },
+        {
+          "extractor_pattern": "vk",
+          "name_ja": "VK (VKontakte)",
+          "name_en": "VK (VKontakte)",
+          "description_ja": "ロシア最大のSNS。動画・ライブ対応。",
+          "description_en": "Russia's largest social network. Video and live support.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://vk.com"
+        },
+        {
+          "extractor_pattern": "weibo",
+          "name_ja": "Weibo (微博)",
+          "name_en": "Weibo",
+          "description_ja": "中国のマイクロブログ。動画投稿のDL。",
+          "description_en": "Chinese microblogging platform. Download posted videos.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://weibo.com"
+        },
+        {
+          "extractor_pattern": "naver",
+          "name_ja": "Naver (네이버)",
+          "name_en": "Naver",
+          "description_ja": "韓国最大のポータルサイトの動画。",
+          "description_en": "Videos from South Korea's largest portal site.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.naver.com"
+        },
+        {
+          "extractor_pattern": "vlive",
+          "name_ja": "V LIVE / Weverse",
+          "name_en": "V LIVE / Weverse",
+          "description_ja": "K-POPアーティストのライブ配信。",
+          "description_en": "K-pop artist live streaming platform.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://weverse.io"
         }
       ]
     },
@@ -165,26 +484,105 @@
       "id": "live",
       "name_ja": "📺 ライブ配信",
       "name_en": "📺 Live Streaming",
+      "name_zh_hant": "📺 直播",
+      "name_zh_hans": "📺 直播",
+      "name_ko": "📺 라이브 스트리밍",
+      "name_ru": "📺 Прямые трансляции",
+      "name_es": "📺 Transmisiones en vivo",
+      "name_fr": "📺 Diffusions en direct",
+      "name_de": "📺 Livestreaming",
+      "name_it": "📺 Streaming dal vivo",
+      "name_pt": "📺 Transmissões ao vivo",
       "sites": [
         {
           "extractor_pattern": "twitch",
           "name_ja": "Twitch",
+          "name_en": "Twitch",
+          "description_ja": "ゲーム配信最大手。VOD・クリップのDLに対応。",
+          "description_en": "Largest game streaming platform. VODs and clips supported.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://www.twitch.tv"
         },
         {
-          "extractor_pattern": "niconico:live",
-          "name_ja": "ニコニコ生放送",
-          "url": "https://live.nicovideo.jp"
+          "extractor_pattern": "kick",
+          "name_ja": "Kick",
+          "name_en": "Kick",
+          "description_ja": "新興のライブ配信プラットフォーム。VOD対応。",
+          "description_en": "Emerging live streaming platform. VOD support.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://kick.com"
         },
         {
           "extractor_pattern": "twitcasting",
           "name_ja": "ツイキャス",
+          "name_en": "TwitCasting",
+          "description_ja": "日本のライブ配信。録画・ライブ対応。",
+          "description_en": "Japanese live streaming. Recordings and live supported.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://twitcasting.tv"
         },
         {
           "extractor_pattern": "showroom",
           "name_ja": "SHOWROOM",
+          "name_en": "SHOWROOM",
+          "description_ja": "アイドル・タレント向け配信プラットフォーム。",
+          "description_en": "Idol and talent live streaming platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://www.showroom-live.com"
+        },
+        {
+          "extractor_pattern": "afreecatv",
+          "name_ja": "AfreecaTV",
+          "name_en": "AfreecaTV",
+          "description_ja": "韓国のライブ配信プラットフォーム。",
+          "description_en": "Korean live streaming platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.afreecatv.com"
+        },
+        {
+          "extractor_pattern": "huya",
+          "name_ja": "虎牙 (Huya)",
+          "name_en": "Huya",
+          "description_ja": "中国のゲーム配信プラットフォーム。",
+          "description_en": "Chinese game streaming platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.huya.com"
+        },
+        {
+          "extractor_pattern": "douyu",
+          "name_ja": "斗鱼 (Douyu)",
+          "name_en": "Douyu",
+          "description_ja": "中国のゲーム配信プラットフォーム。",
+          "description_en": "Chinese game streaming platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.douyu.com"
+        },
+        {
+          "extractor_pattern": "bigo",
+          "name_ja": "Bigo Live",
+          "name_en": "Bigo Live",
+          "description_ja": "グローバルライブ配信アプリ。",
+          "description_en": "Global live streaming app.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.bigo.tv"
+        },
+        {
+          "extractor_pattern": "chzzk",
+          "name_ja": "CHZZK (치지직)",
+          "name_en": "CHZZK",
+          "description_ja": "NAVERのゲーム配信プラットフォーム。",
+          "description_en": "Naver's game streaming platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://chzzk.naver.com"
         }
       ]
     },
@@ -192,21 +590,719 @@
       "id": "music",
       "name_ja": "🎵 音楽",
       "name_en": "🎵 Music",
+      "name_zh_hant": "🎵 音樂",
+      "name_zh_hans": "🎵 音乐",
+      "name_ko": "🎵 음악",
+      "name_ru": "🎵 Музыка",
+      "name_es": "🎵 Música",
+      "name_fr": "🎵 Musique",
+      "name_de": "🎵 Musik",
+      "name_it": "🎵 Musica",
+      "name_pt": "🎵 Música",
       "sites": [
         {
           "extractor_pattern": "soundcloud",
           "name_ja": "SoundCloud",
+          "name_en": "SoundCloud",
+          "description_ja": "楽曲・プレイリスト・アーティストページのDL。",
+          "description_en": "Download tracks, playlists, and artist pages.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://soundcloud.com"
         },
         {
           "extractor_pattern": "bandcamp",
           "name_ja": "Bandcamp",
+          "name_en": "Bandcamp",
+          "description_ja": "インディーズ音楽。無料トラックのDL。",
+          "description_en": "Indie music. Download free tracks.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://bandcamp.com"
         },
         {
           "extractor_pattern": "mixcloud",
           "name_ja": "Mixcloud",
+          "name_en": "Mixcloud",
+          "description_ja": "DJミックス・ポッドキャスト。",
+          "description_en": "DJ mixes and podcasts.",
+          "requires_login": false,
+          "requires_js_runtime": false,
           "url": "https://www.mixcloud.com"
+        },
+        {
+          "extractor_pattern": "audiomack",
+          "name_ja": "Audiomack",
+          "name_en": "Audiomack",
+          "description_ja": "ヒップホップ・R&B中心の音楽プラットフォーム。",
+          "description_en": "Hip-hop and R&B focused music platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://audiomack.com"
+        },
+        {
+          "extractor_pattern": "yandexmusic",
+          "name_ja": "Yandex Music",
+          "name_en": "Yandex Music",
+          "description_ja": "ロシアの音楽ストリーミング。",
+          "description_en": "Russian music streaming service.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://music.yandex.ru"
+        }
+      ]
+    },
+    {
+      "id": "streaming",
+      "name_ja": "🍿 ストリーミングサービス",
+      "name_en": "🍿 Streaming Services",
+      "name_zh_hant": "🍿 串流服務",
+      "name_zh_hans": "🍿 流媒体服务",
+      "name_ko": "🍿 스트리밍 서비스",
+      "name_ru": "🍿 Стриминговые сервисы",
+      "name_es": "🍿 Servicios de streaming",
+      "name_fr": "🍿 Services de streaming",
+      "name_de": "🍿 Streaming-Dienste",
+      "name_it": "🍿 Servizi di streaming",
+      "name_pt": "🍿 Serviços de streaming",
+      "sites": [
+        {
+          "extractor_pattern": "crunchyroll",
+          "name_ja": "Crunchyroll",
+          "name_en": "Crunchyroll",
+          "description_ja": "アニメ専門ストリーミング。一部要プレミアム。",
+          "description_en": "Anime streaming. Some content requires premium.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.crunchyroll.com"
+        },
+        {
+          "extractor_pattern": "amazonprime",
+          "name_ja": "Amazon Prime Video",
+          "name_en": "Amazon Prime Video",
+          "description_ja": "プライム会員向け動画配信。DRM制限あり。",
+          "description_en": "Prime member video streaming. DRM restrictions apply.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.amazon.com/primevideo"
+        },
+        {
+          "extractor_pattern": "disneyplus",
+          "name_ja": "Disney+",
+          "name_en": "Disney+",
+          "description_ja": "ディズニー公式ストリーミング。DRM制限あり。",
+          "description_en": "Disney official streaming. DRM restrictions apply.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.disneyplus.com"
+        },
+        {
+          "extractor_pattern": "hulu",
+          "name_ja": "Hulu",
+          "name_en": "Hulu",
+          "description_ja": "TV番組・映画のストリーミング。",
+          "description_en": "TV shows and movies streaming.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.hulu.com"
+        },
+        {
+          "extractor_pattern": "hbo",
+          "name_ja": "HBO Max / Max",
+          "name_en": "HBO Max / Max",
+          "description_ja": "HBO作品のストリーミング。",
+          "description_en": "HBO content streaming.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.max.com"
+        },
+        {
+          "extractor_pattern": "paramountplus",
+          "name_ja": "Paramount+",
+          "name_en": "Paramount+",
+          "description_ja": "パラマウント公式ストリーミング。",
+          "description_en": "Paramount official streaming service.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.paramountplus.com"
+        },
+        {
+          "extractor_pattern": "iq",
+          "name_ja": "iQIYI (爱奇艺)",
+          "name_en": "iQIYI",
+          "description_ja": "中国の大手動画配信サービス。",
+          "description_en": "Major Chinese video streaming service.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.iq.com"
+        },
+        {
+          "extractor_pattern": "youku",
+          "name_ja": "Youku (优酷)",
+          "name_en": "Youku",
+          "description_ja": "中国の動画プラットフォーム。アリババ系列。",
+          "description_en": "Chinese video platform. Alibaba subsidiary.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.youku.com"
+        },
+        {
+          "extractor_pattern": "wetv",
+          "name_ja": "WeTV (腾讯视频海外版)",
+          "name_en": "WeTV",
+          "description_ja": "テンセント動画の海外版。",
+          "description_en": "Tencent Video international version.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://wetv.vip"
+        },
+        {
+          "extractor_pattern": "wavve",
+          "name_ja": "Wavve (웨이브)",
+          "name_en": "Wavve",
+          "description_ja": "韓国の動画配信サービス。",
+          "description_en": "Korean video streaming service.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.wavve.com"
+        },
+        {
+          "extractor_pattern": "kocowa",
+          "name_ja": "KOCOWA",
+          "name_en": "KOCOWA",
+          "description_ja": "韓国ドラマ・バラエティの海外配信。",
+          "description_en": "Korean drama and variety shows for overseas.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.kocowa.com"
+        }
+      ]
+    },
+    {
+      "id": "adult",
+      "name_ja": "🔞 アダルト",
+      "name_en": "🔞 Adult",
+      "name_zh_hant": "🔞 成人內容",
+      "name_zh_hans": "🔞 成人内容",
+      "name_ko": "🔞 성인",
+      "name_ru": "🔞 Для взрослых",
+      "name_es": "🔞 Adultos",
+      "name_fr": "🔞 Adulte",
+      "name_de": "🔞 Erwachsene",
+      "name_it": "🔞 Adulti",
+      "name_pt": "🔞 Adulto",
+      "sites": [
+        {
+          "extractor_pattern": "xvideos",
+          "name_ja": "XVideos",
+          "name_en": "XVideos",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.xvideos.com"
+        },
+        {
+          "extractor_pattern": "pornhub",
+          "name_ja": "Pornhub",
+          "name_en": "Pornhub",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.pornhub.com"
+        },
+        {
+          "extractor_pattern": "xhamster",
+          "name_ja": "xHamster",
+          "name_en": "xHamster",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://xhamster.com"
+        },
+        {
+          "extractor_pattern": "redtube",
+          "name_ja": "RedTube",
+          "name_en": "RedTube",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.redtube.com"
+        },
+        {
+          "extractor_pattern": "youporn",
+          "name_ja": "YouPorn",
+          "name_en": "YouPorn",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.youporn.com"
+        },
+        {
+          "extractor_pattern": "tube8",
+          "name_ja": "Tube8",
+          "name_en": "Tube8",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.tube8.com"
+        },
+        {
+          "extractor_pattern": "spankbang",
+          "name_ja": "SpankBang",
+          "name_en": "SpankBang",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://spankbang.com"
+        },
+        {
+          "extractor_pattern": "eporner",
+          "name_ja": "Eporner",
+          "name_en": "Eporner",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.eporner.com"
+        },
+        {
+          "extractor_pattern": "tnaflix",
+          "name_ja": "TNAFlix",
+          "name_en": "TNAFlix",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.tnaflix.com"
+        },
+        {
+          "extractor_pattern": "drtuber",
+          "name_ja": "DrTuber",
+          "name_en": "DrTuber",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.drtuber.com"
+        },
+        {
+          "extractor_pattern": "txxx",
+          "name_ja": "TXXX",
+          "name_en": "TXXX",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.txxx.com"
+        },
+        {
+          "extractor_pattern": "iwara",
+          "name_ja": "Iwara",
+          "name_en": "Iwara",
+          "description_ja": "MMD・3Dアニメーション中心の動画共有サイト。",
+          "description_en": "MMD and 3D animation focused video sharing site.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.iwara.tv"
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "name_ja": "📚 教育・ニュース",
+      "name_en": "📚 Education & News",
+      "name_zh_hant": "📚 教育與新聞",
+      "name_zh_hans": "📚 教育与新闻",
+      "name_ko": "📚 교육 및 뉴스",
+      "name_ru": "📚 Образование и новости",
+      "name_es": "📚 Educación y noticias",
+      "name_fr": "📚 Éducation et actualités",
+      "name_de": "📚 Bildung & Nachrichten",
+      "name_it": "📚 Istruzione e notizie",
+      "name_pt": "📚 Educação e notícias",
+      "sites": [
+        {
+          "extractor_pattern": "ted",
+          "name_ja": "TED Talks",
+          "name_en": "TED Talks",
+          "description_ja": "TED講演のダウンロード。字幕対応。",
+          "description_en": "Download TED talks. Subtitles supported.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.ted.com"
+        },
+        {
+          "extractor_pattern": "khanacademy",
+          "name_ja": "Khan Academy",
+          "name_en": "Khan Academy",
+          "description_ja": "無料オンライン教育プラットフォーム。",
+          "description_en": "Free online education platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.khanacademy.org"
+        },
+        {
+          "extractor_pattern": "udemy",
+          "name_ja": "Udemy",
+          "name_en": "Udemy",
+          "description_ja": "オンライン学習プラットフォーム。購入済みコースのDL。",
+          "description_en": "Online learning platform. Download purchased courses.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://www.udemy.com"
+        },
+        {
+          "extractor_pattern": "bbc",
+          "name_ja": "BBC",
+          "name_en": "BBC",
+          "description_ja": "BBC iPlayer・ニュース動画。地域制限あり。",
+          "description_en": "BBC iPlayer and news videos. Geo-restricted.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.bbc.co.uk"
+        },
+        {
+          "extractor_pattern": "cnn",
+          "name_ja": "CNN",
+          "name_en": "CNN",
+          "description_ja": "ニュース動画のDL。",
+          "description_en": "Download news videos.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://edition.cnn.com"
+        },
+        {
+          "extractor_pattern": "arte",
+          "name_ja": "ARTE",
+          "name_en": "ARTE",
+          "description_ja": "独仏共同の公共放送。文化・ドキュメンタリー。",
+          "description_en": "Franco-German public broadcaster. Culture and documentaries.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.arte.tv"
+        },
+        {
+          "extractor_pattern": "ard",
+          "name_ja": "ARD Mediathek",
+          "name_en": "ARD Mediathek",
+          "description_ja": "ドイツ公共放送の動画ライブラリ。",
+          "description_en": "German public broadcast media library.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.ardmediathek.de"
+        },
+        {
+          "extractor_pattern": "zdf",
+          "name_ja": "ZDF Mediathek",
+          "name_en": "ZDF Mediathek",
+          "description_ja": "ドイツ第二テレビの動画ライブラリ。",
+          "description_en": "German ZDF television media library.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.zdf.de"
+        },
+        {
+          "extractor_pattern": "francetv",
+          "name_ja": "France TV",
+          "name_en": "France TV",
+          "description_ja": "フランス公共テレビの動画ライブラリ。",
+          "description_en": "French public television media library.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.france.tv"
+        },
+        {
+          "extractor_pattern": "raiplay",
+          "name_ja": "Rai Play",
+          "name_en": "Rai Play",
+          "description_ja": "イタリア公共放送の動画ライブラリ。",
+          "description_en": "Italian public broadcast media library.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.raiplay.it"
+        },
+        {
+          "extractor_pattern": "svt",
+          "name_ja": "SVT Play",
+          "name_en": "SVT Play",
+          "description_ja": "スウェーデン公共放送の動画ライブラリ。",
+          "description_en": "Swedish public broadcast media library.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.svtplay.se"
+        },
+        {
+          "extractor_pattern": "kbs",
+          "name_ja": "KBS (한국방송공사)",
+          "name_en": "KBS",
+          "description_ja": "韓国の公共放送。",
+          "description_en": "Korean public broadcasting.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.kbs.co.kr"
+        }
+      ]
+    },
+    {
+      "id": "hosting",
+      "name_ja": "☁️ ファイル・動画ホスティング",
+      "name_en": "☁️ File & Video Hosting",
+      "name_zh_hant": "☁️ 檔案與影片託管",
+      "name_zh_hans": "☁️ 文件与视频托管",
+      "name_ko": "☁️ 파일 및 동영상 호스팅",
+      "name_ru": "☁️ Файловый и видеохостинг",
+      "name_es": "☁️ Hosting de archivos y vídeos",
+      "name_fr": "☁️ Hébergement fichiers et vidéos",
+      "name_de": "☁️ Datei- & Videohosting",
+      "name_it": "☁️ Hosting file e video",
+      "name_pt": "☁️ Hospedagem de arquivos e vídeos",
+      "sites": [
+        {
+          "extractor_pattern": "googledrive",
+          "name_ja": "Google Drive",
+          "name_en": "Google Drive",
+          "description_ja": "共有された動画ファイルのDL。",
+          "description_en": "Download shared video files.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://drive.google.com"
+        },
+        {
+          "extractor_pattern": "dropbox",
+          "name_ja": "Dropbox",
+          "name_en": "Dropbox",
+          "description_ja": "共有リンクからの動画DL。",
+          "description_en": "Download videos from shared links.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.dropbox.com"
+        },
+        {
+          "extractor_pattern": "onedrive",
+          "name_ja": "OneDrive",
+          "name_en": "OneDrive",
+          "description_ja": "Microsoft OneDriveの共有動画。",
+          "description_en": "Microsoft OneDrive shared videos.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://onedrive.live.com"
+        },
+        {
+          "extractor_pattern": "streamable",
+          "name_ja": "Streamable",
+          "name_en": "Streamable",
+          "description_ja": "短い動画の共有サービス。",
+          "description_en": "Short video sharing service.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://streamable.com"
+        },
+        {
+          "extractor_pattern": "mediafire",
+          "name_ja": "MediaFire",
+          "name_en": "MediaFire",
+          "description_ja": "ファイルホスティング・動画DL。",
+          "description_en": "File hosting and video downloads.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.mediafire.com"
+        },
+        {
+          "extractor_pattern": "imgur",
+          "name_ja": "Imgur",
+          "name_en": "Imgur",
+          "description_ja": "画像・動画ホスティング。GIF/MP4対応。",
+          "description_en": "Image and video hosting. GIF/MP4 supported.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://imgur.com"
+        },
+        {
+          "extractor_pattern": "gfycat",
+          "name_ja": "Gfycat",
+          "name_en": "Gfycat",
+          "description_ja": "GIF/短い動画の共有。",
+          "description_en": "GIF and short video sharing.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://gfycat.com"
+        },
+        {
+          "extractor_pattern": "catbox",
+          "name_ja": "Catbox",
+          "name_en": "Catbox",
+          "description_ja": "匿名ファイルアップロード。動画対応。",
+          "description_en": "Anonymous file upload. Video support.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://catbox.moe"
+        }
+      ]
+    },
+    {
+      "id": "china",
+      "name_ja": "🇨🇳 中国のサービス",
+      "name_en": "🇨🇳 Chinese Services",
+      "name_zh_hant": "🇨🇳 中國服務",
+      "name_zh_hans": "🇨🇳 中国服务",
+      "name_ko": "🇨🇳 중국 서비스",
+      "name_ru": "🇨🇳 Китайские сервисы",
+      "name_es": "🇨🇳 Servicios chinos",
+      "name_fr": "🇨🇳 Services chinois",
+      "name_de": "🇨🇳 Chinesische Dienste",
+      "name_it": "🇨🇳 Servizi cinesi",
+      "name_pt": "🇨🇳 Serviços chineses",
+      "sites": [
+        {
+          "extractor_pattern": "bilibili",
+          "name_ja": "Bilibili (哔哩哔哩)",
+          "name_en": "Bilibili",
+          "description_ja": "中国最大の動画共有サイト。弾幕コメント付き。",
+          "description_en": "China's largest video sharing site with danmaku comments.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.bilibili.com"
+        },
+        {
+          "extractor_pattern": "douyin",
+          "name_ja": "抖音 (Douyin)",
+          "name_en": "Douyin (Chinese TikTok)",
+          "description_ja": "中国版TikTok。ショート動画。",
+          "description_en": "Chinese TikTok. Short videos.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.douyin.com"
+        },
+        {
+          "extractor_pattern": "kuaishou",
+          "name_ja": "快手 (Kuaishou)",
+          "name_en": "Kuaishou",
+          "description_ja": "中国のショート動画・ライブ配信プラットフォーム。",
+          "description_en": "Chinese short video and live streaming platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.kuaishou.com"
+        },
+        {
+          "extractor_pattern": "qq",
+          "name_ja": "腾讯视频 (Tencent Video)",
+          "name_en": "Tencent Video",
+          "description_ja": "テンセントの動画プラットフォーム。",
+          "description_en": "Tencent's video platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://v.qq.com"
+        },
+        {
+          "extractor_pattern": "xiaohongshu",
+          "name_ja": "小红书 (RED / Xiaohongshu)",
+          "name_en": "Xiaohongshu (RED)",
+          "description_ja": "中国のライフスタイルSNS。動画・画像。",
+          "description_en": "Chinese lifestyle social platform. Videos and images.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.xiaohongshu.com"
+        },
+        {
+          "extractor_pattern": "zhihu",
+          "name_ja": "知乎 (Zhihu)",
+          "name_en": "Zhihu",
+          "description_ja": "中国のQ&Aプラットフォーム。動画回答のDL。",
+          "description_en": "Chinese Q&A platform. Download video answers.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.zhihu.com"
+        },
+        {
+          "extractor_pattern": "mgtv",
+          "name_ja": "芒果TV (MangoTV)",
+          "name_en": "MangoTV",
+          "description_ja": "湖南テレビの動画プラットフォーム。",
+          "description_en": "Hunan TV's video platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.mgtv.com"
+        }
+      ]
+    },
+    {
+      "id": "korea",
+      "name_ja": "🇰🇷 韓国のサービス",
+      "name_en": "🇰🇷 Korean Services",
+      "name_zh_hant": "🇰🇷 韓國服務",
+      "name_zh_hans": "🇰🇷 韩国服务",
+      "name_ko": "🇰🇷 한국 서비스",
+      "name_ru": "🇰🇷 Корейские сервисы",
+      "name_es": "🇰🇷 Servicios coreanos",
+      "name_fr": "🇰🇷 Services coréens",
+      "name_de": "🇰🇷 Koreanische Dienste",
+      "name_it": "🇰🇷 Servizi coreani",
+      "name_pt": "🇰🇷 Serviços coreanos",
+      "sites": [
+        {
+          "extractor_pattern": "naver",
+          "name_ja": "NAVERテレビ",
+          "name_en": "Naver TV",
+          "description_ja": "韓国最大ポータルの動画サービス。",
+          "description_en": "Video service from Korea's largest portal.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://tv.naver.com"
+        },
+        {
+          "extractor_pattern": "afreecatv",
+          "name_ja": "AfreecaTV (아프리카TV)",
+          "name_en": "AfreecaTV",
+          "description_ja": "韓国の大手ライブ配信。VODも対応。",
+          "description_en": "Major Korean live streaming platform. VODs also supported.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.afreecatv.com"
+        },
+        {
+          "extractor_pattern": "chzzk",
+          "name_ja": "CHZZK (치지직)",
+          "name_en": "CHZZK",
+          "description_ja": "NAVERのゲーム配信。旧Naver Now。",
+          "description_en": "Naver's game streaming. Formerly Naver Now.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://chzzk.naver.com"
+        },
+        {
+          "extractor_pattern": "kakao",
+          "name_ja": "KakaoTV",
+          "name_en": "KakaoTV",
+          "description_ja": "カカオの動画プラットフォーム。",
+          "description_en": "Kakao's video platform.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://tv.kakao.com"
+        },
+        {
+          "extractor_pattern": "vlive",
+          "name_ja": "Weverse (旧V LIVE)",
+          "name_en": "Weverse (ex V LIVE)",
+          "description_ja": "K-POPファン向けプラットフォーム。",
+          "description_en": "K-pop fan platform.",
+          "requires_login": true,
+          "requires_js_runtime": false,
+          "url": "https://weverse.io"
+        },
+        {
+          "extractor_pattern": "kbs",
+          "name_ja": "KBS",
+          "name_en": "KBS",
+          "description_ja": "韓国の公共放送。",
+          "description_en": "Korean Broadcasting System.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.kbs.co.kr"
+        },
+        {
+          "extractor_pattern": "sbs",
+          "name_ja": "SBS (에스비에스)",
+          "name_en": "SBS",
+          "description_ja": "韓国の民放テレビ。",
+          "description_en": "Korean commercial broadcaster.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.sbs.co.kr"
+        },
+        {
+          "extractor_pattern": "mbn",
+          "name_ja": "MBN (매일방송)",
+          "name_en": "MBN",
+          "description_ja": "韓国のニュース・経済チャンネル。",
+          "description_en": "Korean news and business channel.",
+          "requires_login": false,
+          "requires_js_runtime": false,
+          "url": "https://www.mbn.co.kr"
         }
       ]
     }

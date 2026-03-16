@@ -5,24 +5,24 @@ struct DependencySetupView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             // ヘッダー
             VStack(spacing: 8) {
                 Image(systemName: "shippingbox")
                     .font(.system(size: 40))
                     .foregroundStyle(.blue)
-                Text("依存関係の管理")
+                Text(L10n.dependencyManagement)
                     .font(.title2)
                     .fontWeight(.semibold)
-                Text("yt-dlp-swift は以下のツールを使用します")
+                Text(L10n.dependencySubtitle)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
-            // 依存関係リスト
+            // 依存ライブラリリスト
             VStack(spacing: 8) {
                 ForEach(viewModel.statuses) { status in
-                    DependencyRow(status: status) {
+                    DependencyRow(status: status, isInstalling: viewModel.isInstalling) {
                         Task { await viewModel.update(status.dependency) }
                     }
                 }
@@ -37,48 +37,141 @@ struct DependencySetupView: View {
                     .padding(.horizontal)
             }
 
-            // 進捗表示
-            if !viewModel.installProgress.isEmpty {
-                HStack {
-                    ProgressView()
-                        .controlSize(.small)
-                    Text(viewModel.installProgress)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+            // プログレスバー
+            if viewModel.isInstalling {
+                VStack(spacing: 6) {
+                    ProgressView(value: viewModel.installProgress)
+                        .progressViewStyle(.linear)
+                    HStack {
+                        Text(viewModel.installStepDescription)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        if !viewModel.downloadSizeInfo.isEmpty {
+                            Text(viewModel.downloadSizeInfo)
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .monospacedDigit()
+                        }
+                    }
                 }
+                .padding(.horizontal)
             }
 
-            Spacer()
+            // ログ表示エリア
+            if !viewModel.logLines.isEmpty || viewModel.isInstalling {
+                LogConsoleView(logLines: viewModel.logLines, isRunning: viewModel.isInstalling)
+            }
+
+            Spacer(minLength: 0)
 
             // アクションボタン
             HStack {
-                if viewModel.allInstalled {
-                    Button("閉じる") {
+                if viewModel.allInstalled && !viewModel.isInstalling {
+                    Button(L10n.close) {
                         dismiss()
                     }
                     .keyboardShortcut(.cancelAction)
                 } else {
-                    Button("自動インストール") {
+                    Button(L10n.autoInstall) {
                         Task { await viewModel.installMissing() }
                     }
-                    .disabled(viewModel.isInstalling)
+                    .disabled(viewModel.isInstalling || viewModel.allInstalled)
                     .keyboardShortcut(.defaultAction)
 
-                    Button("スキップ") {
+                    Button(L10n.skip) {
                         viewModel.isSetupRequired = false
                         dismiss()
                     }
+                    .disabled(viewModel.isInstalling)
                     .keyboardShortcut(.cancelAction)
                 }
+
+                Spacer()
+
+                Button {
+                    Task { await viewModel.checkAllDependencies() }
+                } label: {
+                    Label(L10n.recheck, systemImage: "arrow.clockwise")
+                }
+                .controlSize(.small)
+                .disabled(viewModel.isInstalling)
             }
+            .padding(.horizontal)
             .padding(.bottom)
         }
-        .padding()
+        .padding(.top)
+    }
+}
+
+// ログコンソール
+struct LogConsoleView: View {
+    let logLines: [String]
+    let isRunning: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text(L10n.log)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                if isRunning {
+                    ProgressView()
+                        .controlSize(.mini)
+                    Text(L10n.running)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .padding(.horizontal)
+
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 1) {
+                        ForEach(Array(logLines.enumerated()), id: \.offset) { index, line in
+                            Text(line)
+                                .font(.system(size: 11, design: .monospaced))
+                                .foregroundStyle(logLineColor(line))
+                                .textSelection(.enabled)
+                                .id(index)
+                        }
+                    }
+                    .padding(8)
+                }
+                .frame(maxHeight: 200)
+                .background(Color(nsColor: .textBackgroundColor).opacity(0.5))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(.quaternary, lineWidth: 1)
+                )
+                .padding(.horizontal)
+                .onChange(of: logLines.count) {
+                    if let lastIndex = logLines.indices.last {
+                        proxy.scrollTo(lastIndex, anchor: .bottom)
+                    }
+                }
+            }
+        }
+    }
+
+    private func logLineColor(_ line: String) -> Color {
+        if line.contains(L10n.error) || line.contains("ERROR") || line.contains("エラー") {
+            return .red
+        }
+        if line.contains(L10n.installComplete) || line.contains(L10n.installDone)
+            || line.contains("インストール完了") || line.contains("完了しました") {
+            return .green
+        }
+        return .primary
     }
 }
 
 struct DependencyRow: View {
     let status: DependencyStatus
+    let isInstalling: Bool
     let onUpdate: () -> Void
 
     var body: some View {
@@ -94,17 +187,43 @@ struct DependencyRow: View {
                     .frame(width: 20, height: 20)
             }
 
-            // 依存関係情報
+            // 依存ライブラリ情報
             VStack(alignment: .leading, spacing: 2) {
                 Text(status.dependency.displayName)
                     .font(.body)
 
-                if let version = status.version {
-                    Text("v\(version)")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
+                if status.isCheckingVersion {
+                    HStack(spacing: 4) {
+                        ProgressView()
+                            .controlSize(.mini)
+                        Text(L10n.checkingVersion)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                } else if let version = status.version {
+                    HStack(spacing: 4) {
+                        Text("v\(version)")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+
+                        if status.isCheckingUpdate {
+                            ProgressView()
+                                .controlSize(.mini)
+                            Text(L10n.checkingUpdate)
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        } else if status.isLatest {
+                            Text(L10n.upToDate)
+                                .font(.caption2)
+                                .foregroundStyle(.green)
+                        } else if let latest = status.latestVersion {
+                            Text(L10n.updateAvailable(latest))
+                                .font(.caption2)
+                                .foregroundStyle(.orange)
+                        }
+                    }
                 } else if !status.isInstalled {
-                    Text("未インストール")
+                    Text(L10n.notInstalled)
                         .font(.caption2)
                         .foregroundStyle(.red)
                 }
@@ -120,12 +239,23 @@ struct DependencyRow: View {
 
             Spacer()
 
-            // 更新ボタン
-            if status.isInstalled && !status.isUpdating {
-                Button("更新") {
-                    onUpdate()
+            // ボタン表示
+            if !status.isUpdating && !isInstalling {
+                if !status.isInstalled {
+                    Button(L10n.install) {
+                        onUpdate()
+                    }
+                    .controlSize(.small)
+                } else if status.isCheckingVersion || status.isCheckingUpdate {
+                    EmptyView()
+                } else if status.isLatest {
+                    EmptyView()
+                } else if status.latestVersion != nil {
+                    Button(L10n.update) {
+                        onUpdate()
+                    }
+                    .controlSize(.small)
                 }
-                .controlSize(.small)
             }
         }
         .padding(10)

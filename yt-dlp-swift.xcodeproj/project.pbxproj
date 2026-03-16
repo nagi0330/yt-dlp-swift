@@ -14,16 +14,21 @@
 		295B195DBA017E57B0AD15BE /* SupportedSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E2171256FFEE7C4FC6D482 /* SupportedSite.swift */; };
 		2E479441EE32EFEC485BF09C /* DownloadRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC0769B62EA165911FAE103 /* DownloadRowView.swift */; };
 		36241B71CD6FEED29D30C3DA /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87CB92F63C3F40C86E58BEC /* DownloadManager.swift */; };
+		595453FD899DFBA19C51B7A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842153D9930C23A391B1561A /* Assets.xcassets */; };
+		5D8B0995BB87685F1BFA9937 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B5B9029FEBD14822339148 /* MenuBarView.swift */; };
 		5ED8F3E7975C78A15BFA5E3E /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CB3D22A1A4C7EEC088D95 /* AppSettings.swift */; };
 		643D16FB6379884E8EBD938E /* YtDlpSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100932391042EF45C4373C3 /* YtDlpSwiftApp.swift */; };
 		6578AEAC91BD8A996FA67EBE /* OutputParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E778806EC80DAF8FBD70D0 /* OutputParser.swift */; };
 		6F0F95D873623CFE70691334 /* FormatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0404F3B6FCF397C561388DB /* FormatPickerView.swift */; };
+		79DB60C7B552BB522AC73C25 /* LoginWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360FC1F24637427C4CAB536F /* LoginWebView.swift */; };
 		857330B1AD16D94BCDCBDC50 /* YtDlpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E9471D9EE661C364F5F0BC /* YtDlpService.swift */; };
 		8A494421B826194DC3DEDBED /* SupportedSites.json in Resources */ = {isa = PBXBuildFile; fileRef = D631578873C1E0794095B4DA /* SupportedSites.json */; };
 		8E0136A9A5A5D21A3C3266FB /* DownloadListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE700ABBFFB47425D41EE102 /* DownloadListView.swift */; };
+		9B2925A3616BEC203C06C236 /* CookieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7431E036A75A6B0A5D92E0DB /* CookieManager.swift */; };
 		A07886C827F587B1F79873BC /* DependencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAEF28530B87D97DF01ABA /* DependencyViewModel.swift */; };
 		A1AD50B61A1BFDAC3A53DEBC /* ProcessRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45BCDDB2B915BDE0EDAF9B0 /* ProcessRunner.swift */; };
 		A1B492FBD988B7ECA056DE11 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A9276B05334BFCB379BB1 /* DownloadTask.swift */; };
+		AEC32256434D62DC15DF6A28 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C25C37CC0EF3EC9027B9984 /* L10n.swift */; };
 		B252AACB2320F581C275C545 /* SiteRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F3FF7ADFBC539AC623242E /* SiteRegistry.swift */; };
 		C7B311CE58526263C1779CCB /* VideoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE26FBCFE56AB9ECB0AF95 /* VideoInfoView.swift */; };
 		D50DBAC08B5892F877BBC06A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A29B950B159A63177AC8A /* SettingsViewModel.swift */; };
@@ -40,7 +45,9 @@
 /* Begin PBXFileReference section */
 		054A29B950B159A63177AC8A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		08661B2A688BF2D240279207 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0C25C37CC0EF3EC9027B9984 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		1496F0F129D6B7A5E725CAF6 /* VideoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfo.swift; sourceTree = "<group>"; };
+		360FC1F24637427C4CAB536F /* LoginWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebView.swift; sourceTree = "<group>"; };
 		40F3FF7ADFBC539AC623242E /* SiteRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRegistry.swift; sourceTree = "<group>"; };
 		479CB3D22A1A4C7EEC088D95 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		4E62F064B4D19A99B3205719 /* yt-dlp-swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "yt-dlp-swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,10 +57,13 @@
 		5ECE26FBCFE56AB9ECB0AF95 /* VideoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfoView.swift; sourceTree = "<group>"; };
 		6542087377BCD3D4BB0AA49C /* FileNameSanitizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNameSanitizer.swift; sourceTree = "<group>"; };
 		6D7689075346AAF7F25DF27E /* DependencySetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencySetupView.swift; sourceTree = "<group>"; };
+		71B5B9029FEBD14822339148 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		7431E036A75A6B0A5D92E0DB /* CookieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieManager.swift; sourceTree = "<group>"; };
 		78E9471D9EE661C364F5F0BC /* YtDlpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YtDlpService.swift; sourceTree = "<group>"; };
 		81BAEF28530B87D97DF01ABA /* DependencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyViewModel.swift; sourceTree = "<group>"; };
 		81E2171256FFEE7C4FC6D482 /* SupportedSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedSite.swift; sourceTree = "<group>"; };
 		81E778806EC80DAF8FBD70D0 /* OutputParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputParser.swift; sourceTree = "<group>"; };
+		842153D9930C23A391B1561A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BE602254FF08E8DA037A52F /* DependencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyManager.swift; sourceTree = "<group>"; };
 		92A7E5DCEF3D12A187332E11 /* DownloadFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFormat.swift; sourceTree = "<group>"; };
 		A2660C2E3A77ABD837BCCFB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -75,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				6542087377BCD3D4BB0AA49C /* FileNameSanitizer.swift */,
+				0C25C37CC0EF3EC9027B9984 /* L10n.swift */,
 				D45BCDDB2B915BDE0EDAF9B0 /* ProcessRunner.swift */,
 			);
 			path = Utilities;
@@ -94,6 +105,7 @@
 		2A45CF2813765A0CE672D606 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				7431E036A75A6B0A5D92E0DB /* CookieManager.swift */,
 				8BE602254FF08E8DA037A52F /* DependencyManager.swift */,
 				C87CB92F63C3F40C86E58BEC /* DownloadManager.swift */,
 				81E778806EC80DAF8FBD70D0 /* OutputParser.swift */,
@@ -114,6 +126,7 @@
 		8528CF529C86E4554DD30874 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				842153D9930C23A391B1561A /* Assets.xcassets */,
 				A2660C2E3A77ABD837BCCFB5 /* Info.plist */,
 				D631578873C1E0794095B4DA /* SupportedSites.json */,
 			);
@@ -162,7 +175,9 @@
 				DE700ABBFFB47425D41EE102 /* DownloadListView.swift */,
 				BAC0769B62EA165911FAE103 /* DownloadRowView.swift */,
 				E0404F3B6FCF397C561388DB /* FormatPickerView.swift */,
+				360FC1F24637427C4CAB536F /* LoginWebView.swift */,
 				B9717CB505AACD89D444D24D /* MainView.swift */,
+				71B5B9029FEBD14822339148 /* MenuBarView.swift */,
 				08661B2A688BF2D240279207 /* SettingsView.swift */,
 				DCE004F04DDF4AA908130168 /* SupportedSitesView.swift */,
 				5C47D001D1EBD78BF2E7849D /* URLInputView.swift */,
@@ -239,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				595453FD899DFBA19C51B7A7 /* Assets.xcassets in Resources */,
 				8A494421B826194DC3DEDBED /* SupportedSites.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +268,7 @@
 			files = (
 				E711EEA1BA8AD42465EDCA6A /* AboutView.swift in Sources */,
 				5ED8F3E7975C78A15BFA5E3E /* AppSettings.swift in Sources */,
+				9B2925A3616BEC203C06C236 /* CookieManager.swift in Sources */,
 				FC887365E2067B0B430FD5C1 /* DependencyManager.swift in Sources */,
 				EDD26590EC98C9BD1EB3FC4F /* DependencySetupView.swift in Sources */,
 				A07886C827F587B1F79873BC /* DependencyViewModel.swift in Sources */,
@@ -263,8 +280,11 @@
 				DDFE31B6BF2A9EA7EE3C3C06 /* DownloadViewModel.swift in Sources */,
 				212ED07581B3923161E681A1 /* FileNameSanitizer.swift in Sources */,
 				6F0F95D873623CFE70691334 /* FormatPickerView.swift in Sources */,
+				AEC32256434D62DC15DF6A28 /* L10n.swift in Sources */,
+				79DB60C7B552BB522AC73C25 /* LoginWebView.swift in Sources */,
 				EB4EFFA521F994B4CFE7AED7 /* MainView.swift in Sources */,
 				E37AF2AD8FAEEAB560E92CD5 /* MainViewModel.swift in Sources */,
+				5D8B0995BB87685F1BFA9937 /* MenuBarView.swift in Sources */,
 				6578AEAC91BD8A996FA67EBE /* OutputParser.swift in Sources */,
 				A1AD50B61A1BFDAC3A53DEBC /* ProcessRunner.swift in Sources */,
 				227732B919226AE744D48614 /* SettingsView.swift in Sources */,
@@ -287,6 +307,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				AUTOMATION_APPLE_EVENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = "yt-dlp-swift/yt-dlp-swift.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -294,8 +316,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "yt-dlp-swift/Resources/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -304,6 +334,12 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nagi.yt-dlp-swift";
 				PRODUCT_NAME = "yt-dlp-swift";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = YES;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
 				SDKROOT = macosx;
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.9;
@@ -433,6 +469,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				AUTOMATION_APPLE_EVENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = "yt-dlp-swift/yt-dlp-swift.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -440,8 +478,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "yt-dlp-swift/Resources/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -450,6 +496,12 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nagi.yt-dlp-swift";
 				PRODUCT_NAME = "yt-dlp-swift";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = YES;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
 				SDKROOT = macosx;
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.9;
