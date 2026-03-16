@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="swift.png" alt="yt-dlp-swift" width="128" height="128">
+  <img src="logo.png" alt="yt-dlp-swift" width="128" height="128">
 </p>
 
 <h1 align="center">yt-dlp-swift</h1>
