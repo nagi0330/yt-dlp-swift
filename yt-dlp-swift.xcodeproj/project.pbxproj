@@ -14,6 +14,7 @@
 		295B195DBA017E57B0AD15BE /* SupportedSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E2171256FFEE7C4FC6D482 /* SupportedSite.swift */; };
 		2E479441EE32EFEC485BF09C /* DownloadRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC0769B62EA165911FAE103 /* DownloadRowView.swift */; };
 		36241B71CD6FEED29D30C3DA /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87CB92F63C3F40C86E58BEC /* DownloadManager.swift */; };
+		4EB055888D33D264EDEC94E5 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 50D1F74E168C9B44539B055C /* Sparkle */; };
 		595453FD899DFBA19C51B7A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842153D9930C23A391B1561A /* Assets.xcassets */; };
 		5D8B0995BB87685F1BFA9937 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B5B9029FEBD14822339148 /* MenuBarView.swift */; };
 		5ED8F3E7975C78A15BFA5E3E /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CB3D22A1A4C7EEC088D95 /* AppSettings.swift */; };
@@ -79,6 +80,17 @@
 		E0404F3B6FCF397C561388DB /* FormatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatPickerView.swift; sourceTree = "<group>"; };
 		F100932391042EF45C4373C3 /* YtDlpSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YtDlpSwiftApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6E59EB57B760079482F22284 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EB055888D33D264EDEC94E5 /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		10F2E58576AAB114C9C655B9 /* Utilities */ = {
@@ -203,6 +215,7 @@
 			buildPhases = (
 				2480B39863EDC26E23B062D9 /* Sources */,
 				8A1955DC352A93A1A052A4C4 /* Resources */,
+				6E59EB57B760079482F22284 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -210,6 +223,7 @@
 			);
 			name = "yt-dlp-swift";
 			packageProductDependencies = (
+				50D1F74E168C9B44539B055C /* Sparkle */,
 			);
 			productName = "yt-dlp-swift";
 			productReference = 4E62F064B4D19A99B3205719 /* yt-dlp-swift.app */;
@@ -239,6 +253,9 @@
 			);
 			mainGroup = 8B399BDEEA6EB1B7D1F28DA8;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CBFAF029318460531139D86C /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2DF795C24DA1F93E781DB36D /* Products */;
 			projectDirPath = "";
@@ -307,8 +324,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				AUTOMATION_APPLE_EVENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = "yt-dlp-swift/yt-dlp-swift.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -316,17 +331,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = NO;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
-				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
-				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
-				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
-				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "yt-dlp-swift/Resources/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "yt-dlp-swift";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -335,12 +341,6 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nagi.yt-dlp-swift";
 				PRODUCT_NAME = "yt-dlp-swift";
-				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
-				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
-				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = YES;
-				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
-				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
-				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
 				SDKROOT = macosx;
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.9;
@@ -470,8 +470,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				AUTOMATION_APPLE_EVENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = "yt-dlp-swift/yt-dlp-swift.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -479,17 +477,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = NO;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
-				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
-				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
-				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
-				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "yt-dlp-swift/Resources/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "yt-dlp-swift";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -498,12 +487,6 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nagi.yt-dlp-swift";
 				PRODUCT_NAME = "yt-dlp-swift";
-				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
-				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
-				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = YES;
-				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
-				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
-				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
 				SDKROOT = macosx;
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.9;
@@ -532,6 +515,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CBFAF029318460531139D86C /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		50D1F74E168C9B44539B055C /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBFAF029318460531139D86C /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D12BC187B10EBC1912BCD047 /* Project object */;
 }

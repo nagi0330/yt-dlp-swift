@@ -1363,12 +1363,12 @@ enum L10n {
     // MARK: - About画面
 
     static var version: String {
-        t("バージョン 1.0.0", "Version 1.0.0",
-          zhHant: "版本 1.0.0", zhHans: "版本 1.0.0",
-          ko: "버전 1.0.0", ru: "Версия 1.0.0",
-          es: "Versión 1.0.0", fr: "Version 1.0.0",
-          de: "Version 1.0.0", it: "Versione 1.0.0",
-          pt: "Versão 1.0.0")
+        t("バージョン 1.1.0", "Version 1.1.0",
+          zhHant: "版本 1.1.0", zhHans: "版本 1.1.0",
+          ko: "버전 1.1.0", ru: "Версия 1.1.0",
+          es: "Versión 1.1.0", fr: "Version 1.1.0",
+          de: "Version 1.1.0", it: "Versione 1.1.0",
+          pt: "Versão 1.1.0")
     }
 
     static var appDescription: String {
@@ -1813,5 +1813,43 @@ enum L10n {
           es: "Transmisión en vivo detectada", fr: "Flux en direct détecté",
           de: "Livestream erkannt", it: "Stream live rilevato",
           pt: "Transmissão ao vivo detectada")
+    }
+
+    // MARK: - アプリアップデート
+
+    static var checkForUpdates: String {
+        t("アップデートを確認…", "Check for Updates…",
+          zhHant: "檢查更新…", zhHans: "检查更新…",
+          ko: "업데이트 확인…", ru: "Проверить обновления…",
+          es: "Buscar actualizaciones…", fr: "Rechercher les mises à jour…",
+          de: "Nach Updates suchen…", it: "Verifica aggiornamenti…",
+          pt: "Verificar atualizações…")
+    }
+
+    static var appUpdateSection: String {
+        t("アプリのアップデート", "App Updates",
+          zhHant: "應用程式更新", zhHans: "应用更新",
+          ko: "앱 업데이트", ru: "Обновление приложения",
+          es: "Actualización de la app", fr: "Mise à jour de l'app",
+          de: "App-Aktualisierung", it: "Aggiornamento app",
+          pt: "Atualização do app")
+    }
+
+    static var appVersion: String {
+        t("現在のバージョン", "Current Version",
+          zhHant: "目前版本", zhHans: "当前版本",
+          ko: "현재 버전", ru: "Текущая версия",
+          es: "Versión actual", fr: "Version actuelle",
+          de: "Aktuelle Version", it: "Versione attuale",
+          pt: "Versão atual")
+    }
+
+    static var autoCheckUpdates: String {
+        t("自動でアップデートを確認", "Automatically check for updates",
+          zhHant: "自動檢查更新", zhHans: "自动检查更新",
+          ko: "자동으로 업데이트 확인", ru: "Проверять автоматически",
+          es: "Buscar actualizaciones automáticamente", fr: "Vérifier automatiquement les mises à jour",
+          de: "Automatisch nach Updates suchen", it: "Verifica automaticamente gli aggiornamenti",
+          pt: "Verificar atualizações automaticamente")
     }
 }

@@ -6,6 +6,11 @@ options:
   xcodeVersion: "15.0"
   createIntermediateGroups: true
 
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.6.0"
+
 targets:
   yt-dlp-swift:
     type: application
@@ -14,12 +19,14 @@ targets:
       - path: yt-dlp-swift
         excludes:
           - "**/*.entitlements"
+    dependencies:
+      - package: Sparkle
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.nagi.yt-dlp-swift
         PRODUCT_NAME: yt-dlp-swift
-        MARKETING_VERSION: "1.0.0"
-        CURRENT_PROJECT_VERSION: "1"
+        MARKETING_VERSION: "1.1.0"
+        CURRENT_PROJECT_VERSION: "2"
         SWIFT_VERSION: "5.9"
         MACOSX_DEPLOYMENT_TARGET: "14.0"
         INFOPLIST_FILE: yt-dlp-swift/Resources/Info.plist

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>yt-dlp-swift</title>
+        <link>https://github.com/nagi/yt-dlp-swift</link>
+        <description>yt-dlp-swift アップデートフィード</description>
+        <language>ja</language>
+
+        <item>
+            <title>バージョン 1.1.0</title>
+            <pubDate>Mon, 17 Mar 2026 11:30:00 +0900</pubDate>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[
+                <h2>v1.1.0 変更点</h2>
+                <ul>
+                    <li>配信録画モードを追加</li>
+                    <li>QuickTime互換のMP4出力に対応</li>
+                    <li>ダウンロードキャンセルの修正</li>
+                    <li>Sparkle自動アップデートに対応</li>
+                </ul>
+            ]]></description>
+            <enclosure
+                url="https://github.com/nagi/yt-dlp-swift/releases/download/v1.1.0/yt-dlp-swift.dmg"
+                type="application/octet-stream"
+                length="0"
+            />
+        </item>
+
+        <!--
+        新バージョンリリース時のテンプレート:
+
+        <item>
+            <title>バージョン X.Y.Z</title>
+            <pubDate>Mon, 01 Jan 2026 00:00:00 +0900</pubDate>
+            <sparkle:version>BUILD_NUMBER</sparkle:version>
+            <sparkle:shortVersionString>X.Y.Z</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[
+                <h2>変更点</h2>
+                <ul>
+                    <li>新機能: ...</li>
+                    <li>修正: ...</li>
+                </ul>
+            ]]></description>
+            <enclosure
+                url="https://github.com/nagi/yt-dlp-swift/releases/download/vX.Y.Z/yt-dlp-swift.dmg"
+                type="application/octet-stream"
+                sparkle:edSignature="ED_SIGNATURE_HERE"
+                length="FILE_SIZE_IN_BYTES"
+            />
+        </item>
+        -->
+    </channel>
+</rss>

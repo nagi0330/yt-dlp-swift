@@ -1,8 +1,17 @@
 import SwiftUI
+import Sparkle
 
 struct SettingsView: View {
     @Environment(SettingsViewModel.self) private var viewModel
     @Environment(DependencyViewModel.self) private var dependencyVM
+    let updater: SPUUpdater
+
+    @ObservedObject private var checkForUpdatesVM: CheckForUpdatesViewModel
+
+    init(updater: SPUUpdater) {
+        self.updater = updater
+        self.checkForUpdatesVM = CheckForUpdatesViewModel(updater: updater)
+    }
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -94,6 +103,28 @@ struct SettingsView: View {
                     TextField(L10n.extraArgsPlaceholder, text: $vm.extraArguments)
                         .font(.system(.body, design: .monospaced))
                 }
+            }
+
+            Section(L10n.appUpdateSection) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(L10n.appVersion)
+                            .font(.body)
+                        Text(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button(L10n.checkForUpdates) {
+                        updater.checkForUpdates()
+                    }
+                    .disabled(!checkForUpdatesVM.canCheckForUpdates)
+                }
+
+                Toggle(L10n.autoCheckUpdates, isOn: Binding(
+                    get: { updater.automaticallyChecksForUpdates },
+                    set: { updater.automaticallyChecksForUpdates = $0 }
+                ))
             }
 
             Section(L10n.ytDlpPathSection) {

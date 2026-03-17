@@ -40,6 +40,17 @@
 
 ## インストール / Installation
 
+### DMG からインストール
+
+1. [Releases](https://github.com/nagi/yt-dlp-swift/releases) から最新の `.dmg` をダウンロード
+2. DMG を開き、`yt-dlp-swift.app` を `Applications` フォルダにドラッグ
+3. **初回起動時**: 署名なしアプリのため Gatekeeper に止められます。以下のいずれかで開いてください:
+   - **方法1**: `yt-dlp-swift.app` を **右クリック** →「**開く**」→ ダイアログで「開く」をクリック
+   - **方法2**: ターミナルで以下を実行:
+     ```bash
+     xattr -cr /Applications/yt-dlp-swift.app
+     ```
+
 ### ソースからビルド
 
 ```bash
@@ -250,6 +261,18 @@ yt-dlp-swift/
     ├── Assets.xcassets/            # アイコン・画像
     └── Info.plist
 ```
+
+---
+
+## 免責事項 / Disclaimer
+
+本アプリケーションは、著作権者の許可を得たコンテンツ、クリエイティブ・コモンズなどのフリーライセンスで公開されたコンテンツ、またはパブリックドメインのコンテンツをダウンロードすることを目的としています。
+
+**著作権で保護されたコンテンツを権利者の許可なくダウンロード・複製・再配布することは、各国の著作権法に違反する可能性があります。** 本アプリケーションの使用により発生したいかなる法的問題についても、開発者は一切の責任を負いません。コンテンツのダウンロードに際しては、お住まいの国・地域の法律を遵守し、自己の責任において利用してください。
+
+This application is intended for downloading content that is authorized by the copyright holder, released under free licenses such as Creative Commons, or in the public domain.
+
+**Downloading, copying, or redistributing copyrighted content without permission from the rights holder may violate copyright laws in your jurisdiction.** The developers assume no responsibility for any legal issues arising from the use of this application. Please comply with the laws of your country/region and use this application at your own risk.
 
 ---
 

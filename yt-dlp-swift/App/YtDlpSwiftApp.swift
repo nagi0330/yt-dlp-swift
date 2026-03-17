@@ -1,5 +1,6 @@
 import SwiftUI
 import UserNotifications
+import Sparkle
 
 @main
 struct YtDlpSwiftApp: App {
@@ -9,9 +10,20 @@ struct YtDlpSwiftApp: App {
     @State private var downloadViewModel = DownloadViewModel()
     @State private var settingsViewModel = SettingsViewModel()
 
+    // Sparkle アップデーター
+    private let updaterController: SPUStandardUpdaterController
+
     // 言語変更時にView全体を再構築するためのキー
     @AppStorage("language") private var language = AppLanguage.system.rawValue
     @AppStorage("menuBarEnabled") private var menuBarEnabled = false
+
+    init() {
+        updaterController = SPUStandardUpdaterController(
+            startingUpdater: true,
+            updaterDelegate: nil,
+            userDriverDelegate: nil
+        )
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -29,10 +41,15 @@ struct YtDlpSwiftApp: App {
         .defaultSize(width: 900, height: 650)
         .commands {
             CommandGroup(replacing: .newItem) {}
+
+            // アプリメニューに「アップデートを確認」を追加
+            CommandGroup(after: .appInfo) {
+                CheckForUpdatesView(updater: updaterController.updater)
+            }
         }
 
         Settings {
-            SettingsView()
+            SettingsView(updater: updaterController.updater)
                 .environment(settingsViewModel)
                 .environment(dependencyViewModel)
                 .id(language)
@@ -50,6 +67,34 @@ struct YtDlpSwiftApp: App {
             }
         }
         .menuBarExtraStyle(.window)
+    }
+}
+
+// メニューバーの「アップデートを確認」ボタン
+struct CheckForUpdatesView: View {
+    @ObservedObject private var checkForUpdatesViewModel: CheckForUpdatesViewModel
+    private let updater: SPUUpdater
+
+    init(updater: SPUUpdater) {
+        self.updater = updater
+        self.checkForUpdatesViewModel = CheckForUpdatesViewModel(updater: updater)
+    }
+
+    var body: some View {
+        Button(L10n.checkForUpdates) {
+            updater.checkForUpdates()
+        }
+        .disabled(!checkForUpdatesViewModel.canCheckForUpdates)
+    }
+}
+
+// Sparkle のアップデート可能状態を監視する ViewModel
+final class CheckForUpdatesViewModel: ObservableObject {
+    @Published var canCheckForUpdates = false
+
+    init(updater: SPUUpdater) {
+        updater.publisher(for: \.canCheckForUpdates)
+            .assign(to: &$canCheckForUpdates)
     }
 }
 
