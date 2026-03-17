@@ -5,9 +5,15 @@ import AppKit
 @Observable
 class DownloadViewModel {
     let downloadManager = DownloadManager.shared
+    var selectedTaskID: UUID?
 
     var tasks: [DownloadTask] {
         downloadManager.tasks
+    }
+
+    var selectedTask: DownloadTask? {
+        guard let id = selectedTaskID else { return nil }
+        return tasks.first { $0.id == id }
     }
 
     var activeCount: Int {

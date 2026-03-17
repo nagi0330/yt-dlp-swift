@@ -24,6 +24,14 @@ class DownloadTask: Identifiable {
     var outputFilePath: String?
     var error: String?
 
+    // メタデータ（VideoInfoから取得）
+    var videoDescription: String?
+    var uploader: String?
+    var duration: Double?
+    var uploadDate: String?
+    var viewCount: Int?
+    var extractor: String?
+
     // ライブ録画関連
     let isLiveRecording: Bool
     let liveFromStart: Bool       // --live-from-start を使うか
@@ -33,7 +41,7 @@ class DownloadTask: Identifiable {
     // Process制御用（永続化しない）
     var process: Process?
 
-    init(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, isLiveRecording: Bool = false, liveFromStart: Bool = false, outputDirectory: URL, outputTemplate: String) {
+    init(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, isLiveRecording: Bool = false, liveFromStart: Bool = false, outputDirectory: URL, outputTemplate: String, videoDescription: String? = nil, uploader: String? = nil, duration: Double? = nil, uploadDate: String? = nil, viewCount: Int? = nil, extractor: String? = nil) {
         self.id = UUID()
         self.url = url
         self.title = title
@@ -47,6 +55,12 @@ class DownloadTask: Identifiable {
         self.outputDirectory = outputDirectory
         self.outputTemplate = outputTemplate
         self.createdAt = Date()
+        self.videoDescription = videoDescription
+        self.uploader = uploader
+        self.duration = duration
+        self.uploadDate = uploadDate
+        self.viewCount = viewCount
+        self.extractor = extractor
     }
 
     // 永続化用の復元イニシャライザ
@@ -68,6 +82,12 @@ class DownloadTask: Identifiable {
         self.progress = record.progress
         self.outputFilePath = record.outputFilePath
         self.error = record.error
+        self.videoDescription = record.videoDescription
+        self.uploader = record.uploader
+        self.duration = record.duration
+        self.uploadDate = record.uploadDate
+        self.viewCount = record.viewCount
+        self.extractor = record.extractor
     }
 
     func toRecord() -> TaskRecord {
@@ -88,8 +108,44 @@ class DownloadTask: Identifiable {
             status: status.rawValue,
             progress: progress,
             outputFilePath: outputFilePath,
-            error: error
+            error: error,
+            videoDescription: videoDescription,
+            uploader: uploader,
+            duration: duration,
+            uploadDate: uploadDate,
+            viewCount: viewCount,
+            extractor: extractor
         )
+    }
+
+    // 再生時間を "HH:MM:SS" 形式に変換
+    var durationFormatted: String? {
+        guard let duration = duration else { return nil }
+        let totalSeconds = Int(duration)
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+        if hours > 0 {
+            return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+        }
+        return String(format: "%d:%02d", minutes, seconds)
+    }
+
+    // アップロード日を "yyyy年MM月dd日" 形式に変換
+    var uploadDateFormatted: String? {
+        guard let uploadDate = uploadDate, uploadDate.count == 8 else { return nil }
+        let year = String(uploadDate.prefix(4))
+        let month = String(uploadDate.dropFirst(4).prefix(2))
+        let day = String(uploadDate.dropFirst(6).prefix(2))
+        return L10n.uploadDate(year: year, month: month, day: day)
+    }
+
+    // 再生回数をフォーマット
+    var viewCountFormatted: String? {
+        guard let count = viewCount else { return nil }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: count))
     }
 }
 
@@ -112,6 +168,12 @@ struct TaskRecord: Codable {
     let progress: Double
     let outputFilePath: String?
     let error: String?
+    let videoDescription: String?
+    let uploader: String?
+    let duration: Double?
+    let uploadDate: String?
+    let viewCount: Int?
+    let extractor: String?
 }
 
 enum DownloadStatus: String {

@@ -4,6 +4,8 @@ struct DownloadListView: View {
     @Environment(DownloadViewModel.self) private var viewModel
 
     var body: some View {
+        @Bindable var vm = viewModel
+
         VStack(spacing: 0) {
             // ヘッダー
             HStack {
@@ -33,7 +35,7 @@ struct DownloadListView: View {
                 }
                 Spacer()
             } else {
-                List {
+                List(selection: $vm.selectedTaskID) {
                     ForEach(viewModel.tasks) { task in
                         DownloadRowView(
                             task: task,
@@ -44,6 +46,7 @@ struct DownloadListView: View {
                             onRevealInFinder: { viewModel.revealInFinder(task) },
                             onOpenFile: { viewModel.openFile(task) }
                         )
+                        .tag(task.id)
                     }
                 }
                 .listStyle(.sidebar)

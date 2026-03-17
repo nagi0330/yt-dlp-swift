@@ -94,7 +94,13 @@ class MainViewModel {
             formatSelector: formatSelector,
             container: AppSettings.preferredContainer,
             postProcessorArgs: selectedPreset.postProcessorArgs,
-            downloadPlaylist: usePlaylist
+            downloadPlaylist: usePlaylist,
+            videoDescription: info.description,
+            uploader: info.uploader,
+            duration: info.duration,
+            uploadDate: info.uploadDate,
+            viewCount: info.viewCount,
+            extractor: info.extractor
         )
 
         // UIリセット
@@ -216,7 +222,13 @@ class MainViewModel {
             container: AppSettings.preferredContainer,
             postProcessorArgs: selectedPreset.postProcessorArgs,
             isLiveRecording: true,
-            liveFromStart: liveFromStart
+            liveFromStart: liveFromStart,
+            videoDescription: info.description,
+            uploader: info.uploader,
+            duration: info.duration,
+            uploadDate: info.uploadDate,
+            viewCount: info.viewCount,
+            extractor: info.extractor
         )
 
         // UIリセット

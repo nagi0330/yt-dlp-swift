@@ -7,6 +7,28 @@
         <language>ja</language>
 
         <item>
+            <title>バージョン 1.1.1</title>
+            <pubDate>Mon, 17 Mar 2026 15:00:00 +0900</pubDate>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[
+                <h2>v1.1.1 変更点</h2>
+                <ul>
+                    <li>メタデータ(タイトル・概要・サムネイル)をMP4に自動埋め込み</li>
+                    <li>ダウンロードリストから詳細情報を表示可能に</li>
+                    <li>DMGビルドのcodesignエラーを修正</li>
+                </ul>
+            ]]></description>
+            <enclosure
+                url="https://github.com/nagi0330/yt-dlp-swift/releases/download/v1.1.1/yt-dlp-swift.dmg"
+                type="application/octet-stream"
+                sparkle:edSignature="AH3ORb2T9pYD52R2wECXJ5VDGX0iOrvnR1TXpF8iwBDODQudmsMSTiy3n7dLbOqnnrRU9UJP1ft171FNV9lFBg=="
+                length="5291271"
+            />
+        </item>
+
+        <item>
             <title>バージョン 1.1.0</title>
             <pubDate>Mon, 17 Mar 2026 11:30:00 +0900</pubDate>
             <sparkle:version>2</sparkle:version>

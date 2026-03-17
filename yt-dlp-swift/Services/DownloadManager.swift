@@ -24,7 +24,7 @@ class DownloadManager {
     }
 
     // タスクを追加してキューに入れる
-    func addTask(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, isLiveRecording: Bool = false, liveFromStart: Bool = false, outputTemplate: String? = nil) {
+    func addTask(url: String, title: String, thumbnailURL: String? = nil, formatSelector: String, container: String = "", postProcessorArgs: [String] = [], downloadPlaylist: Bool = false, isLiveRecording: Bool = false, liveFromStart: Bool = false, outputTemplate: String? = nil, videoDescription: String? = nil, uploader: String? = nil, duration: Double? = nil, uploadDate: String? = nil, viewCount: Int? = nil, extractor: String? = nil) {
         let task = DownloadTask(
             url: url,
             title: title,
@@ -36,7 +36,13 @@ class DownloadManager {
             isLiveRecording: isLiveRecording,
             liveFromStart: liveFromStart,
             outputDirectory: AppSettings.downloadDirectoryURL,
-            outputTemplate: outputTemplate ?? AppSettings.outputTemplate
+            outputTemplate: outputTemplate ?? AppSettings.outputTemplate,
+            videoDescription: videoDescription,
+            uploader: uploader,
+            duration: duration,
+            uploadDate: uploadDate,
+            viewCount: viewCount,
+            extractor: extractor
         )
         tasks.insert(task, at: 0)
         saveHistory()
@@ -66,7 +72,7 @@ class DownloadManager {
 
     // ダウンロードを実行
     private func executeDownload(_ task: DownloadTask) async {
-        // タイトルがURLのままなら動画情報を取得してタイトル・サムネイルを更新
+        // タイトルがURLのままなら動画情報を取得してタイトル・サムネイル・メタデータを更新
         if task.title == task.url {
             if let info = try? await ytDlpService.fetchVideoInfo(url: task.url) {
                 await MainActor.run {
@@ -74,6 +80,12 @@ class DownloadManager {
                     if task.thumbnailURL == nil {
                         task.thumbnailURL = info.thumbnail
                     }
+                    task.videoDescription = info.description
+                    task.uploader = info.uploader
+                    task.duration = info.duration
+                    task.uploadDate = info.uploadDate
+                    task.viewCount = info.viewCount
+                    task.extractor = info.extractor
                 }
             }
         }

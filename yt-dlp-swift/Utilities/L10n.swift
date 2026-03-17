@@ -468,6 +468,80 @@ enum L10n {
           pt: "Retomar")
     }
 
+    // MARK: - メタデータ詳細
+
+    static var metadataDetail: String {
+        t("詳細情報", "Details",
+          zhHant: "詳細資訊", zhHans: "详细信息",
+          ko: "상세 정보", ru: "Подробности",
+          es: "Detalles", fr: "Détails",
+          de: "Details", it: "Dettagli",
+          pt: "Detalhes")
+    }
+
+    static var metadataUploader: String {
+        t("投稿者", "Uploader",
+          zhHant: "上傳者", zhHans: "上传者",
+          ko: "업로더", ru: "Автор",
+          es: "Subido por", fr: "Auteur",
+          de: "Hochgeladen von", it: "Caricato da",
+          pt: "Enviado por")
+    }
+
+    static var metadataDuration: String {
+        t("再生時間", "Duration",
+          zhHant: "時長", zhHans: "时长",
+          ko: "재생 시간", ru: "Длительность",
+          es: "Duración", fr: "Durée",
+          de: "Dauer", it: "Durata",
+          pt: "Duração")
+    }
+
+    static var metadataUploadDate: String {
+        t("投稿日", "Upload Date",
+          zhHant: "上傳日期", zhHans: "上传日期",
+          ko: "업로드 날짜", ru: "Дата загрузки",
+          es: "Fecha de subida", fr: "Date de mise en ligne",
+          de: "Upload-Datum", it: "Data di caricamento",
+          pt: "Data de envio")
+    }
+
+    static var metadataViewCount: String {
+        t("再生回数", "View Count",
+          zhHant: "觀看次數", zhHans: "播放次数",
+          ko: "조회수", ru: "Просмотры",
+          es: "Reproducciones", fr: "Vues",
+          de: "Aufrufe", it: "Visualizzazioni",
+          pt: "Visualizações")
+    }
+
+    static var metadataSource: String {
+        t("ソース", "Source",
+          zhHant: "來源", zhHans: "来源",
+          ko: "출처", ru: "Источник",
+          es: "Fuente", fr: "Source",
+          de: "Quelle", it: "Fonte",
+          pt: "Fonte")
+    }
+
+    static var metadataDescription: String {
+        t("概要", "Description",
+          zhHant: "說明", zhHans: "简介",
+          ko: "설명", ru: "Описание",
+          es: "Descripción", fr: "Description",
+          de: "Beschreibung", it: "Descrizione",
+          pt: "Descrição")
+    }
+
+    static var metadataNoDescription: String {
+        t("概要なし", "No description",
+          zhHant: "無說明", zhHans: "无简介",
+          ko: "설명 없음", ru: "Нет описания",
+          es: "Sin descripción", fr: "Pas de description",
+          de: "Keine Beschreibung", it: "Nessuna descrizione",
+          pt: "Sem descrição")
+    }
+
     // MARK: - ダウンロードフェーズ
 
     static var phaseVideo: String {
@@ -1363,12 +1437,12 @@ enum L10n {
     // MARK: - About画面
 
     static var version: String {
-        t("バージョン 1.1.0", "Version 1.1.0",
-          zhHant: "版本 1.1.0", zhHans: "版本 1.1.0",
-          ko: "버전 1.1.0", ru: "Версия 1.1.0",
-          es: "Versión 1.1.0", fr: "Version 1.1.0",
-          de: "Version 1.1.0", it: "Versione 1.1.0",
-          pt: "Versão 1.1.0")
+        t("バージョン 1.1.1", "Version 1.1.1",
+          zhHant: "版本 1.1.1", zhHans: "版本 1.1.1",
+          ko: "버전 1.1.1", ru: "Версия 1.1.1",
+          es: "Versión 1.1.1", fr: "Version 1.1.1",
+          de: "Version 1.1.1", it: "Versione 1.1.1",
+          pt: "Versão 1.1.1")
     }
 
     static var appDescription: String {

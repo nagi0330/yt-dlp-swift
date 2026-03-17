@@ -153,6 +153,10 @@ class YtDlpService {
             }
         }
 
+        // メタデータ・サムネイル埋め込み
+        args.append("--embed-metadata")
+        args.append("--embed-thumbnail")
+
         // 追加引数
         let extra = AppSettings.extraArguments.trimmingCharacters(in: .whitespacesAndNewlines)
         if !extra.isEmpty {

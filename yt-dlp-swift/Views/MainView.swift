@@ -13,64 +13,11 @@ struct MainView: View {
             DownloadListView()
                 .navigationSplitViewColumnWidth(min: 250, ideal: 300, max: 400)
         } detail: {
-            // メイン: URL入力 + 動画情報 + フォーマット選択
-            VStack(spacing: 0) {
-                URLInputView()
-                    .padding()
-
-                Divider()
-
-                if mainVM.isFetching {
-                    Spacer()
-                    VStack(spacing: 12) {
-                        ProgressView(L10n.fetchingVideoInfo)
-                        Button(L10n.cancel) {
-                            mainVM.cancelFetch()
-                        }
-                        .buttonStyle(.bordered)
-                        .controlSize(.small)
-                    }
-                    .padding()
-                    Spacer()
-                } else if let videoInfo = mainVM.videoInfo {
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            VideoInfoView(
-                                videoInfo: videoInfo,
-                                onStartDownload: mainVM.appMode == .download ? {
-                                    mainVM.startDownload()
-                                } : nil,
-                                onStartRecording: mainVM.appMode == .liveRecording || videoInfo.isCurrentlyLive ? {
-                                    mainVM.startLiveRecording()
-                                } : nil
-                            )
-                            FormatPickerView()
-                        }
-                        .padding()
-                    }
-                } else if let error = mainVM.errorMessage {
-                    Spacer()
-                    VStack(spacing: 12) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 48))
-                            .foregroundStyle(.secondary)
-                        Text(error)
-                            .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding()
-                    Spacer()
-                } else {
-                    Spacer()
-                    VStack(spacing: 12) {
-                        Image(systemName: mainVM.appMode == .liveRecording ? "record.circle" : "arrow.down.circle")
-                            .font(.system(size: 48))
-                            .foregroundStyle(mainVM.appMode == .liveRecording ? .red.opacity(0.5) : .secondary)
-                        Text(mainVM.appMode == .liveRecording ? L10n.enterLiveURLPlaceholder : L10n.enterURLPlaceholder)
-                            .foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                }
+            // メイン: 選択されたタスクの詳細 or URL入力
+            if let selectedTask = downloadVM.selectedTask {
+                TaskDetailView(task: selectedTask)
+            } else {
+                urlInputContent
             }
         }
         .toolbar {
@@ -112,6 +59,69 @@ struct MainView: View {
             Button(L10n.cancel, role: .cancel) {}
         } message: {
             Text(L10n.playlistDetectedMessage)
+        }
+    }
+
+    // URL入力コンテンツ（タスク未選択時）
+    @ViewBuilder
+    private var urlInputContent: some View {
+        VStack(spacing: 0) {
+            URLInputView()
+                .padding()
+
+            Divider()
+
+            if mainVM.isFetching {
+                Spacer()
+                VStack(spacing: 12) {
+                    ProgressView(L10n.fetchingVideoInfo)
+                    Button(L10n.cancel) {
+                        mainVM.cancelFetch()
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                }
+                .padding()
+                Spacer()
+            } else if let videoInfo = mainVM.videoInfo {
+                ScrollView {
+                    VStack(spacing: 16) {
+                        VideoInfoView(
+                            videoInfo: videoInfo,
+                            onStartDownload: mainVM.appMode == .download ? {
+                                mainVM.startDownload()
+                            } : nil,
+                            onStartRecording: mainVM.appMode == .liveRecording || videoInfo.isCurrentlyLive ? {
+                                mainVM.startLiveRecording()
+                            } : nil
+                        )
+                        FormatPickerView()
+                    }
+                    .padding()
+                }
+            } else if let error = mainVM.errorMessage {
+                Spacer()
+                VStack(spacing: 12) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.system(size: 48))
+                        .foregroundStyle(.secondary)
+                    Text(error)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+                .padding()
+                Spacer()
+            } else {
+                Spacer()
+                VStack(spacing: 12) {
+                    Image(systemName: mainVM.appMode == .liveRecording ? "record.circle" : "arrow.down.circle")
+                        .font(.system(size: 48))
+                        .foregroundStyle(mainVM.appMode == .liveRecording ? .red.opacity(0.5) : .secondary)
+                    Text(mainVM.appMode == .liveRecording ? L10n.enterLiveURLPlaceholder : L10n.enterURLPlaceholder)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+            }
         }
     }
 

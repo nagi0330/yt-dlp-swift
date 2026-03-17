@@ -13,6 +13,7 @@
 		269510CC9A5C4584BD19DE64 /* VideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1496F0F129D6B7A5E725CAF6 /* VideoInfo.swift */; };
 		295B195DBA017E57B0AD15BE /* SupportedSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E2171256FFEE7C4FC6D482 /* SupportedSite.swift */; };
 		2E479441EE32EFEC485BF09C /* DownloadRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC0769B62EA165911FAE103 /* DownloadRowView.swift */; };
+		AABB001122334455DEADBEEF /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB001122334455DEADBEE0 /* TaskDetailView.swift */; };
 		36241B71CD6FEED29D30C3DA /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87CB92F63C3F40C86E58BEC /* DownloadManager.swift */; };
 		4EB055888D33D264EDEC94E5 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 50D1F74E168C9B44539B055C /* Sparkle */; };
 		595453FD899DFBA19C51B7A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842153D9930C23A391B1561A /* Assets.xcassets */; };
@@ -71,6 +72,7 @@
 		B26A9276B05334BFCB379BB1 /* DownloadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTask.swift; sourceTree = "<group>"; };
 		B9717CB505AACD89D444D24D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		BAC0769B62EA165911FAE103 /* DownloadRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadRowView.swift; sourceTree = "<group>"; };
+		AABB001122334455DEADBEE0 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
 		C87CB92F63C3F40C86E58BEC /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		D0BFED213216DE2A3C338FE7 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		D45BCDDB2B915BDE0EDAF9B0 /* ProcessRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessRunner.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				6D7689075346AAF7F25DF27E /* DependencySetupView.swift */,
 				DE700ABBFFB47425D41EE102 /* DownloadListView.swift */,
 				BAC0769B62EA165911FAE103 /* DownloadRowView.swift */,
+				AABB001122334455DEADBEE0 /* TaskDetailView.swift */,
 				E0404F3B6FCF397C561388DB /* FormatPickerView.swift */,
 				360FC1F24637427C4CAB536F /* LoginWebView.swift */,
 				B9717CB505AACD89D444D24D /* MainView.swift */,
@@ -293,6 +296,7 @@
 				8E0136A9A5A5D21A3C3266FB /* DownloadListView.swift in Sources */,
 				36241B71CD6FEED29D30C3DA /* DownloadManager.swift in Sources */,
 				2E479441EE32EFEC485BF09C /* DownloadRowView.swift in Sources */,
+				AABB001122334455DEADBEEF /* TaskDetailView.swift in Sources */,
 				A1B492FBD988B7ECA056DE11 /* DownloadTask.swift in Sources */,
 				DDFE31B6BF2A9EA7EE3C3C06 /* DownloadViewModel.swift in Sources */,
 				212ED07581B3923161E681A1 /* FileNameSanitizer.swift in Sources */,

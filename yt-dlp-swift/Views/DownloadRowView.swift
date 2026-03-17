@@ -54,6 +54,14 @@ struct DownloadRowView: View {
                 .lineLimit(2)
                 .truncationMode(.tail)
 
+            // 投稿者
+            if let uploader = task.uploader {
+                Text(uploader)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
+
             // 録画中
             if task.status == .recording {
                 HStack(spacing: 4) {
