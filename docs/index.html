@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yt-dlp-swift</title>
+    <meta name="description" content="A native macOS GUI for yt-dlp. 1800+ sites, 12 languages, zero config.">
+    <link rel="icon" href="icon.png" type="image/png">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --card: #fff;
+            --text: #1d1d1f;
+            --sub: #6e6e73;
+            --accent: #0071e3;
+            --accent-hover: #0077ed;
+            --border: #e5e5e7;
+            --tag-bg: #f0f0f5;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #111;
+                --card: #1c1c1e;
+                --text: #f5f5f7;
+                --sub: #a1a1a6;
+                --accent: #2997ff;
+                --accent-hover: #40a9ff;
+                --border: #333;
+                --tag-bg: #2c2c2e;
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .lang-switcher {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+        }
+        .lang-switcher select {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            font-size: 0.85rem;
+            cursor: pointer;
+            appearance: auto;
+        }
+        .hero {
+            text-align: center;
+            padding: 80px 24px 60px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        .hero img.logo {
+            width: 128px;
+            height: 128px;
+            border-radius: 24px;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+        .hero p.tagline {
+            font-size: 1.2rem;
+            color: var(--sub);
+            margin-bottom: 32px;
+        }
+        .hero .badges {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+        .hero .badges span {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-radius: 20px;
+            background: var(--tag-bg);
+            color: var(--sub);
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #fff;
+            background: var(--accent);
+            border: none;
+            border-radius: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .download-btn:hover { background: var(--accent-hover); }
+        .download-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .download-sub {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--sub);
+        }
+        .features {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+        }
+        .feature-card .icon { font-size: 1.8rem; margin-bottom: 12px; }
+        .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+        .feature-card p { font-size: 0.9rem; color: var(--sub); }
+        .sites {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+            text-align: center;
+        }
+        .sites h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; }
+        .sites .site-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .sites .site-tags span {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            background: var(--tag-bg);
+            color: var(--sub);
+        }
+        .install {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+        .install h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .install ol { list-style: none; counter-reset: step; }
+        .install ol li {
+            counter-increment: step;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .install ol li::before {
+            content: counter(step);
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .install ol li div { padding-top: 4px; }
+        .install ol li strong { font-weight: 600; }
+        .install ol li code {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 2px 8px;
+            background: var(--tag-bg);
+            border-radius: 6px;
+            font-family: "SF Mono", Menlo, monospace;
+            font-size: 0.85rem;
+        }
+        .install ol li a { color: var(--accent); text-decoration: none; }
+        .install ol li a:hover { text-decoration: underline; }
+        .disclaimer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 24px 40px;
+            text-align: center;
+        }
+        .disclaimer p { font-size: 0.8rem; color: var(--sub); line-height: 1.7; }
+        footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--sub);
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <select id="langSelect">
+            <option value="ja">日本語</option>
+            <option value="en">English</option>
+            <option value="zh-Hant">繁體中文</option>
+            <option value="zh-Hans">简体中文</option>
+            <option value="ko">한국어</option>
+            <option value="ru">Русский</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="pt">Português</option>
+        </select>
+    </div>
+
+    <section class="hero">
+        <img class="logo" src="logo.png" alt="yt-dlp-swift">
+        <h1>yt-dlp-swift</h1>
+        <p class="tagline" id="tagline">macOS向け動画ダウンローダー</p>
+        <div class="badges">
+            <span>macOS 14+</span>
+            <span>Swift 5.9</span>
+            <span>MIT License</span>
+            <span id="badgeLangs">12言語対応</span>
+        </div>
+        <a class="download-btn" href="https://github.com/nagi0330/yt-dlp-swift/releases/latest">
+            <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-8 4h16v-2H4v2z"/></svg>
+            <span id="downloadBtn">DMG をダウンロード</span>
+        </a>
+        <p class="download-sub" id="downloadSub">macOS Sonoma 14 以降 · Apple Silicon / Intel 対応</p>
+    </section>
+
+    <section class="features" id="features">
+        <div class="feature-card"><div class="icon">⚡</div><h3>ゼロ設定で開始</h3><p>yt-dlp, FFmpeg, Deno を自動ダウンロード。インストールして起動するだけですぐ使えます。</p></div>
+        <div class="feature-card"><div class="icon">🌐</div><h3>1800+ サイト対応</h3><p>YouTube, ニコニコ動画, TVer, ABEMA, TikTok, X, Bilibili など、あらゆるサイトに対応。</p></div>
+        <div class="feature-card"><div class="icon">🎥</div><h3>配信録画モード</h3><p>ライブ配信をリアルタイムで録画。開始から録画、途中からの録画に対応。</p></div>
+        <div class="feature-card"><div class="icon">🎬</div><h3>QuickTime 互換</h3><p>MP4 は H.264+AAC でエンコード。ダウンロードしてすぐ QuickTime Player で再生。</p></div>
+        <div class="feature-card"><div class="icon">🔒</div><h3>Cookie・ログイン対応</h3><p>アプリ内ブラウザでログインし、会員限定コンテンツもダウンロード可能。</p></div>
+        <div class="feature-card"><div class="icon">🔧</div><h3>自動アップデート</h3><p>Sparkle によるアプリ自動更新。yt-dlp や FFmpeg もアプリ内でワンクリック更新。</p></div>
+    </section>
+
+    <section class="sites">
+        <h2 id="sitesTitle">対応サイト (一部)</h2>
+        <div class="site-tags">
+            <span>YouTube</span>
+            <span>ニコニコ動画</span>
+            <span>TVer</span>
+            <span>ABEMA</span>
+            <span>TikTok</span>
+            <span>X (Twitter)</span>
+            <span>Instagram</span>
+            <span>Twitch</span>
+            <span>Bilibili</span>
+            <span>SoundCloud</span>
+            <span>Bandcamp</span>
+            <span>NHK</span>
+            <span>Radiko</span>
+            <span>Vimeo</span>
+            <span>Dailymotion</span>
+            <span id="sitesMore">+ 1800 以上</span>
+        </div>
+    </section>
+
+    <section class="install">
+        <h2 id="installTitle">インストール方法</h2>
+        <ol id="installSteps">
+            <li><div><strong>DMG をダウンロード</strong><br><a href="https://github.com/nagi0330/yt-dlp-swift/releases/latest">GitHub Releases</a> から最新版を取得</div></li>
+            <li><div><strong>Applications にドラッグ</strong><br>DMG を開き、アプリを Applications フォルダにドラッグ</div></li>
+            <li><div><strong>右クリック →「開く」で初回起動</strong><br>署名なし配布のため、初回は右クリックから開いてください。<br>または: <code>xattr -cr /Applications/yt-dlp-swift.app</code></div></li>
+        </ol>
+    </section>
+
+    <section class="disclaimer">
+        <p id="disclaimer">本アプリは著作権で保護されたコンテンツの無断ダウンロードを推奨しません。利用者は各国・地域の法律を遵守し、自己責任でご利用ください。</p>
+    </section>
+
+    <footer>
+        <p>
+            <a href="https://github.com/nagi0330/yt-dlp-swift">GitHub</a> &middot;
+            MIT License &middot;
+            &copy; 2026 nagi
+        </p>
+    </footer>
+
+<script>
+const i18n = {
+    ja: {
+        title: "yt-dlp-swift — macOS向け動画ダウンローダー",
+        tagline: "macOS向け動画ダウンローダー",
+        badgeLangs: "12言語対応",
+        downloadBtn: "DMG をダウンロード",
+        downloadSub: "macOS Sonoma 14 以降 · Apple Silicon / Intel 対応",
+        sitesTitle: "対応サイト (一部)",
+        sitesMore: "+ 1800 以上",
+        installTitle: "インストール方法",
+        install: [
+            ["DMG をダウンロード", "{link}から最新版を取得"],
+            ["Applications にドラッグ", "DMG を開き、アプリを Applications フォルダにドラッグ"],
+            ["右クリック →「開く」で初回起動", "署名なし配布のため、初回は右クリックから開いてください。{br}または: {code}"]
+        ],
+        disclaimer: "本アプリは著作権で保護されたコンテンツの無断ダウンロードを推奨しません。利用者は各国・地域の法律を遵守し、自己責任でご利用ください。",
+        features: [
+            ["⚡", "ゼロ設定で開始", "yt-dlp, FFmpeg, Deno を自動ダウンロード。インストールして起動するだけですぐ使えます。"],
+            ["🌐", "1800+ サイト対応", "YouTube, ニコニコ動画, TVer, ABEMA, TikTok, X, Bilibili など、あらゆるサイトに対応。"],
+            ["🎥", "配信録画モード", "ライブ配信をリアルタイムで録画。開始から録画、途中からの録画に対応。"],
+            ["🎬", "QuickTime 互換", "MP4 は H.264+AAC でエンコード。ダウンロードしてすぐ QuickTime Player で再生。"],
+            ["🔒", "Cookie・ログイン対応", "アプリ内ブラウザでログインし、会員限定コンテンツもダウンロード可能。"],
+            ["🔧", "自動アップデート", "Sparkle によるアプリ自動更新。yt-dlp や FFmpeg もアプリ内でワンクリック更新。"]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    en: {
+        title: "yt-dlp-swift — Video Downloader for macOS",
+        tagline: "Video Downloader for macOS",
+        badgeLangs: "12 Languages",
+        downloadBtn: "Download DMG",
+        downloadSub: "macOS Sonoma 14+ · Apple Silicon / Intel",
+        sitesTitle: "Supported Sites (partial)",
+        sitesMore: "+ 1800 more",
+        installTitle: "Installation",
+        install: [
+            ["Download DMG", "Get the latest release from {link}"],
+            ["Drag to Applications", "Open the DMG and drag the app to your Applications folder"],
+            ["Right-click → Open on first launch", "Since the app is unsigned, right-click and select Open.{br}Or run: {code}"]
+        ],
+        disclaimer: "This application does not endorse downloading copyrighted content without authorization. Users must comply with applicable laws.",
+        features: [
+            ["⚡", "Zero Config", "Automatically downloads yt-dlp, FFmpeg, and Deno. Just install and launch."],
+            ["🌐", "1800+ Sites", "YouTube, Niconico, TVer, ABEMA, TikTok, X, Bilibili, and many more."],
+            ["🎥", "Live Recording", "Record live streams in real-time. Supports recording from start or mid-stream."],
+            ["🎬", "QuickTime Compatible", "MP4 encoded with H.264+AAC. Play immediately in QuickTime Player."],
+            ["🔒", "Cookie & Login Support", "Log in via the built-in browser to download members-only content."],
+            ["🔧", "Auto Update", "App auto-updates via Sparkle. One-click updates for yt-dlp and FFmpeg."]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    "zh-Hant": {
+        title: "yt-dlp-swift — macOS 影片下載器",
+        tagline: "macOS 影片下載器",
+        badgeLangs: "12 種語言",
+        downloadBtn: "下載 DMG",
+        downloadSub: "macOS Sonoma 14 以上 · Apple Silicon / Intel 支援",
+        sitesTitle: "支援網站（部分）",
+        sitesMore: "+ 1800 以上",
+        installTitle: "安裝方法",
+        install: [
+            ["下載 DMG", "從 {link} 取得最新版本"],
+            ["拖到 Applications", "打開 DMG，將應用程式拖到 Applications 資料夾"],
+            ["右鍵 →「打開」首次啟動", "由於未簽名，首次請右鍵點選「打開」。{br}或執行：{code}"]
+        ],
+        disclaimer: "本應用程式不鼓勵未經授權下載受版權保護的內容。使用者須遵守所在地區法律。",
+        features: [
+            ["⚡", "零設定啟動", "自動下載 yt-dlp、FFmpeg、Deno。安裝後直接啟動即可使用。"],
+            ["🌐", "1800+ 網站支援", "YouTube、Niconico、TVer、ABEMA、TikTok、X、Bilibili 等。"],
+            ["🎥", "直播錄製模式", "即時錄製直播。支援從頭錄製或中途開始。"],
+            ["🎬", "QuickTime 相容", "MP4 使用 H.264+AAC 編碼，可直接在 QuickTime Player 播放。"],
+            ["🔒", "Cookie 和登入支援", "透過內建瀏覽器登入，下載會員專屬內容。"],
+            ["🔧", "自動更新", "透過 Sparkle 自動更新。yt-dlp 和 FFmpeg 一鍵更新。"]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    "zh-Hans": {
+        title: "yt-dlp-swift — macOS 视频下载器",
+        tagline: "macOS 视频下载器",
+        badgeLangs: "12 种语言",
+        downloadBtn: "下载 DMG",
+        downloadSub: "macOS Sonoma 14 以上 · Apple Silicon / Intel 支持",
+        sitesTitle: "支持网站（部分）",
+        sitesMore: "+ 1800 以上",
+        installTitle: "安装方法",
+        install: [
+            ["下载 DMG", "从 {link} 获取最新版本"],
+            ["拖到 Applications", "打开 DMG，将应用拖到 Applications 文件夹"],
+            ["右键 →「打开」首次启动", "由于未签名，首次请右键选择「打开」。{br}或执行：{code}"]
+        ],
+        disclaimer: "本应用不鼓励未经授权下载受版权保护的内容。用户须遵守所在地区法律。",
+        features: [
+            ["⚡", "零配置启动", "自动下载 yt-dlp、FFmpeg、Deno。安装后直接启动即可使用。"],
+            ["🌐", "1800+ 网站支持", "YouTube、Niconico、TVer、ABEMA、TikTok、X、Bilibili 等。"],
+            ["🎥", "直播录制模式", "实时录制直播。支持从头录制或中途开始。"],
+            ["🎬", "QuickTime 兼容", "MP4 使用 H.264+AAC 编码，可直接在 QuickTime Player 播放。"],
+            ["🔒", "Cookie 和登录支持", "通过内置浏览器登录，下载会员专属内容。"],
+            ["🔧", "自动更新", "通过 Sparkle 自动更新。yt-dlp 和 FFmpeg 一键更新。"]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    ko: {
+        title: "yt-dlp-swift — macOS 동영상 다운로더",
+        tagline: "macOS 동영상 다운로더",
+        badgeLangs: "12개 언어",
+        downloadBtn: "DMG 다운로드",
+        downloadSub: "macOS Sonoma 14 이상 · Apple Silicon / Intel 지원",
+        sitesTitle: "지원 사이트 (일부)",
+        sitesMore: "+ 1800개 이상",
+        installTitle: "설치 방법",
+        install: [
+            ["DMG 다운로드", "{link}에서 최신 버전 다운로드"],
+            ["Applications에 드래그", "DMG를 열고 앱을 Applications 폴더로 드래그"],
+            ["우클릭 → '열기'로 첫 실행", "서명되지 않은 배포이므로 첫 실행 시 우클릭으로 열어주세요.{br}또는: {code}"]
+        ],
+        disclaimer: "이 앱은 저작권으로 보호된 콘텐츠의 무단 다운로드를 권장하지 않습니다. 사용자는 해당 지역 법률을 준수해야 합니다.",
+        features: [
+            ["⚡", "제로 설정", "yt-dlp, FFmpeg, Deno를 자동 다운로드. 설치 후 바로 사용 가능."],
+            ["🌐", "1800+ 사이트 지원", "YouTube, Niconico, TVer, ABEMA, TikTok, X, Bilibili 등."],
+            ["🎥", "라이브 녹화 모드", "라이브 스트리밍을 실시간 녹화. 처음부터 또는 중간부터 녹화 가능."],
+            ["🎬", "QuickTime 호환", "MP4는 H.264+AAC로 인코딩. QuickTime Player에서 바로 재생."],
+            ["🔒", "쿠키 및 로그인 지원", "내장 브라우저로 로그인하여 회원 전용 콘텐츠 다운로드."],
+            ["🔧", "자동 업데이트", "Sparkle을 통한 앱 자동 업데이트. yt-dlp, FFmpeg 원클릭 업데이트."]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    ru: {
+        title: "yt-dlp-swift — Загрузчик видео для macOS",
+        tagline: "Загрузчик видео для macOS",
+        badgeLangs: "12 языков",
+        downloadBtn: "Скачать DMG",
+        downloadSub: "macOS Sonoma 14+ · Apple Silicon / Intel",
+        sitesTitle: "Поддерживаемые сайты (часть)",
+        sitesMore: "+ 1800 и более",
+        installTitle: "Установка",
+        install: [
+            ["Скачайте DMG", "Загрузите последнюю версию с {link}"],
+            ["Перетащите в Applications", "Откройте DMG и перетащите приложение в папку Applications"],
+            ["ПКМ → «Открыть» при первом запуске", "Приложение не подписано, поэтому при первом запуске нажмите ПКМ → Открыть.{br}Или выполните: {code}"]
+        ],
+        disclaimer: "Это приложение не поддерживает несанкционированную загрузку защищённого авторским правом контента. Пользователи обязаны соблюдать законодательство.",
+        features: [
+            ["⚡", "Нулевая настройка", "Автоматическая загрузка yt-dlp, FFmpeg, Deno. Просто установите и запустите."],
+            ["🌐", "1800+ сайтов", "YouTube, Niconico, TVer, ABEMA, TikTok, X, Bilibili и другие."],
+            ["🎥", "Запись трансляций", "Запись прямых трансляций в реальном времени с начала или с текущего момента."],
+            ["🎬", "Совместимость с QuickTime", "MP4 в H.264+AAC. Воспроизведение сразу в QuickTime Player."],
+            ["🔒", "Cookie и авторизация", "Войдите через встроенный браузер для загрузки закрытого контента."],
+            ["🔧", "Автообновление", "Автоматическое обновление через Sparkle. Обновление yt-dlp и FFmpeg в один клик."]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    es: {
+        title: "yt-dlp-swift — Descargador de vídeos para macOS",
+        tagline: "Descargador de vídeos para macOS",
+        badgeLangs: "12 idiomas",
+        downloadBtn: "Descargar DMG",
+        downloadSub: "macOS Sonoma 14+ · Apple Silicon / Intel",
+        sitesTitle: "Sitios compatibles (parcial)",
+        sitesMore: "+ 1800 más",
+        installTitle: "Instalación",
+        install: [
+            ["Descargar DMG", "Obtén la última versión desde {link}"],
+            ["Arrastrar a Applications", "Abre el DMG y arrastra la app a la carpeta Applications"],
+            ["Clic derecho → «Abrir» en el primer inicio", "Como la app no está firmada, haz clic derecho y selecciona Abrir.{br}O ejecuta: {code}"]
+        ],
+        disclaimer: "Esta aplicación no promueve la descarga no autorizada de contenido protegido por derechos de autor. Los usuarios deben cumplir con las leyes aplicables.",
+        features: [
+            ["⚡", "Cero configuración", "Descarga automática de yt-dlp, FFmpeg y Deno. Solo instala y ejecuta."],
+            ["🌐", "1800+ sitios", "YouTube, Niconico, TVer, ABEMA, TikTok, X, Bilibili y muchos más."],
+            ["🎥", "Grabación en vivo", "Graba transmisiones en vivo en tiempo real desde el inicio o en curso."],
+            ["🎬", "Compatible con QuickTime", "MP4 codificado en H.264+AAC. Reproducción inmediata en QuickTime Player."],
+            ["🔒", "Cookies e inicio de sesión", "Inicia sesión en el navegador integrado para descargar contenido exclusivo."],
+            ["🔧", "Actualización automática", "Actualización automática vía Sparkle. Actualiza yt-dlp y FFmpeg con un clic."]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    fr: {
+        title: "yt-dlp-swift — Téléchargeur vidéo pour macOS",
+        tagline: "Téléchargeur vidéo pour macOS",
+        badgeLangs: "12 langues",
+        downloadBtn: "Télécharger le DMG",
+        downloadSub: "macOS Sonoma 14+ · Apple Silicon / Intel",
+        sitesTitle: "Sites supportés (partiel)",
+        sitesMore: "+ 1800 autres",
+        installTitle: "Installation",
+        install: [
+            ["Télécharger le DMG", "Obtenez la dernière version depuis {link}"],
+            ["Glisser dans Applications", "Ouvrez le DMG et glissez l'app dans le dossier Applications"],
+            ["Clic droit → « Ouvrir » au premier lancement", "L'app n'étant pas signée, faites clic droit → Ouvrir.{br}Ou exécutez : {code}"]
+        ],
+        disclaimer: "Cette application n'encourage pas le téléchargement non autorisé de contenu protégé par le droit d'auteur. Les utilisateurs doivent respecter les lois applicables.",
+        features: [
+            ["⚡", "Zéro configuration", "Téléchargement automatique de yt-dlp, FFmpeg et Deno. Installez et lancez."],
+            ["🌐", "1800+ sites", "YouTube, Niconico, TVer, ABEMA, TikTok, X, Bilibili et bien d'autres."],
+            ["🎥", "Enregistrement en direct", "Enregistrez des diffusions en direct en temps réel, depuis le début ou en cours."],
+            ["🎬", "Compatible QuickTime", "MP4 encodé en H.264+AAC. Lecture immédiate dans QuickTime Player."],
+            ["🔒", "Cookies et connexion", "Connectez-vous via le navigateur intégré pour télécharger du contenu réservé."],
+            ["🔧", "Mise à jour automatique", "Mise à jour automatique via Sparkle. Mettez à jour yt-dlp et FFmpeg en un clic."]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    de: {
+        title: "yt-dlp-swift — Video-Downloader für macOS",
+        tagline: "Video-Downloader für macOS",
+        badgeLangs: "12 Sprachen",
+        downloadBtn: "DMG herunterladen",
+        downloadSub: "macOS Sonoma 14+ · Apple Silicon / Intel",
+        sitesTitle: "Unterstützte Seiten (Auswahl)",
+        sitesMore: "+ 1800 weitere",
+        installTitle: "Installation",
+        install: [
+            ["DMG herunterladen", "Neueste Version von {link} herunterladen"],
+            ["In Applications ziehen", "DMG öffnen und die App in den Applications-Ordner ziehen"],
+            ["Rechtsklick → „Öffnen" beim ersten Start", "Da die App unsigniert ist, beim ersten Start Rechtsklick → Öffnen.{br}Oder: {code}"]
+        ],
+        disclaimer: "Diese Anwendung unterstützt nicht das unbefugte Herunterladen urheberrechtlich geschützter Inhalte. Benutzer müssen die geltenden Gesetze einhalten.",
+        features: [
+            ["⚡", "Null Konfiguration", "Automatischer Download von yt-dlp, FFmpeg und Deno. Einfach installieren und starten."],
+            ["🌐", "1800+ Seiten", "YouTube, Niconico, TVer, ABEMA, TikTok, X, Bilibili und viele mehr."],
+            ["🎥", "Live-Aufnahme", "Livestreams in Echtzeit aufnehmen. Von Anfang an oder mittendrin."],
+            ["🎬", "QuickTime-kompatibel", "MP4 in H.264+AAC kodiert. Sofort in QuickTime Player abspielbar."],
+            ["🔒", "Cookie & Login", "Im integrierten Browser anmelden und exklusive Inhalte herunterladen."],
+            ["🔧", "Auto-Update", "Automatische Updates via Sparkle. yt-dlp und FFmpeg per Klick aktualisieren."]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    it: {
+        title: "yt-dlp-swift — Scaricatore video per macOS",
+        tagline: "Scaricatore video per macOS",
+        badgeLangs: "12 lingue",
+        downloadBtn: "Scarica DMG",
+        downloadSub: "macOS Sonoma 14+ · Apple Silicon / Intel",
+        sitesTitle: "Siti supportati (parziale)",
+        sitesMore: "+ 1800 altri",
+        installTitle: "Installazione",
+        install: [
+            ["Scarica il DMG", "Scarica l'ultima versione da {link}"],
+            ["Trascina in Applications", "Apri il DMG e trascina l'app nella cartella Applications"],
+            ["Clic destro → «Apri» al primo avvio", "L'app non è firmata, quindi al primo avvio fai clic destro → Apri.{br}Oppure esegui: {code}"]
+        ],
+        disclaimer: "Questa applicazione non promuove il download non autorizzato di contenuti protetti da copyright. Gli utenti devono rispettare le leggi applicabili.",
+        features: [
+            ["⚡", "Zero configurazione", "Download automatico di yt-dlp, FFmpeg e Deno. Basta installare e avviare."],
+            ["🌐", "1800+ siti", "YouTube, Niconico, TVer, ABEMA, TikTok, X, Bilibili e molti altri."],
+            ["🎥", "Registrazione live", "Registra streaming live in tempo reale dall'inizio o in corso."],
+            ["🎬", "Compatibile con QuickTime", "MP4 codificato in H.264+AAC. Riproduzione immediata in QuickTime Player."],
+            ["🔒", "Cookie e login", "Accedi tramite il browser integrato per scaricare contenuti riservati."],
+            ["🔧", "Aggiornamento automatico", "Aggiornamento automatico tramite Sparkle. Aggiorna yt-dlp e FFmpeg con un clic."]
+        ],
+        releasesLabel: "GitHub Releases"
+    },
+    pt: {
+        title: "yt-dlp-swift — Baixador de vídeos para macOS",
+        tagline: "Baixador de vídeos para macOS",
+        badgeLangs: "12 idiomas",
+        downloadBtn: "Baixar DMG",
+        downloadSub: "macOS Sonoma 14+ · Apple Silicon / Intel",
+        sitesTitle: "Sites suportados (parcial)",
+        sitesMore: "+ 1800 outros",
+        installTitle: "Instalação",
+        install: [
+            ["Baixar o DMG", "Baixe a versão mais recente em {link}"],
+            ["Arrastar para Applications", "Abra o DMG e arraste o app para a pasta Applications"],
+            ["Clique direito → «Abrir» na primeira execução", "Como o app não é assinado, clique direito e selecione Abrir.{br}Ou execute: {code}"]
+        ],
+        disclaimer: "Este aplicativo não incentiva o download não autorizado de conteúdo protegido por direitos autorais. Os usuários devem cumprir as leis aplicáveis.",
+        features: [
+            ["⚡", "Zero configuração", "Download automático de yt-dlp, FFmpeg e Deno. Basta instalar e iniciar."],
+            ["🌐", "1800+ sites", "YouTube, Niconico, TVer, ABEMA, TikTok, X, Bilibili e muito mais."],
+            ["🎥", "Gravação ao vivo", "Grave transmissões ao vivo em tempo real, do início ou durante a transmissão."],
+            ["🎬", "Compatível com QuickTime", "MP4 codificado em H.264+AAC. Reprodução imediata no QuickTime Player."],
+            ["🔒", "Cookies e login", "Faça login pelo navegador integrado para baixar conteúdo exclusivo."],
+            ["🔧", "Atualização automática", "Atualização automática via Sparkle. Atualize yt-dlp e FFmpeg com um clique."]
+        ],
+        releasesLabel: "GitHub Releases"
+    }
+};
+
+function detectLang() {
+    var nav = "en";
+    try { nav = navigator.language || (navigator.languages && navigator.languages[0]) || "en"; } catch(e) {}
+    const n = nav.toLowerCase();
+    if (n.startsWith("ja")) return "ja";
+    if (n === "zh-tw" || n === "zh-hk" || n.startsWith("zh-hant")) return "zh-Hant";
+    if (n.startsWith("zh")) return "zh-Hans";
+    if (n.startsWith("ko")) return "ko";
+    if (n.startsWith("ru")) return "ru";
+    if (n.startsWith("es")) return "es";
+    if (n.startsWith("fr")) return "fr";
+    if (n.startsWith("de")) return "de";
+    if (n.startsWith("it")) return "it";
+    if (n.startsWith("pt")) return "pt";
+    return "en";
+}
+
+function applyLang(lang) {
+    const t = i18n[lang] || i18n.en;
+    document.title = t.title;
+    document.documentElement.lang = lang.split("-")[0];
+    document.getElementById("tagline").textContent = t.tagline;
+    document.getElementById("badgeLangs").textContent = t.badgeLangs;
+    document.getElementById("downloadBtn").textContent = t.downloadBtn;
+    document.getElementById("downloadSub").textContent = t.downloadSub;
+    document.getElementById("sitesTitle").textContent = t.sitesTitle;
+    document.getElementById("sitesMore").textContent = t.sitesMore;
+    document.getElementById("installTitle").textContent = t.installTitle;
+    document.getElementById("disclaimer").textContent = t.disclaimer;
+
+    // Features
+    const fc = document.getElementById("features");
+    fc.innerHTML = t.features.map(f =>
+        `<div class="feature-card"><div class="icon">${f[0]}</div><h3>${f[1]}</h3><p>${f[2]}</p></div>`
+    ).join("");
+
+    // Install steps
+    const ol = document.getElementById("installSteps");
+    const releasesUrl = "https://github.com/nagi0330/yt-dlp-swift/releases/latest";
+    const codeStr = "xattr -cr /Applications/yt-dlp-swift.app";
+    ol.innerHTML = t.install.map(s => {
+        let desc = s[1]
+            .replace("{link}", `<a href="${releasesUrl}">${t.releasesLabel}</a>`)
+            .replace("{br}", "<br>")
+            .replace("{code}", `<code>${codeStr}</code>`);
+        return `<li><div><strong>${s[0]}</strong><br>${desc}</div></li>`;
+    }).join("");
+
+    document.getElementById("langSelect").value = lang;
+}
+
+try {
+    var savedLang = null;
+    try { savedLang = localStorage.getItem("lp-lang"); } catch(e) {}
+    var lang = savedLang || detectLang();
+    applyLang(lang);
+
+    document.getElementById("langSelect").addEventListener("change", function() {
+        var v = this.value;
+        try { localStorage.setItem("lp-lang", v); } catch(e) {}
+        applyLang(v);
+    });
+} catch(e) { console.error("i18n error:", e); }
+</script>
+
+</body>
+</html>
