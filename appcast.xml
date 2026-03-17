@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
     <channel>
         <title>yt-dlp-swift</title>
-        <link>https://github.com/nagi/yt-dlp-swift</link>
+        <link>https://github.com/nagi0330/yt-dlp-swift</link>
         <description>yt-dlp-swift アップデートフィード</description>
         <language>ja</language>
 
@@ -22,7 +22,7 @@
                 </ul>
             ]]></description>
             <enclosure
-                url="https://github.com/nagi/yt-dlp-swift/releases/download/v1.1.0/yt-dlp-swift.dmg"
+                url="https://github.com/nagi0330/yt-dlp-swift/releases/download/v1.1.0/yt-dlp-swift.dmg"
                 type="application/octet-stream"
                 length="0"
             />
@@ -45,7 +45,7 @@
                 </ul>
             ]]></description>
             <enclosure
-                url="https://github.com/nagi/yt-dlp-swift/releases/download/vX.Y.Z/yt-dlp-swift.dmg"
+                url="https://github.com/nagi0330/yt-dlp-swift/releases/download/vX.Y.Z/yt-dlp-swift.dmg"
                 type="application/octet-stream"
                 sparkle:edSignature="ED_SIGNATURE_HERE"
                 length="FILE_SIZE_IN_BYTES"

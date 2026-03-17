@@ -31,7 +31,7 @@
     <key>CFBundleIconName</key>
     <string>AppIcon</string>
     <key>SUFeedURL</key>
-    <string>https://raw.githubusercontent.com/nagi/yt-dlp-swift/main/appcast.xml</string>
+    <string>https://raw.githubusercontent.com/nagi0330/yt-dlp-swift/main/appcast.xml</string>
     <key>SUPublicEDKey</key>
     <string>AWEeyMpCzyyTOZkvPTGGWyjfBS4jy0GtGZ4U2ZuFjXc=</string>
     <key>SUEnableAutomaticChecks</key>
