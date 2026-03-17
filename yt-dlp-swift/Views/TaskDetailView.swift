@@ -235,10 +235,8 @@ struct TaskDetailView: View {
                 Text("URL")
                     .font(.callout)
                     .foregroundStyle(.secondary)
-                Text(task.url)
+                Link(task.url, destination: URL(string: task.url) ?? URL(string: "https://example.com")!)
                     .font(.callout)
-                    .foregroundStyle(.blue)
-                    .textSelection(.enabled)
                     .lineLimit(2)
             }
         }

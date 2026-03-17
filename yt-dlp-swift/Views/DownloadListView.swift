@@ -47,6 +47,7 @@ struct DownloadListView: View {
                             onOpenFile: { viewModel.openFile(task) }
                         )
                         .tag(task.id)
+                        .contentShape(Rectangle())
                     }
                 }
                 .listStyle(.sidebar)

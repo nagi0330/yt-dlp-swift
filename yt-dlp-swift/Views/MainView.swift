@@ -16,6 +16,16 @@ struct MainView: View {
             // メイン: 選択されたタスクの詳細 or URL入力
             if let selectedTask = downloadVM.selectedTask {
                 TaskDetailView(task: selectedTask)
+                    .toolbar {
+                        ToolbarItem(placement: .navigation) {
+                            Button {
+                                downloadVM.selectedTaskID = nil
+                            } label: {
+                                Label(L10n.backToInput, systemImage: "chevron.left")
+                            }
+                            .help(L10n.backToInput)
+                        }
+                    }
             } else {
                 urlInputContent
             }

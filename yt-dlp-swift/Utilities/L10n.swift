@@ -533,6 +533,15 @@ enum L10n {
           pt: "Descrição")
     }
 
+    static var backToInput: String {
+        t("URL入力に戻る", "Back to URL Input",
+          zhHant: "返回URL輸入", zhHans: "返回URL输入",
+          ko: "URL 입력으로 돌아가기", ru: "Назад к вводу URL",
+          es: "Volver a entrada de URL", fr: "Retour à la saisie d'URL",
+          de: "Zurück zur URL-Eingabe", it: "Torna all'inserimento URL",
+          pt: "Voltar à entrada de URL")
+    }
+
     static var metadataNoDescription: String {
         t("概要なし", "No description",
           zhHant: "無說明", zhHans: "无简介",
@@ -1437,12 +1446,12 @@ enum L10n {
     // MARK: - About画面
 
     static var version: String {
-        t("バージョン 1.1.1", "Version 1.1.1",
-          zhHant: "版本 1.1.1", zhHans: "版本 1.1.1",
-          ko: "버전 1.1.1", ru: "Версия 1.1.1",
-          es: "Versión 1.1.1", fr: "Version 1.1.1",
-          de: "Version 1.1.1", it: "Versione 1.1.1",
-          pt: "Versão 1.1.1")
+        t("バージョン 1.1.3", "Version 1.1.3",
+          zhHant: "版本 1.1.3", zhHans: "版本 1.1.3",
+          ko: "버전 1.1.3", ru: "Версия 1.1.3",
+          es: "Versión 1.1.3", fr: "Version 1.1.3",
+          de: "Version 1.1.3", it: "Versione 1.1.3",
+          pt: "Versão 1.1.3")
     }
 
     static var appDescription: String {

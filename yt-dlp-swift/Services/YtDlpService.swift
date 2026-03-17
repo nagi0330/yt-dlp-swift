@@ -156,6 +156,16 @@ class YtDlpService {
         // メタデータ・サムネイル埋め込み
         args.append("--embed-metadata")
         args.append("--embed-thumbnail")
+        // MP4用: サムネイルをJPEGに変換（MP4はWebP/PNG非対応の場合がある）
+        args.append("--convert-thumbnails")
+        args.append("jpg")
+        // Finder「情報を見る」で表示されるようにiTunes互換タグへマッピング
+        args.append(contentsOf: [
+            "--parse-metadata", "%(title)s:%(meta_title)s",
+            "--parse-metadata", "%(uploader)s:%(meta_artist)s",
+            "--parse-metadata", "%(description)s:%(meta_comment)s",
+            "--parse-metadata", "%(upload_date>%Y)s:%(meta_date)s",
+        ])
 
         // 追加引数
         let extra = AppSettings.extraArguments.trimmingCharacters(in: .whitespacesAndNewlines)
